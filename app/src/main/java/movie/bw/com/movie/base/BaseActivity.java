@@ -35,7 +35,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private static BaseActivity mActivity = null;
     private String success ;
-    private UserBean USER;
+    public UserBean USER;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
