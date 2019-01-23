@@ -17,10 +17,11 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 
+import movie.bw.com.movie.DaoMaster;
 import movie.bw.com.movie.DaoSession;
 import movie.bw.com.movie.UserBeanDao;
 import movie.bw.com.movie.bean.UserBean;
-import movie.bw.com.movie.movie.bw.com.movie.DaoMaster;
+
 
 
 /**

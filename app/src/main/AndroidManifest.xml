@@ -20,7 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.RegiterActivity"></activity>
+        <activity android:name=".activity.RegiterActivity" />
+        <activity android:name=".activity.ShowActivity"></activity>
     </application>
 
 </manifest>

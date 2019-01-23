@@ -1,5 +1,6 @@
 package movie.bw.com.movie;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -17,13 +18,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import movie.bw.com.movie.UserBeanDao;
+import movie.bw.com.movie.activity.ShowActivity;
 import movie.bw.com.movie.base.BaseActivity;
 import movie.bw.com.movie.bean.Result;
 import movie.bw.com.movie.bean.UserBean;
 import movie.bw.com.movie.bean.UserInfo;
 import movie.bw.com.movie.core.DataCall;
 import movie.bw.com.movie.core.exception.ApiException;
-import movie.bw.com.movie.movie.bw.com.movie.DaoMaster;
+
 import movie.bw.com.movie.p.LoginPresenter;
 
 public class MainActivity extends BaseActivity {
@@ -44,7 +46,7 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.regist)
     TextView regist;
     @BindView(R.id.weixin)
-    TextView weixin;
+    ImageView weixin;
     private LoginPresenter loginPresenter;
     private String s;
     private String password;
@@ -75,11 +77,12 @@ public class MainActivity extends BaseActivity {
     //点击登录按钮
     @OnClick(R.id.login)
     public void Login(){
-        if (submit()){
+        startActivity(new Intent(this,ShowActivity.class));
+        /*if (submit()){
             s = moble.getText().toString();
             password = this.pwd.getText().toString();
             loginPresenter.request(s,password);
-        }
+        }*/
 
     }
     //微信登录
@@ -113,7 +116,7 @@ public class MainActivity extends BaseActivity {
     private class CallBack implements DataCall<Result<UserInfo>> {
         @Override
         public void success(Result<UserInfo> data) {
-            movie.bw.com.movie.DaoSession daoSession = DaoMaster.newDevSession(MainActivity.this, UserBeanDao.TABLENAME);
+            movie.bw.com.movie.DaoSession daoSession = movie.bw.com.movie.DaoMaster.newDevSession(MainActivity.this, UserBeanDao.TABLENAME);
             UserBeanDao userBeanDao = daoSession.getUserBeanDao();
             if (data.getStatus().equals("0000")){
                 String sessionId = data.getResult().getSessionId();
