@@ -1,28 +1,39 @@
 package movie.bw.com.movie.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import movie.bw.com.movie.R;
 import movie.bw.com.movie.base.BaseActivity;
-import movie.bw.com.movie.frag.FragmentFactory;
+import movie.bw.com.movie.frag.CinemaFragment;
+import movie.bw.com.movie.frag.MovieFrag;
+import movie.bw.com.movie.frag.MyFrag;
 
 public class ShowActivity extends BaseActivity {
 
 
     @BindView(R.id.page)
     ViewPager page;
-    @BindView(R.id.tab)
-    TabLayout tab;
-    private ImageView icon1;
-    private ImageView icon2;
-    private ImageView icon3;
+    @BindView(R.id.wdMovie)
+    RadioButton wdMovie;
+    @BindView(R.id.wdCinema)
+    RadioButton wdCinema;
+    @BindView(R.id.wdMy)
+    RadioButton wdMy;
+    @BindView(R.id.wdGroup)
+    RadioGroup wdGroup;
+    private List<Fragment> list;
 
     @Override
     protected int getLayoutId() {
@@ -31,94 +42,82 @@ public class ShowActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        initTab();
-        tab.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                init(tab);
-            }
+           list=new ArrayList<>();
+           list.add(new MovieFrag());
+           list.add(new CinemaFragment());
+           list.add(new MyFrag());
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
+           page.setOffscreenPageLimit(list.size());
 
-            }
+           page.setAdapter(new FragmentAdapter(getSupportFragmentManager()));
 
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
+           wdGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+               @Override
+               public void onCheckedChanged(RadioGroup group, int checkedId) {
+                   switch (checkedId){
+                       case R.id.wdMovie:
+                           page.setCurrentItem(0);
+                           wdMovie.setBackgroundResource(R.mipmap.com_icon_film_selected);
+                           wdCinema.setBackgroundResource(R.mipmap.com_icon_cinema_default);
+                           wdMy.setBackgroundResource(R.mipmap.com_icon_my_default);
+                           break;
+                       case R.id.wdCinema:
+                           page.setCurrentItem(1);
+                           wdMovie.setBackgroundResource(R.mipmap.com_icon_film_fault);
+                           wdCinema.setBackgroundResource(R.mipmap.com_icon_cinema_selected);
+                           wdMy.setBackgroundResource(R.mipmap.com_icon_my_default);
+                           break;
+                       case R.id.wdMy:
+                           page.setCurrentItem(2);
+                           wdMovie.setBackgroundResource(R.mipmap.com_icon_film_fault);
+                           wdCinema.setBackgroundResource(R.mipmap.com_icon_cinema_default);
+                           wdMy.setBackgroundResource(R.mipmap.com_icon_my_selected);
+                           break;
+                   }
+               }
+           });
 
-            }
-        });
-    }
+           page.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+               @Override
+               public void onPageScrolled(int i, float v, int i1) {
 
-    private void init(TabLayout.Tab tabs) {
-        if (tabs == tab.getTabAt(0)){
-            //tab.getTabAt(0).setCustomView(R.layout.show_bigimage);
-            //icon1=tab.getTabAt(0).getCustomView().findViewById(R.id.img);
-            /*icon1=tab.getTabAt(0).getCustomView().findViewById(R.id.img);
-            icon2=tab.getTabAt(1).getCustomView().findViewById(R.id.img);
-            icon3=tab.getTabAt(2).getCustomView().findViewById(R.id.img);*/
-            icon1 .setImageResource(R.mipmap.com_icon_film_selected);
-            icon2.setImageResource(R.mipmap.com_icon_cinema_default);
-            icon3.setImageResource(R.mipmap.com_icon_my_default);
-        }else if(tabs == tab.getTabAt(1)){
-            //tab.getTabAt(1).setCustomView(R.layout.show_bigimage);
-            //icon2=tab.getTabAt(1).getCustomView().findViewById(R.id.img);
-           /* icon1=tab.getTabAt(0).getCustomView().findViewById(R.id.img);
-            icon2=tab.getTabAt(1).getCustomView().findViewById(R.id.img);
-            icon3=tab.getTabAt(2).getCustomView().findViewById(R.id.img);*/
-            icon1 .setImageResource(R.mipmap.com_icon_film_fault);
-            icon2.setImageResource(R.mipmap.com_icon_cinema_selected);
-            icon3.setImageResource(R.mipmap.com_icon_my_default);
-        }else if(tabs == tab.getTabAt(2)){
-            //tab.getTabAt(2).setCustomView(R.layout.show_bigimage);
-            //icon3=tab.getTabAt(2).getCustomView().findViewById(R.id.img);
-            /*icon1=tab.getTabAt(0).getCustomView().findViewById(R.id.img);
-            icon2=tab.getTabAt(1).getCustomView().findViewById(R.id.img);
-            icon3=tab.getTabAt(2).getCustomView().findViewById(R.id.img);*/
-            icon1 .setImageResource(R.mipmap.com_icon_film_fault);
-            icon2.setImageResource(R.mipmap.com_icon_cinema_default);
-            icon3.setImageResource(R.mipmap.com_icon_my_selected);
-        }
-    }
+               }
 
-    private void initTab() {
-        tab.addTab(tab.newTab());
-        tab.addTab(tab.newTab());
-        tab.addTab(tab.newTab());
+               @Override
+               public void onPageSelected(int i) {
+                   wdGroup.check(wdGroup.getChildAt(i).getId());
+               }
 
-        tab.setupWithViewPager(page,false);
+               @Override
+               public void onPageScrollStateChanged(int i) {
 
-        page.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int i) {
-                Fragment fragment = FragmentFactory.getFragment(i);
-                return fragment;
-            }
-            @Override
-            public int getCount() {
-                return 3;
-            }
-        });
-
-        tab.getTabAt(0).setCustomView(R.layout.show_image);
-        tab.getTabAt(1).setCustomView(R.layout.show_image);
-        tab.getTabAt(2).setCustomView(R.layout.show_image);
-
-
-
-        icon1=tab.getTabAt(0).getCustomView().findViewById(R.id.img);
-        icon2=tab.getTabAt(1).getCustomView().findViewById(R.id.img);
-        icon3=tab.getTabAt(2).getCustomView().findViewById(R.id.img);
-
-        //tab.getTabAt(0).setCustomView(R.layout.show_bigimage);
-        //icon1=tab.getTabAt(0).getCustomView().findViewById(R.id.img);
-        icon1 .setImageResource(R.mipmap.com_icon_film_selected);
-        icon2.setImageResource(R.mipmap.com_icon_cinema_default);
-        icon3.setImageResource(R.mipmap.com_icon_my_default);
+               }
+           });
     }
 
     @Override
     protected void destoryData() {
+
+    }
+
+    //适配器
+    class FragmentAdapter extends FragmentPagerAdapter {
+
+        public FragmentAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+
+        @Override
+        public Fragment getItem(int position) {
+            return list.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return list.size();
+        }
+
 
     }
 

@@ -1,14 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context=".frag.MyFrag">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="220dp"
+        android:layout_gravity="center"
+        android:background="@mipmap/h"
+        android:orientation="vertical"
+        >
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:id="@+id/trumpet"
+            android:src="@mipmap/my_icon_remind"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="30dp"
+            />
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/headimage"
+            app:placeholderImage="@mipmap/m"
+            />
 
-</FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textColor="#ffff"
+            android:layout_below="@+id/headimage"
+            android:id="@+id/name"
+            android:text="请登录"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="86dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/kuang_8dp_touying"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/my_chat"
+            android:layout_marginLeft="30dp"
+            >
+           <ImageView
+               android:layout_width="24dp"
+               android:layout_height="24dp"
+               android:id="@+id/message"
+               android:layout_centerHorizontal="true"
+               android:src="@mipmap/my_icon_messiage"
+               />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/message"
+                android:layout_marginTop="10dp"
+                android:text="我的信息"
+                />
+        </RelativeLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="86dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/kuang_8dp_touying"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/my_attention"
+            android:layout_marginLeft="30dp"
+            >
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:id="@+id/attention"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/my_icon_attention"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/attention"
+                android:layout_marginTop="10dp"
+                android:text="我的关注"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/my_rccord"
+            android:layout_marginLeft="54dp"
+            >
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:id="@+id/rccord"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/my_icon_rccord"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rccord"
+                android:layout_marginTop="10dp"
+                android:text="购票记录"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="86dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/kuang_8dp_touying"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/my_feedback"
+            android:layout_marginLeft="30dp"
+            >
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:id="@+id/feedback"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/my_icon_feedback"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/feedback"
+                android:layout_marginTop="10dp"
+                android:text="意见反馈"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/my_version"
+            android:layout_marginLeft="54dp"
+            >
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:id="@+id/version"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/my_icon_version"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/version"
+                android:layout_marginTop="10dp"
+                android:text="最新版本"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>
