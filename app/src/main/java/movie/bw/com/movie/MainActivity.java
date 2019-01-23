@@ -7,6 +7,8 @@ import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -21,6 +23,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import movie.bw.com.movie.UserBeanDao;
+import movie.bw.com.movie.activity.RegiterActivity;
 import movie.bw.com.movie.activity.ShowActivity;
 import movie.bw.com.movie.base.BaseActivity;
 import movie.bw.com.movie.bean.Result;
@@ -79,6 +82,17 @@ public class MainActivity extends BaseActivity {
             remberpwd.setChecked(false);
         }
         initData();
+
+        eye.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                switch (event.getAction()){
+
+                }
+                return true;
+            }
+        });
     }
     //点击登录按钮
     @OnClick(R.id.login)
@@ -95,6 +109,10 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.weixin)
     public void LoginWeixin(){
 
+    }
+    @OnClick(R.id.regist)
+    public void Regirst(){
+         startActivity(new Intent(this,RegiterActivity.class));
     }
     //显示隐藏密码
     @OnClick(R.id.eye)

@@ -17,6 +17,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 
+import me.jessyan.autosize.internal.CustomAdapt;
 import movie.bw.com.movie.DaoMaster;
 import movie.bw.com.movie.DaoSession;
 import movie.bw.com.movie.UserBeanDao;
@@ -30,7 +31,7 @@ import movie.bw.com.movie.bean.UserBean;
  * 邮箱：
  * 说明：
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements CustomAdapt {
     public final static int PHOTO =0;
     public final static int CAMERA = 1;
     public Dialog mLoadDialog;
@@ -163,5 +164,15 @@ public abstract class BaseActivity extends AppCompatActivity {
             return img_path;
         }
         return null;
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return 720;
     }
 }

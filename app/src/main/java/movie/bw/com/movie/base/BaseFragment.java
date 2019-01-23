@@ -13,6 +13,8 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import me.jessyan.autosize.AutoSizeConfig;
+import me.jessyan.autosize.internal.CustomAdapt;
 import movie.bw.com.movie.DaoMaster;
 import movie.bw.com.movie.DaoSession;
 import movie.bw.com.movie.UserBeanDao;
@@ -25,7 +27,7 @@ import movie.bw.com.movie.bean.UserBean;
  * 邮箱：
  * 说明：
  */
-public abstract class BaseFragment  extends Fragment {
+public abstract class BaseFragment  extends Fragment implements CustomAdapt {
     public Gson mGson = new Gson();
 
 
@@ -35,6 +37,7 @@ public abstract class BaseFragment  extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        AutoSizeConfig.getInstance().setCustomFragment(true);
         DaoSession daoSession = DaoMaster.newDevSession(getActivity(), UserBeanDao.TABLENAME);
         UserBeanDao userBeanDao = daoSession.getUserBeanDao();
         List<UserBean> list = userBeanDao.queryBuilder()
@@ -76,4 +79,13 @@ public abstract class BaseFragment  extends Fragment {
      * 初始化视图
      */
     protected abstract void initView();
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return 720;
+    }
 }
