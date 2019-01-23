@@ -7,11 +7,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bw.movie.R;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import movie.bw.com.movie.MainActivity;
-import movie.bw.com.movie.R;
+
 import movie.bw.com.movie.base.BaseActivity;
 import movie.bw.com.movie.bean.Result;
 import movie.bw.com.movie.bean.UserBean;
@@ -20,6 +22,7 @@ import movie.bw.com.movie.core.DataCall;
 import movie.bw.com.movie.core.exception.ApiException;
 import movie.bw.com.movie.p.RegiterPresenter;
 import movie.bw.com.movie.utils.EncryptUtil;
+
 
 public class RegiterActivity extends BaseActivity {
 

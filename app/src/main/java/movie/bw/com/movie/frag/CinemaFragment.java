@@ -10,10 +10,12 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.bw.movie.R;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import movie.bw.com.movie.R;
+
 import movie.bw.com.movie.base.BaseFragment;
 
 /**

@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bw.movie.R;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -29,6 +31,7 @@ import movie.bw.com.movie.core.exception.ApiException;
 
 import movie.bw.com.movie.p.LoginPresenter;
 import movie.bw.com.movie.utils.EncryptUtil;
+
 
 public class MainActivity extends BaseActivity {
 
@@ -63,6 +66,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        pwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
         loginPresenter = new LoginPresenter(new CallBack());
         share = getSharedPreferences("a", MODE_PRIVATE);
         if (share.getBoolean("isCk", true)) {

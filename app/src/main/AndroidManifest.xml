@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="movie.bw.com.movie">
+    package="com.bw.movie">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -19,23 +19,29 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".App"
+        android:name="movie.bw.com.movie.App"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name="movie.bw.com.movie.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.RegiterActivity" />
-        <activity android:name=".activity.ShowActivity"></activity>
+        <activity android:name="movie.bw.com.movie.activity.RegiterActivity" />
+        <activity android:name="movie.bw.com.movie.activity.ShowActivity"></activity>
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="qHnEwbGEWeANLSvjYht33oCumc5UrDF8"></meta-data>
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="360"/>
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="640"/>
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"

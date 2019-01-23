@@ -9,9 +9,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_24"
-        android:layout_marginTop="@dimen/dp_60"
-        android:layout_marginRight="@dimen/dp_24"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="24dp"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -27,18 +27,18 @@
                     android:id="@+id/nickname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/image_name"
                     android:background="@null"
                     android:hint="昵称"
                     android:textColor="#FFF"
                     android:textColorHint="#FFF"
-                    android:textSize="@dimen/sp_11" />
+                    android:textSize="11dp" />
 
                 <ImageView
                     android:id="@+id/image_name"
-                    android:layout_width="@dimen/dp_11"
-                    android:layout_height="@dimen/dp_11"
+                    android:layout_width="11dp"
+                    android:layout_height="11dp"
                     android:src="@mipmap/register_icon_name" />
             </RelativeLayout>
 
@@ -46,14 +46,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_below="@id/relative_1"
-                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginTop="5dp"
                 android:background="#FFFFFF" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10">
+            android:layout_marginTop="10dp">
 
             <RelativeLayout
                 android:id="@+id/relative_2"
@@ -64,18 +64,18 @@
                     android:id="@+id/edit_sex"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/image_sex"
                     android:background="@null"
                     android:hint="性别"
                     android:textColor="#FFF"
                     android:textColorHint="#FFF"
-                    android:textSize="@dimen/sp_11" />
+                    android:textSize="11dp" />
 
                 <ImageView
                     android:id="@+id/image_sex"
-                    android:layout_width="@dimen/dp_11"
-                    android:layout_height="@dimen/dp_11"
+                    android:layout_width="11dp"
+                    android:layout_height="11dp"
                     android:src="@mipmap/register_icon_sex" />
             </RelativeLayout>
 
@@ -83,14 +83,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_below="@id/relative_2"
-                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginTop="5dp"
                 android:background="#FFFFFF" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10">
+            android:layout_marginTop="10dp">
 
             <RelativeLayout
                 android:id="@+id/relative_3"
@@ -101,18 +101,18 @@
                     android:id="@+id/edit_dateofbirth"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/image_dateofbirth"
                     android:background="@null"
                     android:hint="出生日期"
                     android:textColor="#FFF"
                     android:textColorHint="#FFF"
-                    android:textSize="@dimen/sp_11" />
+                    android:textSize="11dp" />
 
                 <ImageView
                     android:id="@+id/image_dateofbirth"
-                    android:layout_width="@dimen/dp_11"
-                    android:layout_height="@dimen/dp_11"
+                    android:layout_width="11dp"
+                    android:layout_height="11dp"
                     android:src="@mipmap/register_icon_date" />
             </RelativeLayout>
 
@@ -120,14 +120,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_below="@id/relative_3"
-                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginTop="5dp"
                 android:background="#FFFFFF" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10">
+            android:layout_marginTop="10dp">
 
             <RelativeLayout
                 android:id="@+id/relative_4"
@@ -138,18 +138,18 @@
                     android:id="@+id/edit_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/image_phone"
                     android:background="@null"
                     android:hint="手机号"
                     android:textColor="#FFF"
                     android:textColorHint="#FFF"
-                    android:textSize="@dimen/sp_11" />
+                    android:textSize="11dp" />
 
                 <ImageView
                     android:id="@+id/image_phone"
-                    android:layout_width="@dimen/dp_11"
-                    android:layout_height="@dimen/dp_11"
+                    android:layout_width="11dp"
+                    android:layout_height="11dp"
                     android:src="@mipmap/log_icon_phone" />
             </RelativeLayout>
 
@@ -158,14 +158,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_below="@id/relative_4"
-                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginTop="5dp"
                 android:background="#FFFFFF" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10">
+            android:layout_marginTop="10dp">
 
             <RelativeLayout
                 android:id="@+id/relative_5"
@@ -176,18 +176,18 @@
                     android:id="@+id/edit_postbox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/image_postbox"
                     android:background="@null"
                     android:hint="邮箱"
                     android:textColor="#FFF"
                     android:textColorHint="#FFF"
-                    android:textSize="@dimen/sp_11" />
+                    android:textSize="11dp" />
 
                 <ImageView
                     android:id="@+id/image_postbox"
-                    android:layout_width="@dimen/dp_11"
-                    android:layout_height="@dimen/dp_11"
+                    android:layout_width="11dp"
+                    android:layout_height="11dp"
                     android:src="@mipmap/register_icon_mail" />
             </RelativeLayout>
 
@@ -196,14 +196,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_below="@id/relative_5"
-                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginTop="5dp"
                 android:background="#FFFFFF" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10">
+            android:layout_marginTop="10dp">
 
             <RelativeLayout
                 android:id="@+id/relative_6"
@@ -214,18 +214,18 @@
                     android:id="@+id/edit_loginpassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/image_loginpassword"
                     android:background="@null"
                     android:hint="登录密码"
                     android:textColor="#FFF"
                     android:textColorHint="#FFF"
-                    android:textSize="@dimen/sp_11" />
+                    android:textSize="11dp" />
 
                 <ImageView
                     android:id="@+id/image_loginpassword"
-                    android:layout_width="@dimen/dp_11"
-                    android:layout_height="@dimen/dp_11"
+                    android:layout_width="11dp"
+                    android:layout_height="11dp"
                     android:src="@mipmap/log_icon_lock" />
             </RelativeLayout>
 
@@ -234,7 +234,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_below="@id/relative_6"
-                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginTop="5dp"
                 android:background="#FFFFFF" />
         </RelativeLayout>
 
@@ -242,11 +242,11 @@
             android:id="@+id/btn_regiter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_30"
+            android:layout_marginTop="30dp"
             android:background="@drawable/reg_bg"
             android:text="注册"
             android:textColor="#FFF"
-            android:textSize="@dimen/sp_11" />
+            android:textSize="11dp" />
     </LinearLayout>
 
 </LinearLayout>

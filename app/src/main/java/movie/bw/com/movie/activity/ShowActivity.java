@@ -9,12 +9,14 @@ import android.support.v4.view.ViewPager;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.bw.movie.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import movie.bw.com.movie.R;
+
 import movie.bw.com.movie.base.BaseActivity;
 import movie.bw.com.movie.frag.CinemaFragment;
 import movie.bw.com.movie.frag.MovieFrag;
