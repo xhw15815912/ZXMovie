@@ -15,7 +15,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import movie.bw.com.movie.DaoMaster;
+
 import movie.bw.com.movie.UserBeanDao;
 import movie.bw.com.movie.base.BaseActivity;
 import movie.bw.com.movie.bean.Result;
@@ -23,6 +23,7 @@ import movie.bw.com.movie.bean.UserBean;
 import movie.bw.com.movie.bean.UserInfo;
 import movie.bw.com.movie.core.DataCall;
 import movie.bw.com.movie.core.exception.ApiException;
+import movie.bw.com.movie.movie.bw.com.movie.DaoMaster;
 import movie.bw.com.movie.p.LoginPresenter;
 
 public class MainActivity extends BaseActivity {
