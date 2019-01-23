@@ -15,7 +15,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NotWorkUtils {
     //单例模式，饿汉式
     private static NotWorkUtils notWorkUtils = new NotWorkUtils();
-    private final static String BASE_URL = "http://mobile.bwstudent.com/movieApi/";
     private Retrofit retrofit;
 
     private NotWorkUtils() {
@@ -35,7 +34,7 @@ public class NotWorkUtils {
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
         retrofit = new Retrofit.Builder()
                 .client(client)
-                .baseUrl(BASE_URL)
+                .baseUrl("http://mobile.bwstudent.com/movieApi/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

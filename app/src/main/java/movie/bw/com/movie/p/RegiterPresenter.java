@@ -22,7 +22,7 @@ public class RegiterPresenter extends BasePresenter {
     @Override
     protected Observable observable(Object... args) {
         IRequest iRequest = NotWorkUtils.getNotWorkUtils().create(IRequest.class);
-        Log.e("waqe",(String)args[0]+"===");
-        return iRequest.registerUser((String)args[0],(String)args[1],(String)args[2],(String)args[3],(String)args[4],(String)args[5],(String)args[6]);
+        Log.e("waqe", (String) args[0] + "===");
+        return iRequest.registerUser((String) args[0], (String) args[1], (String) args[2], (String) args[3], (int) args[4], (String) args[5], (String) args[6], (String) args[7], (String) args[8], (String) args[9], (String) args[10]);
     }
 }
