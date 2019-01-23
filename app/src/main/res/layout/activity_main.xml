@@ -16,7 +16,7 @@
         android:textSize="18sp"
         android:textColor="#fff"
         android:textColorHint="#ffff"
-        android:layout_marginLeft="90dp"
+        android:layout_marginLeft="85dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="150dp"
         android:hint="手机号" />
@@ -50,9 +50,9 @@
         android:background="@null"
         android:textColor="#fff"
         android:textSize="18sp"
-        android:layout_marginLeft="90dp"
+        android:layout_marginLeft="85dp"
         android:layout_marginRight="60dp"
-        android:layout_marginTop="220dp"
+        android:layout_marginTop="230dp"
         android:hint="密码" />
     <View
         android:layout_width="match_parent"
@@ -68,17 +68,17 @@
         android:layout_marginTop="240dp"
         android:id="@+id/eye"
         android:src="@mipmap/log_icon_eye"
-        android:layout_marginLeft="350dp"
+        android:layout_marginLeft="325dp"
         />
     <Button
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:text="登录"
-
+        android:background="@drawable/reg_bg"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginTop="500dp"
-        android:textColor="#ff5f71"
+        android:textColor="#fff"
         android:id="@+id/login"
         android:textSize="18dp"
         />
@@ -116,14 +116,62 @@
         android:layout_height="wrap_content"
         android:text="快速注册"
         android:id="@+id/regist"
-        android:layout_marginLeft="350dp"
+        android:layout_marginLeft="305dp"
         android:layout_marginTop="310dp"
         android:textSize="14sp"
         android:textColor="#fff"
         />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="horizontal"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="600dp"
+        >
 
-        />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:background="#fff"
+            android:layout_weight="1"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingRight="2dp"
+            android:paddingLeft="2dp"
+            android:textSize="10sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:text="第三方账号快速登录"
+            />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:background="#fff"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="630dp"
+        >
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@mipmap/log_icon_weixin"
+            android:id="@+id/weixin"
+            android:layout_gravity="center"
+
+            />
+
+    </LinearLayout>
 </RelativeLayout>
