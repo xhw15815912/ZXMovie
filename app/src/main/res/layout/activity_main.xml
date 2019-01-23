@@ -8,6 +8,7 @@
     android:background="@mipmap/aa"
     >
 
+
     <EditText
         android:id="@+id/moble"
         android:layout_width="match_parent"
@@ -74,7 +75,6 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:text="登录"
-
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginTop="500dp"
