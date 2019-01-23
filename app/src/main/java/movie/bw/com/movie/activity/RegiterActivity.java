@@ -1,5 +1,6 @@
 package movie.bw.com.movie.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import movie.bw.com.movie.MainActivity;
 import movie.bw.com.movie.R;
 import movie.bw.com.movie.base.BaseActivity;
 import movie.bw.com.movie.bean.Result;
@@ -17,6 +19,7 @@ import movie.bw.com.movie.bean.UserInfo;
 import movie.bw.com.movie.core.DataCall;
 import movie.bw.com.movie.core.exception.ApiException;
 import movie.bw.com.movie.p.RegiterPresenter;
+import movie.bw.com.movie.utils.EncryptUtil;
 
 public class RegiterActivity extends BaseActivity {
 
@@ -75,21 +78,24 @@ public class RegiterActivity extends BaseActivity {
     public void onViewClicked() {
         String reg_nickname = nickname.getText().toString();
         String reg_sex = editSex.getText().toString();
+        Integer sex = Integer.valueOf(reg_sex);
         String reg_loginpassword = editLoginpassword.getText().toString();
         String reg__phone = editPhone.getText().toString();
         String reg_birth = editDateofbirth.getText().toString();
         String reg_box = editPostbox.getText().toString();
-        regiterPresenter.request("123",reg_nickname, reg_sex, reg_birth, reg__phone, reg_box, reg_loginpassword);
+        regiterPresenter.request(reg_nickname, reg__phone, EncryptUtil.encrypt(reg_loginpassword),EncryptUtil.encrypt(reg_loginpassword), sex,reg_birth,"123456","小米","5.0","android",reg_box);
 
     }
 
-    private class DataRegiter implements DataCall<Result<UserInfo>> {
+    private class DataRegiter implements DataCall<Result> {
         @Override
-        public void success(Result<UserInfo> data) {
+        public void success(Result data) {
          if (data.getStatus().equals("0000")){
-             Toast.makeText(RegiterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+             Toast.makeText(RegiterActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
+             Intent intent=new Intent(RegiterActivity.this,MainActivity.class);
+             startActivity(intent);
          }else {
-             Toast.makeText(RegiterActivity.this, "注册失败", Toast.LENGTH_SHORT).show();
+             Toast.makeText(RegiterActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
          }
         }
 

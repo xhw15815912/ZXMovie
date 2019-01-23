@@ -3,6 +3,8 @@ package movie.bw.com.movie.utils;
 import io.reactivex.Observable;
 import movie.bw.com.movie.bean.Result;
 import movie.bw.com.movie.bean.UserInfo;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -14,16 +16,22 @@ import retrofit2.http.Query;
  * Describe:网络请求接口类
  */
 public interface IRequest {
-
+    @FormUrlEncoded
     @POST("user/v1/login")
-    Observable<Result<UserInfo>> LOGIN(@Query("phone") String phone, @Query("pwd") String pwd);
-
+    Observable<Result<UserInfo>> LOGIN(@Field("phone") String phone,@Field("pwd") String pwd);
+    @FormUrlEncoded
     @POST("user/v1/registerUser")
-    Observable<Result<UserInfo>> registerUser(@Header("uNzol1eD+fxXRt/ALcYcdw")String pwd2,
-            @Query("nickName") String nickName,
-            @Query("sex") String sex,
-            @Query("birthday") String birthday,
-            @Query("phone") String phone,
-            @Query("email") String email,
-            @Query("pwd") String pwd);
+    Observable<Result> registerUser(
+            @Field("nickName") String nickName,
+            @Field("phone") String phone,
+            @Field("pwd") String pwd,
+            @Field("pwd2") String pwd2,
+            @Field("sex") int sex,
+            @Field("birthday") String birthday,
+            @Field("imei") String imei,
+            @Field("ua") String ua,
+            @Field("screenSize") String screenSize,
+            @Field("os") String os,
+            @Field("email") String email
+    );
 }

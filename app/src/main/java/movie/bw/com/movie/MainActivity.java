@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -27,6 +28,7 @@ import movie.bw.com.movie.core.DataCall;
 import movie.bw.com.movie.core.exception.ApiException;
 
 import movie.bw.com.movie.p.LoginPresenter;
+import movie.bw.com.movie.utils.EncryptUtil;
 
 public class MainActivity extends BaseActivity {
 
@@ -77,13 +79,13 @@ public class MainActivity extends BaseActivity {
     //点击登录按钮
     @OnClick(R.id.login)
     public void Login(){
-        startActivity(new Intent(this,ShowActivity.class));
-        /*if (submit()){
-            s = moble.getText().toString();
-            password = this.pwd.getText().toString();
-            loginPresenter.request(s,password);
-        }*/
+        //startActivity(new Intent(this,ShowActivity.class));
 
+         if (submit()){
+            s = moble.getText().toString();
+            password = pwd.getText().toString();
+            loginPresenter.request(s,EncryptUtil.encrypt(password));
+        }
     }
     //微信登录
     @OnClick(R.id.weixin)
@@ -116,13 +118,14 @@ public class MainActivity extends BaseActivity {
     private class CallBack implements DataCall<Result<UserInfo>> {
         @Override
         public void success(Result<UserInfo> data) {
-            movie.bw.com.movie.DaoSession daoSession = movie.bw.com.movie.DaoMaster.newDevSession(MainActivity.this, UserBeanDao.TABLENAME);
-            UserBeanDao userBeanDao = daoSession.getUserBeanDao();
+           // movie.bw.com.movie.DaoSession daoSession = movie.bw.com.movie.DaoMaster.newDevSession(MainActivity.this, UserBeanDao.TABLENAME);
+           // UserBeanDao userBeanDao = daoSession.getUserBeanDao();
+            Toast.makeText(MainActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
             if (data.getStatus().equals("0000")){
                 String sessionId = data.getResult().getSessionId();
                 int userId = data.getResult().getUserId();
-                UserBean userBean = new UserBean(sessionId, userId, 1);
-                userBeanDao.insert(userBean);
+               // UserBean userBean = new UserBean(sessionId, userId, 1);
+               // userBeanDao.insert(userBean);
 
                 s = moble.getText().toString();
                 password = pwd.getText().toString();
@@ -138,6 +141,8 @@ public class MainActivity extends BaseActivity {
                     edit.putBoolean("isCk",false);
                     edit.commit();
                 }
+
+                startActivity(new Intent(MainActivity.this,ShowActivity.class));
             }
             Toast.makeText(MainActivity.this,data.getMessage(),Toast.LENGTH_LONG).show();
         }
