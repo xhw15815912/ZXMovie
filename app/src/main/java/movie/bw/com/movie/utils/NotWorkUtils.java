@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NotWorkUtils {
     //单例模式，饿汉式
     private static NotWorkUtils notWorkUtils = new NotWorkUtils();
-    private final static String BASE_URL = "http://172.17.8.100/movieApi/";
+    private final static String BASE_URL = "http://mobile.bwstudent.com/movieApi/";
     private Retrofit retrofit;
 
     private NotWorkUtils() {
