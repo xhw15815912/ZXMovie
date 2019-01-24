@@ -11,4 +11,6 @@
         <item name="colorControlNormal">@android:color/white</item>
         <item name="colorControlActivated">@android:color/white</item>
     </style>
+    // values-v21。5.0 以上提供了 setStatusBarColor()  方法设置状态栏颜色。
+
 </resources>

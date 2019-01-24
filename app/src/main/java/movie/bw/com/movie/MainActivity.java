@@ -18,6 +18,10 @@ import android.widget.Toast;
 
 import com.bw.movie.R;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -88,7 +92,14 @@ public class MainActivity extends BaseActivity {
             public boolean onTouch(View v, MotionEvent event) {
 
                 switch (event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        pwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        pwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
+
+                        break;
                 }
                 return true;
             }
@@ -114,19 +125,7 @@ public class MainActivity extends BaseActivity {
     public void Regirst(){
          startActivity(new Intent(this,RegiterActivity.class));
     }
-    //显示隐藏密码
-    @OnClick(R.id.eye)
-    public void SeePwd(){
-        if (canSee==false){
-            //如果是不能看到密码的情况下，
-            pwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-            canSee=true;
-        }else {
-            //如果是能看到密码的状态下
-            pwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
-            canSee=false;
-        }
-    }
+
     private void initData() {
 
     }
@@ -140,14 +139,19 @@ public class MainActivity extends BaseActivity {
     private class CallBack implements DataCall<Result<UserInfo>> {
         @Override
         public void success(Result<UserInfo> data) {
-           // movie.bw.com.movie.DaoSession daoSession = movie.bw.com.movie.DaoMaster.newDevSession(MainActivity.this, UserBeanDao.TABLENAME);
-           // UserBeanDao userBeanDao = daoSession.getUserBeanDao();
+            movie.bw.com.movie.DaoSession daoSession = movie.bw.com.movie.DaoMaster.newDevSession(MainActivity.this, UserBeanDao.TABLENAME);
+           UserBeanDao userBeanDao = daoSession.getUserBeanDao();
             Toast.makeText(MainActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
             if (data.getStatus().equals("0000")){
                 String sessionId = data.getResult().getSessionId();
                 int userId = data.getResult().getUserId();
-               // UserBean userBean = new UserBean(sessionId, userId, 1);
-               // userBeanDao.insert(userBean);
+               // EventBus.getDefault().postSticky(new UserBean(sessionId,userId,1));
+                List<UserBean> userBeans = userBeanDao.loadAll();
+                if (userBeans.size()>0){
+                    userBeanDao.deleteAll();
+                }
+                UserBean userBean = new UserBean(sessionId, userId, 1);
+                userBeanDao.insert(userBean);
 
                 s = moble.getText().toString();
                 password = pwd.getText().toString();
@@ -163,6 +167,7 @@ public class MainActivity extends BaseActivity {
                     edit.putBoolean("isCk",false);
                     edit.commit();
                 }
+
 
                 startActivity(new Intent(MainActivity.this,ShowActivity.class));
             }
