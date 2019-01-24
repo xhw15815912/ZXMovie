@@ -9,6 +9,10 @@ import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -33,11 +37,15 @@ public abstract class BaseFragment  extends Fragment implements CustomAdapt {
 
     private Unbinder unbinder;
     //public UserInfo LOGIN_USER;
-    private UserBean USER;
+    public UserBean USER;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         AutoSizeConfig.getInstance().setCustomFragment(true);
+
+
+
+
         DaoSession daoSession = DaoMaster.newDevSession(getActivity(), UserBeanDao.TABLENAME);
         UserBeanDao userBeanDao = daoSession.getUserBeanDao();
         List<UserBean> list = userBeanDao.queryBuilder()
@@ -62,6 +70,8 @@ public abstract class BaseFragment  extends Fragment implements CustomAdapt {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+
+
     }
 
 
@@ -88,4 +98,5 @@ public abstract class BaseFragment  extends Fragment implements CustomAdapt {
     public float getSizeInDp() {
         return 720;
     }
+
 }

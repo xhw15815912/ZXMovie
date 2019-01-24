@@ -1,5 +1,6 @@
 package movie.bw.com.movie.base;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -12,6 +13,8 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.view.Window;
+import android.view.WindowManager;
 
 import java.util.List;
 
@@ -43,6 +46,9 @@ public abstract class BaseActivity extends AppCompatActivity implements CustomAd
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Android4.4的沉浸式状态栏写法
+
+
         DaoSession daoSession = DaoMaster.newDevSession(this, UserBeanDao.TABLENAME);
         UserBeanDao userBeanDao = daoSession.getUserBeanDao();
         List<UserBean> list = userBeanDao.queryBuilder()

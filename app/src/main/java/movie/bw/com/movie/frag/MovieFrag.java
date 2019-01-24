@@ -2,6 +2,9 @@ package movie.bw.com.movie.frag;
 
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,23 +17,54 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.bw.movie.R;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-
+import movie.bw.com.movie.adapter.FlowAdapter;
+import movie.bw.com.movie.adapter.HotMovieAdapter;
+import movie.bw.com.movie.adapter.NowAdapter;
+import movie.bw.com.movie.adapter.SoonAdapter;
 import movie.bw.com.movie.base.BaseFragment;
+import movie.bw.com.movie.bean.HotMovie;
+import movie.bw.com.movie.bean.Result;
+import movie.bw.com.movie.core.DataCall;
+import movie.bw.com.movie.core.exception.ApiException;
+import movie.bw.com.movie.p.FindHotMovieListPresenter;
+import movie.bw.com.movie.p.NowMovie;
+import movie.bw.com.movie.p.SoonMoviewPresenter;
+import recycler.coverflow.RecyclerCoverFlow;
 
 
 public class MovieFrag extends BaseFragment {
 
     public LocationClient mLocationClient = null;
+    @BindView(R.id.flow)
+    RecyclerCoverFlow flow;
+    @BindView(R.id.hotMove)
+    RecyclerView hotMove;
+    @BindView(R.id.nowMove)
+    RecyclerView nowMove;
+    @BindView(R.id.soonMove)
+    RecyclerView soonMove;
+    Unbinder unbinder1;
     private MyLocationListener myListener = new MyLocationListener();
     @BindView(R.id.image_location)
     ImageView imageLocation;
     @BindView(R.id.text_positioning)
     TextView textPositioning;
     Unbinder unbinder;
+    private FlowAdapter flowAdapter;
+    private FindHotMovieListPresenter findHotMovieListPresenter;
+    private String sessionId;
+    private int userId;
+    private HotMovieAdapter hotMovieAdapter;
+    private NowMovie nowMovie;
+    private SoonMoviewPresenter soonMoviewPresenter;
+    private NowAdapter nowAdapter;
+    private SoonAdapter soonAdapter;
 
     @Override
     public String getPageName() {
@@ -44,36 +78,43 @@ public class MovieFrag extends BaseFragment {
 
     @Override
     protected void initView() {
-        initlocation();
+        sessionId = USER.getSessionId();
+        userId = USER.getUserId();
+        initFlow();
+        initHotMove();
+        flow.setAdapter(flowAdapter);
+        hotMove.setAdapter(hotMovieAdapter);
+        nowMove.setAdapter(nowAdapter);
+        soonMove.setAdapter(soonAdapter);
     }
-
-    private void initlocation() {
+    private void initFlow() {
+        nowMovie = new NowMovie(new Now());
+        soonAdapter = new SoonAdapter(getActivity());
+        soonMoviewPresenter = new SoonMoviewPresenter(new Soon());
+        flowAdapter = new FlowAdapter(getActivity());
+        nowAdapter = new NowAdapter(getActivity());
+        findHotMovieListPresenter = new FindHotMovieListPresenter(new HotMovie());
+        findHotMovieListPresenter.request(userId, sessionId);
+    }
+    private void initHotMove() {
+        nowMovie.request(userId,sessionId);
+        soonMoviewPresenter.request(userId,sessionId);
+        hotMove.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+        nowMove.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+        soonMove.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+        hotMovieAdapter = new HotMovieAdapter(getActivity());
 
     }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
-
-
-
     @OnClick(R.id.image_location)
     public void onViewClicked() {
         orientation();
 
     }
-
     @Override
     public void onPause() {
         super.onPause();
         orientation();
     }
-
     private void orientation() {
         mLocationClient = new LocationClient(getActivity());
         //声明LocationClient类
@@ -93,6 +134,12 @@ public class MovieFrag extends BaseFragment {
         mLocationClient.setLocOption(option);
         mLocationClient.start();
     }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder1.unbind();
+    }
+
 
     public class MyLocationListener implements BDLocationListener {
         @Override
@@ -103,6 +150,53 @@ public class MovieFrag extends BaseFragment {
             String locationDescribe = location.getLocationDescribe();    //获取位置描述信息
             String addr = location.getCity();    //获取详细地址信息
             textPositioning.setText(addr);
+        }
+    }
+
+    private class HotMovie implements DataCall<Result<List<movie.bw.com.movie.bean.HotMovie>>> {
+        @Override
+        public void success(Result<List<movie.bw.com.movie.bean.HotMovie>> data) {
+            Log.e("qwer", data.getMessage() + "===");
+
+            if (data.getStatus().equals("0000")) {
+                flowAdapter.setData(data.getResult());
+                hotMovieAdapter.setData(data.getResult());
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    private class Now implements DataCall<Result<List<movie.bw.com.movie.bean.HotMovie>>> {
+        @Override
+        public void success(Result<List<movie.bw.com.movie.bean.HotMovie>> data) {
+            if (data.getStatus().equals("0000")) {
+                nowAdapter.setData(data.getResult());
+
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    private class Soon implements DataCall<Result<List<movie.bw.com.movie.bean.HotMovie>>> {
+        @Override
+        public void success(Result<List<movie.bw.com.movie.bean.HotMovie>> data) {
+            if (data.getStatus().equals("0000")) {
+                soonAdapter.setData(data.getResult());
+
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
         }
     }
 }

@@ -1,6 +1,9 @@
 package movie.bw.com.movie.utils;
 
+import java.util.List;
+
 import io.reactivex.Observable;
+import movie.bw.com.movie.bean.HotMovie;
 import movie.bw.com.movie.bean.Result;
 import movie.bw.com.movie.bean.UserInfo;
 import retrofit2.http.Field;
@@ -35,6 +38,28 @@ public interface IRequest {
             @Field("screenSize") String screenSize,
             @Field("os") String os,
             @Field("email") String email
+    );
+
+    @GET("movie/v1/findHotMovieList")
+    Observable<Result<List<HotMovie>>> FINDHOT(
+            @Header("userId")int userId,
+            @Header("sessionId")String sessionId,
+            @Query("page")int page,
+            @Query("count")int count
+    );
+    @GET("movie/v1/findReleaseMovieList")
+    Observable<Result<List<HotMovie>>> NOW(
+            @Header("userId")int userId,
+            @Header("sessionId")String sessionId,
+            @Query("page")int page,
+            @Query("count")int count
+    );
+    @GET("movie/v1/findComingSoonMovieList")
+    Observable<Result<List<HotMovie>>> Soon(
+            @Header("userId")int userId,
+            @Header("sessionId")String sessionId,
+            @Query("page")int page,
+            @Query("count")int count
     );
 
 }
