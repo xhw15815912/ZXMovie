@@ -5,6 +5,7 @@ import movie.bw.com.movie.bean.Result;
 import movie.bw.com.movie.bean.UserInfo;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -18,7 +19,8 @@ import retrofit2.http.Query;
 public interface IRequest {
     @FormUrlEncoded
     @POST("user/v1/login")
-    Observable<Result<UserInfo>> LOGIN(@Field("phone") String phone,@Field("pwd") String pwd);
+    Observable<Result<UserInfo>> LOGIN(@Field("phone") String phone, @Field("pwd") String pwd);
+
     @FormUrlEncoded
     @POST("user/v1/registerUser")
     Observable<Result> registerUser(
@@ -34,4 +36,5 @@ public interface IRequest {
             @Field("os") String os,
             @Field("email") String email
     );
+
 }

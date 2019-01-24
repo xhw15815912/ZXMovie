@@ -2,45 +2,80 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".frag.CinemaFragment">
+    android:orientation="vertical">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="24dp"></RelativeLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="30dp">
+
+        <ImageView
+            android:id="@+id/image_white"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@mipmap/com_icon_loc_white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/image_white"
+            android:text="北京"
+            android:textSize="17dp" />
+
+        <TextView
+            android:id="@+id/sreach"
+            android:layout_width="48dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/bk_radi9" />
+
+        <ImageView
+            android:id="@+id/image_search"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/com_icon_search" />
+    </RelativeLayout>
 
     <RadioGroup
+        android:id="@+id/rad"
         android:layout_width="match_parent"
         android:layout_height="25dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
-        android:id="@+id/rad"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
+
         <RadioButton
-            android:button="@null"
-            android:text="推荐影院"
-            android:gravity="center"
-            android:background="@drawable/bg_dividing_line_title_rectangle"
-            android:layout_width="83dp"
-            android:layout_height="25dp"
             android:id="@+id/recommend"
-            />
-        <RadioButton
-            android:button="@null"
-            android:gravity="center"
-            android:background="@drawable/kuang_8dp_touying"
-            android:text="附近影院"
             android:layout_width="83dp"
             android:layout_height="25dp"
+            android:background="@drawable/selector_radio_button"
+            android:button="@null"
+            android:checked="true"
+            android:textColor="@drawable/selector_orange_white"
+            android:gravity="center"
+            android:text="推荐影院" />
+
+        <RadioButton
             android:id="@+id/nearby"
-            />
+            android:layout_width="83dp"
+            android:layout_height="25dp"
+            android:background="@drawable/selector_radio_button"
+            android:button="@null"
+            android:textColor="@drawable/selector_orange_white"
+            android:gravity="center"
+            android:text="附近影院" />
     </RadioGroup>
 
-    <android.support.v4.view.ViewPager
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/theaters_xrecyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/page"
-        ></android.support.v4.view.ViewPager>
+        android:layout_height="match_parent"></com.jcodecraeer.xrecyclerview.XRecyclerView>
 </LinearLayout>
 

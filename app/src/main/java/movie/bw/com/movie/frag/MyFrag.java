@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import movie.bw.com.movie.activity.MyMessageActivity;
 import movie.bw.com.movie.base.BaseFragment;
 
 /**
@@ -72,9 +73,12 @@ public class MyFrag extends BaseFragment {
             case R.id.headimage:
                 break;
             case R.id.my_chat:
-
+                Intent intent=new Intent(getContext(),MyMessageActivity.class);
+                startActivity(intent);
                 break;
+                //我的关注
             case R.id.my_attention:
+
                 break;
             case R.id.my_rccord:
                 break;

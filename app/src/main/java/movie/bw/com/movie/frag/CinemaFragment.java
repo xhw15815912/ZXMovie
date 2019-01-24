@@ -24,8 +24,7 @@ import movie.bw.com.movie.base.BaseFragment;
 public class CinemaFragment extends BaseFragment {
 
 
-    @BindView(R.id.page)
-    ViewPager page;
+
     @BindView(R.id.recommend)
     RadioButton recommend;
     @BindView(R.id.nearby)
