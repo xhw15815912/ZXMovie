@@ -1,10 +1,19 @@
 package movie.bw.com.movie.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Display;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bw.movie.R;
@@ -37,8 +46,10 @@ public class MovieDetails extends BaseActivity {
     Button comment;
     @BindView(R.id.back)
     ImageView back;
+
     private int id;
     private ParticularsPresenter particularsPresenter;
+    private ParticularsBean result;
 
     @Override
     protected int getLayoutId() {
@@ -47,6 +58,7 @@ public class MovieDetails extends BaseActivity {
 
     @Override
     protected void initView() {
+
         Intent intent = getIntent();
         String sessionId = USER.getSessionId();
         int userId = USER.getUserId();
@@ -65,13 +77,44 @@ public class MovieDetails extends BaseActivity {
     public void Bk(){
         finish();
     }
+    @OnClick(R.id.chat)
+    public void Chat(){
 
+
+
+        Dialog dialog = new Dialog(this);
+        View inflate = View.inflate(this, R.layout.pop_movie_chat, null);
+        dialog.setContentView(inflate);
+        Window dialogWindow = dialog.getWindow();
+        WindowManager m = getWindow().getWindowManager();
+        Display d = m.getDefaultDisplay(); // 获取屏幕宽、高度
+        WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 获取对话框当前的参数值
+        p.height = (int) (d.getHeight() * 0.9); // 高度设置为屏幕的0.6，根据实际情况调整
+        p.width = (int) (d.getWidth()); // 宽度设置为屏幕的0.65，根据实际情况调整
+        dialogWindow.setAttributes(p);
+        dialogWindow.setGravity(Gravity.BOTTOM);
+        String imageUrl = result.getImageUrl();
+        SimpleDraweeView image = inflate.findViewById(R.id.image);
+        image.setImageURI(imageUrl);
+        TextView type = inflate.findViewById(R.id.type);
+        TextView men = inflate.findViewById(R.id.men);
+        TextView time = inflate.findViewById(R.id.time);
+        TextView place = inflate.findViewById(R.id.place);
+        TextView chat = inflate.findViewById(R.id.chat);
+        RecyclerView recy =inflate.findViewById(R.id.recy);
+        type.setText("类型："+result.getMovieTypes());
+        men.setText("导演："+result.getDirector());
+        time.setText("时长："+result.getDuration());
+        place.setText("产地："+result.getPlaceOrigin());
+        chat.setText(result.getSummary());
+        dialog.show();
+    }
     private class CallBack implements DataCall<Result<ParticularsBean>> {
         @Override
         public void success(Result<ParticularsBean> data) {
             Log.e("错误",data.getMessage()+"");
             if (data.getStatus().equals("0000")){
-                ParticularsBean result = data.getResult();
+                result = data.getResult();
                 name.setText(result.getName());
                 image.setImageURI(result.getImageUrl());
 
