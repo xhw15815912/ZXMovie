@@ -51,9 +51,9 @@
             android:process=":remote" />
 
         <activity android:name="movie.bw.com.movie.activity.MyMessageActivity" />
-        <activity android:name="movie.bw.com.movie.activity.MyInterestActivity"></activity>
-
-        <activity android:name="movie.bw.com.movie.activity.MovieDetails"></activity>
+        <activity android:name="movie.bw.com.movie.activity.MyInterestActivity" />
+        <activity android:name="movie.bw.com.movie.activity.MovieDetails" />
+        <activity android:name="movie.bw.com.movie.activity.SearchCinemaActivity"></activity>
     </application>
 
 </manifest>
