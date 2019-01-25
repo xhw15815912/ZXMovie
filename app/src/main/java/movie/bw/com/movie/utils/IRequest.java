@@ -3,7 +3,9 @@ package movie.bw.com.movie.utils;
 import java.util.List;
 
 import io.reactivex.Observable;
+import movie.bw.com.movie.bean.Cinema;
 import movie.bw.com.movie.bean.HotMovie;
+import movie.bw.com.movie.bean.Recommend;
 import movie.bw.com.movie.bean.ParticularsBean;
 import movie.bw.com.movie.bean.Result;
 import movie.bw.com.movie.bean.UserInfo;
@@ -43,24 +45,47 @@ public interface IRequest {
 
     @GET("movie/v1/findHotMovieList")
     Observable<Result<List<HotMovie>>> FINDHOT(
-            @Header("userId")int userId,
-            @Header("sessionId")String sessionId,
-            @Query("page")int page,
-            @Query("count")int count
+            @Header("userId") int userId,
+            @Header("sessionId") String sessionId,
+            @Query("page") int page,
+            @Query("count") int count
     );
+
     @GET("movie/v1/findReleaseMovieList")
     Observable<Result<List<HotMovie>>> NOW(
-            @Header("userId")int userId,
-            @Header("sessionId")String sessionId,
-            @Query("page")int page,
-            @Query("count")int count
+            @Header("userId") int userId,
+            @Header("sessionId") String sessionId,
+            @Query("page") int page,
+            @Query("count") int count
     );
+
     @GET("movie/v1/findComingSoonMovieList")
     Observable<Result<List<HotMovie>>> Soon(
-            @Header("userId")int userId,
-            @Header("sessionId")String sessionId,
-            @Query("page")int page,
-            @Query("count")int count
+            @Header("userId") int userId,
+            @Header("sessionId") String sessionId,
+            @Query("page") int page,
+            @Query("count") int count
+    );
+
+    @GET("cinema/v1/findRecommendCinemas")
+    Observable<Result<List<Recommend>>> findRecommendCinemas(@Header("userId") int userId,
+                                                             @Header("sessionId") String sessionId,
+                                                             @Query("page") int page,
+                                                             @Query("count") int count);
+
+    @GET("cinema/v1/findNearbyCinemas")
+    Observable<Result<List<Recommend>>> findNearbyCinemas(@Header("userId") int userId,
+                                                          @Header("sessionId") String sessionId,
+                                                          @Query("longitude") String longitude,
+                                                          @Query("latitude") String latitude,
+                                                          @Query("page") int page,
+                                                          @Query("count") int count);
+     //查询影院
+    @GET("cinema/v1/findAllCinemas")
+    Observable<Result<Cinema>> findAllCinemas(
+            @Query("page") int page,
+            @Query("count") int count,
+            @Query("cinemaName") String cinemaName
     );
     @GET("movie/v1/findMoviesDetail")
     Observable<Result<ParticularsBean>> Particulars(

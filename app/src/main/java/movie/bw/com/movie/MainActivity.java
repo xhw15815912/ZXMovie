@@ -113,6 +113,7 @@ public class MainActivity extends BaseActivity {
          if (submit()){
             s = moble.getText().toString();
             password = pwd.getText().toString();
+
             loginPresenter.request(s,EncryptUtil.encrypt(password));
         }
     }

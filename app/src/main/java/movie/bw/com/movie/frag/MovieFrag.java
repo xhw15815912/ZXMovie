@@ -1,15 +1,26 @@
 package movie.bw.com.movie.frag;
 
 
+import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Color;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.transition.AutoTransition;
+import android.support.transition.TransitionManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
@@ -52,6 +63,15 @@ public class MovieFrag extends BaseFragment {
     @BindView(R.id.soonMove)
     RecyclerView soonMove;
     Unbinder unbinder1;
+    @BindView(R.id.recommend_cinem_search_image)
+    ImageView recommendCinemSearchImage;
+    @BindView(R.id.recommend_cinema_edname)
+    EditText recommendCinemaEdname;
+    @BindView(R.id.recommend_cinema_textName)
+    TextView recommendCinemaTextName;
+    @BindView(R.id.recommend_cinema_linear)
+    LinearLayout recommendCinemaLinear;
+    Unbinder unbinder2;
     @BindView(R.id.hot)
     TextView hot;
     @BindView(R.id.now)
@@ -74,6 +94,7 @@ public class MovieFrag extends BaseFragment {
     private SoonMoviewPresenter soonMoviewPresenter;
     private NowAdapter nowAdapter;
     private SoonAdapter soonAdapter;
+    private ObjectAnimator animator;
 
     @Override
     public String getPageName() {
@@ -89,6 +110,7 @@ public class MovieFrag extends BaseFragment {
     protected void initView() {
         sessionId = USER.getSessionId();
         userId = USER.getUserId();
+        Log.d("++++++++++++++++++++++", "initView: " + sessionId + "          " + userId);
         initFlow();
         initHotMove();
         flow.setAdapter(flowAdapter);
@@ -110,6 +132,11 @@ public class MovieFrag extends BaseFragment {
     private void initHotMove() {
         nowMovie.request(userId, sessionId,1,10);
         soonMoviewPresenter.request(userId, sessionId,1,10);
+        hotMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        nowMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        soonMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        nowMovie.request(userId, sessionId);
+        soonMoviewPresenter.request(userId, sessionId);
         hotMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         nowMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         soonMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
@@ -141,6 +168,7 @@ public class MovieFrag extends BaseFragment {
         startActivity(intent);
 
     }
+
     @Override
     public void onPause() {
         super.onPause();
@@ -166,6 +194,43 @@ public class MovieFrag extends BaseFragment {
         mLocationClient.setLocOption(option);
         mLocationClient.start();
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder1.unbind();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder2 = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @OnClick({R.id.recommend_cinem_search_image, R.id.recommend_cinema_textName})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.recommend_cinem_search_image:
+                animator = ObjectAnimator.ofFloat(recommendCinemaLinear, "translationX", 30f, 0f);
+                animator.setDuration(1000);
+
+                animator.start();
+                recommendCinemaEdname.setVisibility(View.VISIBLE);
+                recommendCinemaTextName.setVisibility(View.VISIBLE);
+                break;
+            case R.id.recommend_cinema_textName:
+                animator = ObjectAnimator.ofFloat(recommendCinemaLinear, "translationX", 0f, 20f);
+                animator.setDuration(1000);
+
+                animator.start();
+                recommendCinemaEdname.setVisibility(View.GONE);
+                recommendCinemaTextName.setVisibility(View.GONE);
+                break;
+        }
+    }
+
 
     public class MyLocationListener implements BDLocationListener {
         @Override
@@ -225,4 +290,6 @@ public class MovieFrag extends BaseFragment {
 
         }
     }
+
+
 }
