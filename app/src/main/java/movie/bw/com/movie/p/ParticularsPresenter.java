@@ -12,14 +12,15 @@ import movie.bw.com.movie.utils.NotWorkUtils;
  * 邮箱：
  * 说明：
  */
-public class FindHotMovieListPresenter extends BasePresenter {
-    public FindHotMovieListPresenter(DataCall dataCall) {
+public class ParticularsPresenter extends BasePresenter {
+    public ParticularsPresenter(DataCall dataCall) {
         super(dataCall);
     }
 
     @Override
     protected Observable observable(Object... args) {
         IRequest iRequest = NotWorkUtils.getNotWorkUtils().create(IRequest.class);
-        return iRequest.FINDHOT((int)args[0],(String)args[1],(int)args[2],(int)args[3]);
+        return iRequest.Particulars((int)args[0],(String) args[1],(int)args[2]);
     }
 }
+

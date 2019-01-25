@@ -1,6 +1,7 @@
 package movie.bw.com.movie.frag;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import movie.bw.com.movie.activity.MoreMovie;
 import movie.bw.com.movie.adapter.FlowAdapter;
 import movie.bw.com.movie.adapter.HotMovieAdapter;
 import movie.bw.com.movie.adapter.NowAdapter;
@@ -50,6 +52,13 @@ public class MovieFrag extends BaseFragment {
     @BindView(R.id.soonMove)
     RecyclerView soonMove;
     Unbinder unbinder1;
+    @BindView(R.id.hot)
+    TextView hot;
+    @BindView(R.id.now)
+    TextView now;
+    @BindView(R.id.soon)
+    TextView soon;
+    Unbinder unbinder2;
     private MyLocationListener myListener = new MyLocationListener();
     @BindView(R.id.image_location)
     ImageView imageLocation;
@@ -87,6 +96,7 @@ public class MovieFrag extends BaseFragment {
         nowMove.setAdapter(nowAdapter);
         soonMove.setAdapter(soonAdapter);
     }
+
     private void initFlow() {
         nowMovie = new NowMovie(new Now());
         soonAdapter = new SoonAdapter(getActivity());
@@ -94,20 +104,41 @@ public class MovieFrag extends BaseFragment {
         flowAdapter = new FlowAdapter(getActivity());
         nowAdapter = new NowAdapter(getActivity());
         findHotMovieListPresenter = new FindHotMovieListPresenter(new HotMovie());
-        findHotMovieListPresenter.request(userId, sessionId);
+        findHotMovieListPresenter.request(userId, sessionId,1,10);
     }
+
     private void initHotMove() {
-        nowMovie.request(userId,sessionId);
-        soonMoviewPresenter.request(userId,sessionId);
-        hotMove.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
-        nowMove.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
-        soonMove.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+        nowMovie.request(userId, sessionId,1,10);
+        soonMoviewPresenter.request(userId, sessionId,1,10);
+        hotMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        nowMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        soonMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         hotMovieAdapter = new HotMovieAdapter(getActivity());
 
     }
+
     @OnClick(R.id.image_location)
     public void onViewClicked() {
         orientation();
+
+    }
+    @OnClick(R.id.hot)
+    public void Hot() {
+        Intent intent = new Intent(getActivity(), MoreMovie.class);
+        intent.putExtra("id",1);
+        startActivity(intent);
+    }
+    @OnClick(R.id.now)
+    public void Now() {
+        Intent intent = new Intent(getActivity(), MoreMovie.class);
+        intent.putExtra("id",2);
+        startActivity(intent);
+    }
+    @OnClick(R.id.soon)
+    public void Soon() {
+        Intent intent = new Intent(getActivity(), MoreMovie.class);
+        intent.putExtra("id",3);
+        startActivity(intent);
 
     }
     @Override
@@ -115,6 +146,7 @@ public class MovieFrag extends BaseFragment {
         super.onPause();
         orientation();
     }
+
     private void orientation() {
         mLocationClient = new LocationClient(getActivity());
         //声明LocationClient类
@@ -134,12 +166,6 @@ public class MovieFrag extends BaseFragment {
         mLocationClient.setLocOption(option);
         mLocationClient.start();
     }
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder1.unbind();
-    }
-
 
     public class MyLocationListener implements BDLocationListener {
         @Override

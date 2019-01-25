@@ -1,5 +1,6 @@
 package movie.bw.com.movie.adapter;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import movie.bw.com.movie.DaoMaster;
+import movie.bw.com.movie.activity.MovieDetails;
 import movie.bw.com.movie.bean.HotMovie;
 
 /**
@@ -39,12 +41,19 @@ public class FlowAdapter extends RecyclerView.Adapter<FlowAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         String imageUrl = list.get(i).getImageUrl();
         String name = list.get(i).getName();
         viewHolder.image.setImageURI(imageUrl);
         viewHolder.name.setText(name);
-
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MovieDetails.class);
+                intent.putExtra("id",list.get(i).getId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

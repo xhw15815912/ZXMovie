@@ -4,6 +4,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import movie.bw.com.movie.bean.HotMovie;
+import movie.bw.com.movie.bean.ParticularsBean;
 import movie.bw.com.movie.bean.Result;
 import movie.bw.com.movie.bean.UserInfo;
 import retrofit2.http.Field;
@@ -61,5 +62,10 @@ public interface IRequest {
             @Query("page")int page,
             @Query("count")int count
     );
-
+    @GET("movie/v1/findMoviesDetail")
+    Observable<Result<ParticularsBean>> Particulars(
+            @Header("userId")int userId,
+            @Header("sessionId")String sessionId,
+            @Query("movieId")int movieId
+    );
 }
