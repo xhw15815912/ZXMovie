@@ -78,7 +78,7 @@ public class MovieFrag extends BaseFragment {
     TextView now;
     @BindView(R.id.soon)
     TextView soon;
-    Unbinder unbinder2;
+
     private MyLocationListener myListener = new MyLocationListener();
     @BindView(R.id.image_location)
     ImageView imageLocation;
@@ -195,19 +195,7 @@ public class MovieFrag extends BaseFragment {
         mLocationClient.start();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder1.unbind();
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder2 = ButterKnife.bind(this, rootView);
-        return rootView;
-    }
 
     @OnClick({R.id.recommend_cinem_search_image, R.id.recommend_cinema_textName})
     public void onViewClicked(View view) {

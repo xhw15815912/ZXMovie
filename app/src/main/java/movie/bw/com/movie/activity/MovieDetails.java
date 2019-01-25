@@ -1,9 +1,12 @@
 package movie.bw.com.movie.activity;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -19,14 +22,22 @@ import android.widget.TextView;
 import com.bw.movie.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jzvd.JZVideoPlayer;
+import movie.bw.com.movie.adapter.JiaoZiAdapter;
+import movie.bw.com.movie.adapter.MovieReviewAdapter;
+import movie.bw.com.movie.adapter.PhotoAdapter;
 import movie.bw.com.movie.base.BaseActivity;
+import movie.bw.com.movie.bean.MoviewCommentBean;
 import movie.bw.com.movie.bean.ParticularsBean;
 import movie.bw.com.movie.bean.Result;
 import movie.bw.com.movie.core.DataCall;
 import movie.bw.com.movie.core.exception.ApiException;
+import movie.bw.com.movie.p.MovieReview_Presenter;
 import movie.bw.com.movie.p.ParticularsPresenter;
 
 public class MovieDetails extends BaseActivity {
@@ -50,6 +61,11 @@ public class MovieDetails extends BaseActivity {
     private int id;
     private ParticularsPresenter particularsPresenter;
     private ParticularsBean result;
+    private Dialog dialog;
+    private JiaoZiAdapter jiaoZiAdapter;
+    private PhotoAdapter photoAdapter;
+    private MovieReviewAdapter movieReviewAdapter;
+    private MovieReview_Presenter movieReview_presenter;
 
     @Override
     protected int getLayoutId() {
@@ -58,6 +74,12 @@ public class MovieDetails extends BaseActivity {
 
     @Override
     protected void initView() {
+        dialog = new Dialog(this,R.style.DialogTheme);
+        jiaoZiAdapter = new JiaoZiAdapter(this);
+        photoAdapter = new PhotoAdapter(this);
+        movieReviewAdapter = new MovieReviewAdapter(this);
+        movieReview_presenter = new MovieReview_Presenter(new Review());
+
 
         Intent intent = getIntent();
         String sessionId = USER.getSessionId();
@@ -67,6 +89,7 @@ public class MovieDetails extends BaseActivity {
         if (id != 0) {
             particularsPresenter.request(userId, sessionId, id);
         }
+        movieReview_presenter.request(userId,sessionId,id);
     }
 
     @Override
@@ -80,9 +103,6 @@ public class MovieDetails extends BaseActivity {
     @OnClick(R.id.chat)
     public void Chat(){
 
-
-
-        Dialog dialog = new Dialog(this);
         View inflate = View.inflate(this, R.layout.pop_movie_chat, null);
         dialog.setContentView(inflate);
         Window dialogWindow = dialog.getWindow();
@@ -93,9 +113,11 @@ public class MovieDetails extends BaseActivity {
         p.width = (int) (d.getWidth()); // 宽度设置为屏幕的0.65，根据实际情况调整
         dialogWindow.setAttributes(p);
         dialogWindow.setGravity(Gravity.BOTTOM);
+        dialogWindow.setWindowAnimations(R.style.main_menu_animStyle);
         String imageUrl = result.getImageUrl();
         SimpleDraweeView image = inflate.findViewById(R.id.image);
         image.setImageURI(imageUrl);
+        ImageView bak = inflate.findViewById(R.id.bak);
         TextView type = inflate.findViewById(R.id.type);
         TextView men = inflate.findViewById(R.id.men);
         TextView time = inflate.findViewById(R.id.time);
@@ -107,7 +129,105 @@ public class MovieDetails extends BaseActivity {
         time.setText("时长："+result.getDuration());
         place.setText("产地："+result.getPlaceOrigin());
         chat.setText(result.getSummary());
+        bak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
         dialog.show();
+    }
+    @OnClick(R.id.show)
+    public void Show(){
+        View inflate = View.inflate(this, R.layout.dia_foreshow, null);
+        dialog.setContentView(inflate);
+        Window dialogWindow = dialog.getWindow();
+        WindowManager m = getWindow().getWindowManager();
+        Display d = m.getDefaultDisplay(); // 获取屏幕宽、高度
+        WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 获取对话框当前的参数值
+        p.height = (int) (d.getHeight() * 0.9); // 高度设置为屏幕的0.6，根据实际情况调整
+        p.width = (int) (d.getWidth()); // 宽度设置为屏幕的0.65，根据实际情况调整
+        dialogWindow.setAttributes(p);
+        dialogWindow.setGravity(Gravity.BOTTOM);
+        dialogWindow.setWindowAnimations(R.style.main_menu_animStyle);
+        ImageView bak = inflate.findViewById(R.id.bak);
+        bak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                JZVideoPlayer.releaseAllVideos();
+            }
+        });
+        RecyclerView recy = inflate.findViewById(R.id.recy);
+        recy.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+
+        jiaoZiAdapter.setData(result.getShortFilmList());
+        recy.setAdapter(jiaoZiAdapter);
+        dialog.show();
+
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                JZVideoPlayer.releaseAllVideos();
+            }
+        });
+    }
+    @OnClick(R.id.photo)
+    public void Photo(){
+        View inflate = View.inflate(this, R.layout.dia_photo, null);
+        dialog.setContentView(inflate);
+        Window dialogWindow = dialog.getWindow();
+        WindowManager m = getWindow().getWindowManager();
+        Display d = m.getDefaultDisplay(); // 获取屏幕宽、高度
+        WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 获取对话框当前的参数值
+        p.height = (int) (d.getHeight() * 0.9); // 高度设置为屏幕的0.6，根据实际情况调整
+        p.width = (int) (d.getWidth()); // 宽度设置为屏幕的0.65，根据实际情况调整
+        dialogWindow.setAttributes(p);
+        dialogWindow.setGravity(Gravity.BOTTOM);
+        dialogWindow.setWindowAnimations(R.style.main_menu_animStyle);
+        ImageView bak = inflate.findViewById(R.id.bak);
+        bak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        RecyclerView recy = inflate.findViewById(R.id.recy);
+        recy.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        photoAdapter.setData(result.getPosterList());
+        recy.setAdapter(photoAdapter);
+        dialog.show();
+
+
+    }
+    @OnClick(R.id.comment)
+    public void Cooment(){
+        View inflate = View.inflate(this, R.layout.dia_movie_review, null);
+        dialog.setContentView(inflate);
+        Window dialogWindow = dialog.getWindow();
+        WindowManager m = getWindow().getWindowManager();
+        Display d = m.getDefaultDisplay(); // 获取屏幕宽、高度
+        WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 获取对话框当前的参数值
+        p.height = (int) (d.getHeight() * 0.9); // 高度设置为屏幕的0.6，根据实际情况调整
+        p.width = (int) (d.getWidth()); // 宽度设置为屏幕的0.65，根据实际情况调整
+        dialogWindow.setAttributes(p);
+        dialogWindow.setGravity(Gravity.BOTTOM);
+        dialogWindow.setWindowAnimations(R.style.main_menu_animStyle);
+        ImageView bak = inflate.findViewById(R.id.bak);
+        bak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        RecyclerView recy = inflate.findViewById(R.id.recy);
+        recy.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+
+        //movieReviewAdapter.setData(result.getPosterList());
+        recy.setAdapter(movieReviewAdapter);
+        dialog.show();
+
+
     }
     private class CallBack implements DataCall<Result<ParticularsBean>> {
         @Override
@@ -124,6 +244,20 @@ public class MovieDetails extends BaseActivity {
         @Override
         public void fail(ApiException e) {
             Log.e("错误",e+"");
+        }
+    }
+
+    private class Review implements DataCall<Result<List<MoviewCommentBean>>> {
+        @Override
+        public void success(Result<List<MoviewCommentBean>> data) {
+             if (data.getStatus().equals("0000")){
+                 //movieReviewAdapter.setData(data.getResult());
+             }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
         }
     }
 }
