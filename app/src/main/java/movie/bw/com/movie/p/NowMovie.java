@@ -20,6 +20,6 @@ public class NowMovie extends BasePresenter {
     @Override
     protected Observable observable(Object... args) {
         IRequest iRequest = NotWorkUtils.getNotWorkUtils().create(IRequest.class);
-        return iRequest.NOW((int)args[0],(String)args[1],1,10);
+        return iRequest.NOW((int)args[0],(String)args[1],(int)args[2],(int)args[3]);
     }
 }

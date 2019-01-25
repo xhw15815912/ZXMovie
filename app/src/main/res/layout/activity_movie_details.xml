@@ -1,9 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@mipmap/w"
     tools:context="movie.bw.com.movie.activity.MovieDetails">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:layout_marginTop="30dp"
+        android:paddingLeft="24dp"
+        android:orientation="horizontal"
+        android:paddingRight="24dp"
+        >
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@mipmap/com_icon_movie"
+            />
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="电影详情"
+            android:layout_gravity="center"
+            android:layout_marginLeft="6dp"
+            android:textColor="#fff"
+            />
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:id="@+id/name"
+        android:layout_centerHorizontal="true"
+        android:textSize="20sp"
+        android:textColor="#fff"
+        android:layout_gravity="center"
+        android:layout_marginTop="70dp"
+        />
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:layout_width="259dp"
+        android:layout_height="400dp"
+        android:id="@+id/image"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/name"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/image"
+        android:orientation="horizontal"
+        android:paddingRight="24dp"
+        android:paddingLeft="24dp"
+
+        >
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="58dp"
+                android:layout_height="32dp"
+                android:text="详情"
+                android:id="@+id/chat"
+                android:background="@drawable/btshape"
+                android:textColor="#fff"
+                android:textSize="14sp"
+                />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+        <Button
+            android:layout_width="58dp"
+            android:layout_height="32dp"
+            android:text="预告"
+            android:id="@+id/show"
+            android:background="@drawable/btshape"
+            android:textColor="#fff"
+            android:textSize="14sp"
+            />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+        <Button
+            android:layout_width="58dp"
+            android:layout_height="32dp"
+            android:text="剧照"
+            android:id="@+id/photo"
+            android:background="@drawable/btshape"
+            android:textColor="#fff"
+            android:textSize="14sp"
+            />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+        <Button
+            android:layout_width="58dp"
+            android:layout_height="32dp"
+            android:text="影评"
+            android:id="@+id/comment"
+            android:textColor="#fff"
+            android:textSize="14sp"
+            android:background="@drawable/btshape"
+            />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+       android:layout_gravity="bottom"
+
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_show"
+        >
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/back"
+           android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:src="@mipmap/com_icon_my"
+            />
+
+
+    </RelativeLayout>
+</RelativeLayout>

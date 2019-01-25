@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.transition.AutoTransition;
 import android.support.transition.TransitionManager;
@@ -34,6 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import movie.bw.com.movie.activity.MoreMovie;
 import movie.bw.com.movie.adapter.FlowAdapter;
 import movie.bw.com.movie.adapter.HotMovieAdapter;
 import movie.bw.com.movie.adapter.NowAdapter;
@@ -69,6 +71,13 @@ public class MovieFrag extends BaseFragment {
     TextView recommendCinemaTextName;
     @BindView(R.id.recommend_cinema_linear)
     LinearLayout recommendCinemaLinear;
+    Unbinder unbinder2;
+    @BindView(R.id.hot)
+    TextView hot;
+    @BindView(R.id.now)
+    TextView now;
+    @BindView(R.id.soon)
+    TextView soon;
     Unbinder unbinder2;
     private MyLocationListener myListener = new MyLocationListener();
     @BindView(R.id.image_location)
@@ -117,10 +126,15 @@ public class MovieFrag extends BaseFragment {
         flowAdapter = new FlowAdapter(getActivity());
         nowAdapter = new NowAdapter(getActivity());
         findHotMovieListPresenter = new FindHotMovieListPresenter(new HotMovie());
-        findHotMovieListPresenter.request(userId, sessionId);
+        findHotMovieListPresenter.request(userId, sessionId,1,10);
     }
 
     private void initHotMove() {
+        nowMovie.request(userId, sessionId,1,10);
+        soonMoviewPresenter.request(userId, sessionId,1,10);
+        hotMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        nowMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        soonMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         nowMovie.request(userId, sessionId);
         soonMoviewPresenter.request(userId, sessionId);
         hotMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
@@ -133,6 +147,25 @@ public class MovieFrag extends BaseFragment {
     @OnClick(R.id.image_location)
     public void onViewClicked() {
         orientation();
+
+    }
+    @OnClick(R.id.hot)
+    public void Hot() {
+        Intent intent = new Intent(getActivity(), MoreMovie.class);
+        intent.putExtra("id",1);
+        startActivity(intent);
+    }
+    @OnClick(R.id.now)
+    public void Now() {
+        Intent intent = new Intent(getActivity(), MoreMovie.class);
+        intent.putExtra("id",2);
+        startActivity(intent);
+    }
+    @OnClick(R.id.soon)
+    public void Soon() {
+        Intent intent = new Intent(getActivity(), MoreMovie.class);
+        intent.putExtra("id",3);
+        startActivity(intent);
 
     }
 

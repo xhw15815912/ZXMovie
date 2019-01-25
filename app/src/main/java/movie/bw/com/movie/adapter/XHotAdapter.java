@@ -1,9 +1,8 @@
 package movie.bw.com.movie.adapter;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +10,12 @@ import android.widget.TextView;
 
 import com.bw.movie.R;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import movie.bw.com.movie.activity.MoreMovie;
 import movie.bw.com.movie.activity.MovieDetails;
 import movie.bw.com.movie.bean.HotMovie;
 
@@ -24,29 +25,27 @@ import movie.bw.com.movie.bean.HotMovie;
  * 邮箱：
  * 说明：
  */
-public class SoonAdapter extends RecyclerView.Adapter<SoonAdapter.ViewHolder> {
-    private final FragmentActivity context;
+public class XHotAdapter extends XRecyclerView.Adapter<XHotAdapter.ViewHolder> {
+    private final MoreMovie context;
     private List<HotMovie> list;
 
-    public SoonAdapter(FragmentActivity activity) {
-        this.context=activity;
+    public XHotAdapter(MoreMovie moreMovie) {
+        this.context=moreMovie;
         this.list=new ArrayList<>();
     }
 
     @NonNull
     @Override
-    public SoonAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View inflate = View.inflate(context, R.layout.hotmovie_item, null);
-
-        return new SoonAdapter.ViewHolder(inflate);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View inflate = View.inflate(context, R.layout.morex_item, null);
+        return new ViewHolder(inflate);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SoonAdapter.ViewHolder viewHolder, final int i) {
-        String imageUrl = list.get(i).getImageUrl();
-        String name = list.get(i).getName();
-        viewHolder.image.setImageURI(imageUrl);
-        viewHolder.name.setText(name);
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
+        viewHolder.message.setText(list.get(i).getSummary());
+        viewHolder.name.setText(list.get(i).getName());
+        viewHolder.image.setImageURI(list.get(i).getImageUrl());
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,7 +53,8 @@ public class SoonAdapter extends RecyclerView.Adapter<SoonAdapter.ViewHolder> {
                 intent.putExtra("id",list.get(i).getId());
                 context.startActivity(intent);
             }
-        });
+        });;
+
     }
 
     @Override
@@ -73,11 +73,12 @@ public class SoonAdapter extends RecyclerView.Adapter<SoonAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         SimpleDraweeView image;
-        TextView name;
+        TextView name,message;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             image=itemView.findViewById(R.id.image);
             name=itemView.findViewById(R.id.name);
+            message=itemView.findViewById(R.id.message);
         }
     }
 }

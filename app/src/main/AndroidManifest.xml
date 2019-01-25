@@ -54,6 +54,9 @@
         <activity android:name="movie.bw.com.movie.activity.MyInterestActivity" />
         <activity android:name="movie.bw.com.movie.activity.MovieDetails" />
         <activity android:name="movie.bw.com.movie.activity.SearchCinemaActivity"></activity>
+        <activity android:name="movie.bw.com.movie.activity.MyInterestActivity" />
+        <activity android:name="movie.bw.com.movie.activity.MovieDetails" />
+        <activity android:name="movie.bw.com.movie.activity.MoreMovie"></activity>
     </application>
 
 </manifest>
