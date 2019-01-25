@@ -6,6 +6,7 @@ import io.reactivex.Observable;
 import movie.bw.com.movie.bean.Cinema;
 import movie.bw.com.movie.bean.HotMovie;
 import movie.bw.com.movie.bean.MeBean;
+import movie.bw.com.movie.bean.MoviewCommentBean;
 import movie.bw.com.movie.bean.Recommend;
 import movie.bw.com.movie.bean.ParticularsBean;
 import movie.bw.com.movie.bean.Result;
@@ -90,11 +91,21 @@ public interface IRequest {
             @Query("cinemaName") String cinemaName
     );
 
+    //查询影片详情
     @GET("movie/v1/findMoviesDetail")
     Observable<Result<ParticularsBean>> Particulars(
             @Header("userId") int userId,
             @Header("sessionId") String sessionId,
             @Query("movieId") int movieId
+    );
+    //查询影片评论
+    @GET("movie/v1/findAllMovieComment")
+    Observable<Result<List<MoviewCommentBean>>> MoviewComment(
+            @Header("userId")int userId,
+            @Header("sessionId")String sessionId,
+            @Query("movieId")int movieId,
+            @Query("page") int page,
+            @Query("count") int count
     );
 
     //我的信息

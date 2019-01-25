@@ -40,10 +40,10 @@
             android:value="qHnEwbGEWeANLSvjYht33oCumc5UrDF8" />
         <meta-data
             android:name="design_width_in_dp"
-            android:value="720" />
+            android:value="360" />
         <meta-data
             android:name="design_height_in_dp"
-            android:value="1280" />
+            android:value="640" />
 
         <service
             android:name="com.baidu.location.f"

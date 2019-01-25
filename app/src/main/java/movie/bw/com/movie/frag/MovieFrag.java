@@ -204,6 +204,7 @@ public class MovieFrag extends BaseFragment {
     }
 
 
+
     @OnClick({R.id.recommend_cinem_search_image, R.id.recommend_cinema_textName})
     public void onViewClicked(View view) {
         switch (view.getId()) {
