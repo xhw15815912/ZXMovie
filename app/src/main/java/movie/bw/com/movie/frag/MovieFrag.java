@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -62,7 +63,6 @@ public class MovieFrag extends BaseFragment {
     RecyclerView nowMove;
     @BindView(R.id.soonMove)
     RecyclerView soonMove;
-    Unbinder unbinder1;
     @BindView(R.id.recommend_cinem_search_image)
     ImageView recommendCinemSearchImage;
     @BindView(R.id.recommend_cinema_edname)
@@ -71,20 +71,18 @@ public class MovieFrag extends BaseFragment {
     TextView recommendCinemaTextName;
     @BindView(R.id.recommend_cinema_linear)
     LinearLayout recommendCinemaLinear;
-    Unbinder unbinder2;
     @BindView(R.id.hot)
     TextView hot;
     @BindView(R.id.now)
     TextView now;
     @BindView(R.id.soon)
     TextView soon;
-    Unbinder unbinder2;
+
     private MyLocationListener myListener = new MyLocationListener();
     @BindView(R.id.image_location)
     ImageView imageLocation;
-    @BindView(R.id.text_positioning)
-    TextView textPositioning;
-    Unbinder unbinder;
+    @BindView(R.id.text_positioningq)
+    TextView textPositioningq;
     private FlowAdapter flowAdapter;
     private FindHotMovieListPresenter findHotMovieListPresenter;
     private String sessionId;
@@ -126,12 +124,12 @@ public class MovieFrag extends BaseFragment {
         flowAdapter = new FlowAdapter(getActivity());
         nowAdapter = new NowAdapter(getActivity());
         findHotMovieListPresenter = new FindHotMovieListPresenter(new HotMovie());
-        findHotMovieListPresenter.request(userId, sessionId,1,10);
+        findHotMovieListPresenter.request(userId, sessionId, 1, 10);
     }
 
     private void initHotMove() {
-        nowMovie.request(userId, sessionId,1,10);
-        soonMoviewPresenter.request(userId, sessionId,1,10);
+        nowMovie.request(userId, sessionId, 1, 10);
+        soonMoviewPresenter.request(userId, sessionId, 1, 10);
         hotMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         nowMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         soonMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
@@ -146,33 +144,43 @@ public class MovieFrag extends BaseFragment {
 
     @OnClick(R.id.image_location)
     public void onViewClicked() {
-        orientation();
+        if (mLocationClient==null){
+            orientation();
+        }
 
     }
+
     @OnClick(R.id.hot)
     public void Hot() {
         Intent intent = new Intent(getActivity(), MoreMovie.class);
-        intent.putExtra("id",1);
+        intent.putExtra("id", 1);
         startActivity(intent);
     }
+
     @OnClick(R.id.now)
     public void Now() {
         Intent intent = new Intent(getActivity(), MoreMovie.class);
-        intent.putExtra("id",2);
+        intent.putExtra("id", 2);
         startActivity(intent);
     }
+
     @OnClick(R.id.soon)
     public void Soon() {
         Intent intent = new Intent(getActivity(), MoreMovie.class);
-        intent.putExtra("id",3);
+        intent.putExtra("id", 3);
         startActivity(intent);
+    }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        orientation();
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        orientation();
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     private void orientation() {
@@ -195,38 +203,21 @@ public class MovieFrag extends BaseFragment {
         mLocationClient.start();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder1.unbind();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder2 = ButterKnife.bind(this, rootView);
-        return rootView;
-    }
 
     @OnClick({R.id.recommend_cinem_search_image, R.id.recommend_cinema_textName})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.recommend_cinem_search_image:
-                animator = ObjectAnimator.ofFloat(recommendCinemaLinear, "translationX", 30f, 0f);
+                animator = ObjectAnimator.ofFloat(recommendCinemaLinear, "translationX", 30f, -500f);
                 animator.setDuration(1000);
-
+                animator.setInterpolator(new LinearInterpolator());
                 animator.start();
-                recommendCinemaEdname.setVisibility(View.VISIBLE);
-                recommendCinemaTextName.setVisibility(View.VISIBLE);
                 break;
             case R.id.recommend_cinema_textName:
-                animator = ObjectAnimator.ofFloat(recommendCinemaLinear, "translationX", 0f, 20f);
+                animator = ObjectAnimator.ofFloat(recommendCinemaLinear, "translationX", -510f, 0f);
                 animator.setDuration(1000);
-
+                animator.setInterpolator(new LinearInterpolator());
                 animator.start();
-                recommendCinemaEdname.setVisibility(View.GONE);
-                recommendCinemaTextName.setVisibility(View.GONE);
                 break;
         }
     }
@@ -240,7 +231,7 @@ public class MovieFrag extends BaseFragment {
             //更多结果信息获取说明，请参照类参考中BDLocation类中的说明
             String locationDescribe = location.getLocationDescribe();    //获取位置描述信息
             String addr = location.getCity();    //获取详细地址信息
-            textPositioning.setText(addr);
+            textPositioningq.setText(addr + "");
         }
     }
 

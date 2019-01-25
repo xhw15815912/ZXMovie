@@ -5,12 +5,23 @@ import android.os.Bundle;
 
 import com.bw.movie.R;
 
-public class SearchCinemaActivity extends AppCompatActivity {
+import movie.bw.com.movie.base.BaseActivity;
+
+public class SearchCinemaActivity extends BaseActivity {
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_cinema);
+    protected int getLayoutId() {
+        return R.layout.activity_search_cinema;
+    }
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void destoryData() {
 
     }
 }

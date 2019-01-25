@@ -18,7 +18,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-
+import movie.bw.com.movie.DaoMaster;
+import movie.bw.com.movie.DaoSession;
+import movie.bw.com.movie.MainActivity;
+import movie.bw.com.movie.UserBeanDao;
 import movie.bw.com.movie.activity.MyMessageActivity;
 import movie.bw.com.movie.base.BaseFragment;
 
@@ -44,6 +47,10 @@ public class MyFrag extends BaseFragment {
     RelativeLayout myFeedback;
     @BindView(R.id.my_version)
     RelativeLayout myVersion;
+    @BindView(R.id.rccord)
+    ImageView rccord;
+    @BindView(R.id.image_logout)
+    ImageView imageLogout;
     Unbinder unbinder;
 
     @Override
@@ -62,9 +69,6 @@ public class MyFrag extends BaseFragment {
     }
 
 
-
-
-
     @OnClick({R.id.trumpet, R.id.headimage, R.id.my_chat, R.id.my_attention, R.id.my_rccord, R.id.my_feedback, R.id.my_version})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -73,10 +77,10 @@ public class MyFrag extends BaseFragment {
             case R.id.headimage:
                 break;
             case R.id.my_chat:
-                Intent intent=new Intent(getContext(),MyMessageActivity.class);
+                Intent intent = new Intent(getContext(), MyMessageActivity.class);
                 startActivity(intent);
                 break;
-                //我的关注
+            //我的关注
             case R.id.my_attention:
 
                 break;
@@ -87,5 +91,17 @@ public class MyFrag extends BaseFragment {
             case R.id.my_version:
                 break;
         }
+    }
+
+
+    @OnClick(R.id.my_logout)
+    public void onViewClicked() {
+        DaoSession daoSession = DaoMaster.newDevSession(getActivity(), UserBeanDao.TABLENAME);
+        UserBeanDao userBeanDao = daoSession.getUserBeanDao();
+        userBeanDao.deleteAll();
+        Intent intent = new Intent(getActivity(), MainActivity.class)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        startActivity(intent);
     }
 }

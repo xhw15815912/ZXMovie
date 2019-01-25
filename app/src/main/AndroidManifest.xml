@@ -25,7 +25,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="movie.bw.com.movie.MainActivity">
+        <activity android:name="movie.bw.com.movie.activity.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,10 +53,10 @@
         <activity android:name="movie.bw.com.movie.activity.MyMessageActivity" />
         <activity android:name="movie.bw.com.movie.activity.MyInterestActivity" />
         <activity android:name="movie.bw.com.movie.activity.MovieDetails" />
-        <activity android:name="movie.bw.com.movie.activity.SearchCinemaActivity"></activity>
-        <activity android:name="movie.bw.com.movie.activity.MyInterestActivity" />
-        <activity android:name="movie.bw.com.movie.activity.MovieDetails" />
-        <activity android:name="movie.bw.com.movie.activity.MoreMovie"></activity>
+        <activity android:name="movie.bw.com.movie.activity.SearchCinemaActivity" />
+        <activity android:name="movie.bw.com.movie.activity.MoreMovie" />
+        <activity android:name="movie.bw.com.movie.MainActivity" />
+        <activity android:name="movie.bw.com.movie.activity.GuidePageActivity"></activity>
     </application>
 
 </manifest>

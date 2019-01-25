@@ -71,7 +71,7 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
     private String sessionId;
     private int userId;
     private NearcinemadPresenter nearcinemadPresenter;
-    private int page = 2;
+    private int page = 1;
 
     @Override
     public String getPageName() {
@@ -169,29 +169,25 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
         theatersXrecyclerview.setLayoutManager(layoutManager);
         adapter = new RecommedAdapter(getContext());
         theatersXrecyclerview.setAdapter(adapter);
-        //监听软键盘
-        InputMethodManager imm =
-                (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(recommendCinemaEdname, 0);
     }
+
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    public void onResume() {
+        super.onResume();
+        presenter.request(userId, sessionId, page, 10);
     }
-
 
     @OnClick({R.id.recommend, R.id.nearby, R.id.rad, R.id.recommend_cinem_search_image, R.id.recommend_cinema_textName})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.recommend:
 
-                presenter.request(userId, sessionId, page, 5);
+                presenter.request(userId, sessionId, page, 10);
                 break;
             case R.id.nearby:
 
-                nearcinemadPresenter.request(userId, sessionId,"116.30551391385724","40.04571807462411", page, 5);
+                nearcinemadPresenter.request(userId, sessionId, "116.30551391385724", "40.04571807462411", page, 10);
                 break;
             case R.id.recommend_cinem_search_image:
                 initExpand();
@@ -208,9 +204,9 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
     public void onRefresh() {
         page = 1;
         if (recommend.isChecked()) {
-            presenter.request(userId, sessionId, page, 5);
-        } else if (nearby.isChecked()){
-            nearcinemadPresenter.request(userId, sessionId,"116.30551391385724","40.04571807462411", page, 5);
+            presenter.request(userId, sessionId, page, 10);
+        } else if (nearby.isChecked()) {
+            nearcinemadPresenter.request(userId, sessionId, "116.30551391385724", "40.04571807462411", page, 10);
         }
     }
 
@@ -218,9 +214,9 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
     public void onLoadMore() {
         page++;
         if (recommend.isChecked()) {
-            presenter.request(userId, sessionId, page, 5);
-        } else if (nearby.isChecked()){
-            nearcinemadPresenter.request(userId, sessionId,"116.30551391385724","40.04571807462411", page, 5);
+            presenter.request(userId, sessionId, page, 10);
+        } else if (nearby.isChecked()) {
+            nearcinemadPresenter.request(userId, sessionId, "116.30551391385724", "40.04571807462411", page, 10);
         }
     }
 

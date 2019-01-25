@@ -5,6 +5,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import movie.bw.com.movie.bean.Cinema;
 import movie.bw.com.movie.bean.HotMovie;
+import movie.bw.com.movie.bean.MeBean;
 import movie.bw.com.movie.bean.Recommend;
 import movie.bw.com.movie.bean.ParticularsBean;
 import movie.bw.com.movie.bean.Result;
@@ -80,17 +81,24 @@ public interface IRequest {
                                                           @Query("latitude") String latitude,
                                                           @Query("page") int page,
                                                           @Query("count") int count);
-     //查询影院
+
+    //查询影院
     @GET("cinema/v1/findAllCinemas")
     Observable<Result<Cinema>> findAllCinemas(
             @Query("page") int page,
             @Query("count") int count,
             @Query("cinemaName") String cinemaName
     );
+
     @GET("movie/v1/findMoviesDetail")
     Observable<Result<ParticularsBean>> Particulars(
-            @Header("userId")int userId,
-            @Header("sessionId")String sessionId,
-            @Query("movieId")int movieId
+            @Header("userId") int userId,
+            @Header("sessionId") String sessionId,
+            @Query("movieId") int movieId
     );
+
+    //我的信息
+    @GET("user/v1/verify/getUserInfoByUserId")
+    Observable<Result<MeBean>> getUserInfoByUserId(@Header("userId") int userId,
+                                                   @Header("sessionId") String sessionId);
 }

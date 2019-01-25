@@ -38,6 +38,8 @@ public abstract class BaseFragment  extends Fragment implements CustomAdapt {
     private Unbinder unbinder;
     //public UserInfo LOGIN_USER;
     public UserBean USER;
+    public List<UserBean> list;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,13 +50,13 @@ public abstract class BaseFragment  extends Fragment implements CustomAdapt {
 
         DaoSession daoSession = DaoMaster.newDevSession(getActivity(), UserBeanDao.TABLENAME);
         UserBeanDao userBeanDao = daoSession.getUserBeanDao();
-        List<UserBean> list = userBeanDao.queryBuilder()
+        list = userBeanDao.queryBuilder()
                 .where(UserBeanDao.Properties.Register.eq(1))
                 .build()
                 .list();
 
-        if (list!=null&&list.size()>0){
-            USER=list.get(0);
+        if (list !=null&& list.size()>0){
+            USER= list.get(0);
         }
 
         // 每次ViewPager要展示该页面时，均会调用该方法获取显示的View

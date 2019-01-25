@@ -42,6 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity implements CustomAd
     private static BaseActivity mActivity = null;
     private String success ;
     public UserBean USER;
+    public List<UserBean> list;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,13 +52,13 @@ public abstract class BaseActivity extends AppCompatActivity implements CustomAd
 
         DaoSession daoSession = DaoMaster.newDevSession(this, UserBeanDao.TABLENAME);
         UserBeanDao userBeanDao = daoSession.getUserBeanDao();
-        List<UserBean> list = userBeanDao.queryBuilder()
+        list = userBeanDao.queryBuilder()
                 .where(UserBeanDao.Properties.Register.eq(1))
                 .build()
                 .list();
 
-        if (list!=null&&list.size()>0){
-            USER=list.get(0);
+        if (list !=null&& list.size()>0){
+            USER= list.get(0);
         }
         initLoad();
         setContentView(getLayoutId());
