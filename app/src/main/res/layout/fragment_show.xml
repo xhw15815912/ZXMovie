@@ -12,7 +12,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="186dp"
-            android:src="@mipmap/q"
+            android:background="@mipmap/q"
             />
         <LinearLayout
             android:layout_marginTop="30dp"

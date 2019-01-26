@@ -49,7 +49,7 @@ public abstract class BaseActivity extends AppCompatActivity implements CustomAd
         super.onCreate(savedInstanceState);
         // Android4.4的沉浸式状态栏写法
 
-
+        BaseActivity.this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         DaoSession daoSession = DaoMaster.newDevSession(this, UserBeanDao.TABLENAME);
         UserBeanDao userBeanDao = daoSession.getUserBeanDao();
         list = userBeanDao.queryBuilder()

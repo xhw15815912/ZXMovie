@@ -125,6 +125,7 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.regist)
     public void Regirst(){
          startActivity(new Intent(this,RegiterActivity.class));
+
     }
 
     private void initData() {
@@ -171,6 +172,7 @@ public class MainActivity extends BaseActivity {
 
 
                 startActivity(new Intent(MainActivity.this,ShowActivity.class));
+                finish();
             }
             Toast.makeText(MainActivity.this,data.getMessage(),Toast.LENGTH_LONG).show();
         }

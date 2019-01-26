@@ -7,9 +7,12 @@ import movie.bw.com.movie.bean.Cinema;
 import movie.bw.com.movie.bean.HotMovie;
 import movie.bw.com.movie.bean.MeBean;
 import movie.bw.com.movie.bean.MoviewCommentBean;
+import movie.bw.com.movie.bean.MyCinemaBean;
+import movie.bw.com.movie.bean.MyInterestBean;
 import movie.bw.com.movie.bean.Recommend;
 import movie.bw.com.movie.bean.ParticularsBean;
 import movie.bw.com.movie.bean.Result;
+import movie.bw.com.movie.bean.SystemInfoBean;
 import movie.bw.com.movie.bean.UserInfo;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -98,12 +101,13 @@ public interface IRequest {
             @Header("sessionId") String sessionId,
             @Query("movieId") int movieId
     );
+
     //查询影片评论
     @GET("movie/v1/findAllMovieComment")
     Observable<Result<List<MoviewCommentBean>>> MoviewComment(
-            @Header("userId")int userId,
-            @Header("sessionId")String sessionId,
-            @Query("movieId")int movieId,
+            @Header("userId") int userId,
+            @Header("sessionId") String sessionId,
+            @Query("movieId") int movieId,
             @Query("page") int page,
             @Query("count") int count
     );
@@ -112,4 +116,35 @@ public interface IRequest {
     @GET("user/v1/verify/getUserInfoByUserId")
     Observable<Result<MeBean>> getUserInfoByUserId(@Header("userId") int userId,
                                                    @Header("sessionId") String sessionId);
+
+    @GET("user/v1/verify/userSignIn")
+    Observable<Result> userSignIn(@Header("userId") int userId,
+                                  @Header("sessionId") String sessionId);
+
+    //
+    @GET("movie/v1/verify/findMoviePageList")
+    Observable<Result<List<MyInterestBean>>> findMoviePageList(@Header("userId") int userId,
+                                                               @Header("sessionId") String sessionId,
+                                                               @Query("page") int page,
+                                                               @Query("count") int count
+    );
+
+    @GET("cinema/v1/verify/findCinemaPageList")
+    Observable<Result<List<MyCinemaBean>>> findCinemaPageList(@Header("userId") int userId,
+                                                              @Header("sessionId") String sessionId,
+                                                              @Query("page") int page,
+                                                              @Query("count") int count
+    );
+
+    @FormUrlEncoded
+    @POST("tool/v1/verify/recordFeedBack")
+    Observable<Result> recordFeedBack(@Header("userId") int userId,
+                                      @Header("sessionId") String sessionId,
+                                      @Field("content") String content);
+
+    @GET("tool/v1/verify/findAllSysMsgList")
+    Observable<Result<List<SystemInfoBean>>> findAllSysMsgList(@Header("userId") int userId,
+                                                               @Header("sessionId") String sessionId,
+                                                               @Query("page") int page,
+                                                               @Query("count") int count);
 }

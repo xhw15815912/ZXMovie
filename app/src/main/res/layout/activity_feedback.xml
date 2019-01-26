@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="movie.bw.com.movie.activity.FeedbackActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="30dp"
+            android:text="意见反馈"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:background="@drawable/kuang_8dp_touying"
+            android:id="@+id/aaaaaaa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="24dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:textSize="12sp"
+                android:textColor="#999999"
+                android:id="@+id/ed_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@null" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/text_commit"
+                android:layout_width="48dp"
+                android:layout_height="24dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:gravity="center"
+                android:textColor="#FFF"
+                android:background="@drawable/bg_dividing_line_title_rectangle"
+                android:layout_marginRight="24dp"
+                android:layout_marginTop="20dp"
+
+                android:text="提交" />
+        </LinearLayout>
+
+    </LinearLayout>
+     <ImageView
+         android:id="@+id/fan"
+         android:layout_width="60dp"
+         android:layout_height="60dp"
+         android:layout_alignParentBottom="true"
+         android:layout_marginLeft="24dp"
+         android:layout_marginBottom="24dp"
+         android:src="@mipmap/com_icon_my"/>
+
+</RelativeLayout>

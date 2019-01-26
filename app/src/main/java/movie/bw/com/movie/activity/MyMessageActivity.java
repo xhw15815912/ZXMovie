@@ -10,14 +10,13 @@ import com.bw.movie.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import movie.bw.com.movie.base.BaseActivity;
 import movie.bw.com.movie.bean.MeBean;
 import movie.bw.com.movie.bean.Result;
-import movie.bw.com.movie.bean.UserInfo;
 import movie.bw.com.movie.core.DataCall;
 import movie.bw.com.movie.core.exception.ApiException;
 import movie.bw.com.movie.p.MePresenter;
@@ -61,6 +60,10 @@ public class MyMessageActivity extends BaseActivity {
 
     }
 
+    @OnClick(R.id.back)
+    public void onViewClicked() {
+        finish();
+    }
 
 
     private class MeData implements DataCall<Result<MeBean>> {
@@ -68,21 +71,21 @@ public class MyMessageActivity extends BaseActivity {
         public void success(Result<MeBean> result) {
             if (result.getStatus().equals("0000")) {
                 Toast.makeText(MyMessageActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
-                MeBean meBean= result.getResult();
+                MeBean meBean = result.getResult();
 
                 userAvatar.setImageURI(meBean.getHeadPic());
                 nickname.setText(meBean.getNickName());
                 SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
                 String s = format1.format(meBean.getBirthday());
-                if (meBean.getSex()==1){
+                if (meBean.getSex() == 1) {
                     userSex.setText("男");
-                }else {
+                } else {
                     userSex.setText("女");
                 }
                 dateOfBirth.setText(s);
                 userPhone.setText(meBean.getPhone());
                 userPostbox.setText(meBean.getEmail());
-            }else {
+            } else {
                 Toast.makeText(MyMessageActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
