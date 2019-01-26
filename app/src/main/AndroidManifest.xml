@@ -60,6 +60,10 @@
         <activity android:name="movie.bw.com.movie.activity.Pay_Chose_Film" />
         <activity android:name="movie.bw.com.movie.activity.Chose_Session" />
         <activity android:name="movie.bw.com.movie.activity.Choose_Seat"></activity>
+        <activity android:name="movie.bw.com.movie.activity.GuidePageActivity" />
+        <activity android:name="movie.bw.com.movie.activity.FeedbackActivity" />
+        <activity android:name="movie.bw.com.movie.activity.FeedActivity" />
+        <activity android:name="movie.bw.com.movie.activity.SystemInfoActivity"></activity>
     </application>
 
 </manifest>

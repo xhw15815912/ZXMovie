@@ -53,6 +53,7 @@ public abstract class BaseActivity extends AppCompatActivity implements CustomAd
 
 
 
+        BaseActivity.this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         DaoSession daoSession = DaoMaster.newDevSession(this, UserBeanDao.TABLENAME);
         UserBeanDao userBeanDao = daoSession.getUserBeanDao();
         list = userBeanDao.queryBuilder()

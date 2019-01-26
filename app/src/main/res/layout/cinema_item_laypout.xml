@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="20dp"
+    android:background="@drawable/kuang_8dp_touying"
+    android:orientation="horizontal">
+   <com.facebook.drawee.view.SimpleDraweeView
+       android:layout_width="70dp"
+       android:layout_height="70dp"
+       android:id="@+id/item_image"
+       android:layout_marginTop="10dp"
+       android:layout_marginLeft="10dp"
+       android:layout_marginBottom="10dp"
+       android:src="@mipmap/register_icon_mail"/>
+    <LinearLayout
+        android:layout_marginLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:orientation="vertical">
+         <TextView
+             android:id="@+id/item_title"
+             android:textSize="14sp"
+             android:textColor="#333333"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="10dp"/>
+        <TextView
+            android:id="@+id/item_site"
+            android:textSize="12sp"
+            android:textColor="#333333"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"/>
+    </LinearLayout>
+</LinearLayout>

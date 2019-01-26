@@ -101,6 +101,7 @@
             android:textColor="@drawable/selector_orange_white" />
 
         <RadioButton
+            android:layout_marginLeft="32dp"
             android:id="@+id/nearby"
             android:layout_width="83dp"
             android:layout_height="25dp"

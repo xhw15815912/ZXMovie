@@ -1,10 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="movie.bw.com.movie.activity.MyInterestActivity">
+     <LinearLayout
+         android:id="@+id/sahng"
+         android:layout_alignParentTop="true"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:orientation="vertical">
+         <RadioGroup
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="50dp"
+             android:gravity="center"
 
-</LinearLayout>
+             android:layout_above="@id/x_receycelview"
+             android:orientation="horizontal">
+
+             <RadioButton
+                 android:id="@+id/movie"
+                 android:layout_width="83dp"
+                 android:layout_height="25dp"
+                 android:checked="true"
+                 android:background="@drawable/selector_radio_button"
+                 android:button="@null"
+                 android:gravity="center"
+                 android:text="电影"
+                 android:textColor="@drawable/selector_orange_white" />
+
+             <RadioButton
+                 android:id="@+id/cinema"
+                 android:layout_width="83dp"
+                 android:layout_height="25dp"
+                 android:layout_marginLeft="32dp"
+                 android:background="@drawable/selector_radio_button"
+                 android:button="@null"
+                 android:gravity="center"
+                 android:text="影院"
+                 android:textColor="@drawable/selector_orange_white" />
+         </RadioGroup>
+     </LinearLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/x_receycelview"
+        android:layout_below="@id/sahng"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"></android.support.v7.widget.RecyclerView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:layout_gravity="bottom"
+
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_show"
+        >
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/back"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:src="@mipmap/com_icon_my"
+            />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

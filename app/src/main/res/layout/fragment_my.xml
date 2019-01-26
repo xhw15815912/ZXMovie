@@ -25,8 +25,9 @@
             android:id="@+id/headimage"
             android:layout_width="72dp"
             android:layout_height="72dp"
+            app:roundAsCircle="true"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="60dp"
             app:placeholderImage="@mipmap/m" />
 
         <TextView
@@ -38,6 +39,19 @@
             android:layout_marginTop="10dp"
             android:text="请登录"
             android:textColor="#ffff" />
+
+        <TextView
+            android:id="@+id/sign_in"
+            android:layout_width="66dp"
+            android:layout_height="28dp"
+            android:layout_below="@id/name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/reg_bg"
+            android:gravity="center"
+            android:text="签到"
+            android:textColor="#FFF"
+            android:textSize="14sp" />
     </RelativeLayout>
 
     <LinearLayout
