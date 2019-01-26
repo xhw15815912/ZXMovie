@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="movie.bw.com.movie.activity.Pay_Chose_Film"
+
+
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/movieName"
+        android:text="111"
+        android:textSize="18sp"
+        android:textColor="#333333"
+        android:layout_marginTop="35dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="选择合适的影院"
+        android:textColor="#b11450"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:textSize="10sp"
+        android:layout_below="@id/movieName"
+        android:id="@+id/q"
+        />
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/q"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:id="@+id/recy"
+        ></android.support.v7.widget.RecyclerView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:layout_gravity="bottom"
+
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_show"
+        >
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/back"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:src="@mipmap/com_icon_my"
+            />
+
+
+    </RelativeLayout>
+</RelativeLayout>

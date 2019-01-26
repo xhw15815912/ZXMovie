@@ -146,7 +146,16 @@
             android:layout_alignParentLeft="true"
             android:src="@mipmap/com_icon_my"
             />
-
+      <Button
+          android:layout_width="60dp"
+          android:layout_height="60dp"
+          android:id="@+id/pay"
+          android:text="购票"
+          android:textColor="#fff"
+          android:background="@drawable/pay_shape"
+          android:layout_centerVertical="true"
+          android:layout_alignParentRight="true"
+          />
 
     </RelativeLayout>
 </RelativeLayout>

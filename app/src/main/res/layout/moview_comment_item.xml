@@ -16,6 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/name"
+        android:text="1111"
         android:layout_toRightOf="@+id/head"
         android:layout_marginLeft="10dp"
         android:textColor="#666666"
@@ -26,6 +27,7 @@
         android:layout_height="wrap_content"
         android:maxLength="3"
         android:id="@+id/message"
+        android:text="11111111111111111111111111"
         android:layout_below="@id/head"
         android:layout_marginTop="12dp"
         android:textColor="#333333"
@@ -39,6 +41,53 @@
         android:id="@+id/time"
         android:textColor="#999999"
         android:textSize="12sp"
+        android:text="11111111"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/num"
+        android:layout_alignParentRight="true"
+        android:textSize="12sp"
+        android:textColor="#666666"
+        android:text="11111"
+        android:layout_below="@id/message"
+        android:layout_marginTop="10dp"
+        />
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_below="@id/message"
+        android:layout_toLeftOf="@id/num"
+        android:layout_marginTop="10dp"
+       android:layout_marginRight="6dp"
+        android:id="@+id/q"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/great"
+        android:layout_toLeftOf="@id/q"
+        android:layout_below="@id/message"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="18dp"
+        android:text="11111"
+        />
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:id="@+id/praise"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/message"
+        android:layout_toLeftOf="@id/great"
+        android:layout_marginRight="6dp"
         />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/praise"
+        android:layout_marginTop="10dp"
+        android:background="#999999"
+        />
 </RelativeLayout>

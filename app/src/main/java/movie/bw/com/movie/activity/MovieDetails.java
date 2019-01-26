@@ -57,7 +57,8 @@ public class MovieDetails extends BaseActivity {
     Button comment;
     @BindView(R.id.back)
     ImageView back;
-
+    @BindView(R.id.pay)
+    Button pay;
     private int id;
     private ParticularsPresenter particularsPresenter;
     private ParticularsBean result;
@@ -222,12 +223,26 @@ public class MovieDetails extends BaseActivity {
         });
         RecyclerView recy = inflate.findViewById(R.id.recy);
         recy.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-
+         ImageView back=inflate.findViewById(R.id.back);
         //movieReviewAdapter.setData(result.getPosterList());
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+
         recy.setAdapter(movieReviewAdapter);
         dialog.show();
 
 
+    }@OnClick(R.id.pay)
+    public void Pay(){
+        Intent intent = new Intent(this, Pay_Chose_Film.class);
+        intent.putExtra("id",id);
+        intent.putExtra("name",result.getName());
+        startActivity(intent);
     }
     private class CallBack implements DataCall<Result<ParticularsBean>> {
         @Override
@@ -251,7 +266,7 @@ public class MovieDetails extends BaseActivity {
         @Override
         public void success(Result<List<MoviewCommentBean>> data) {
              if (data.getStatus().equals("0000")){
-                 //movieReviewAdapter.setData(data.getResult());
+                 movieReviewAdapter.setData(data.getResult());
              }
         }
 

@@ -3,10 +3,13 @@ package movie.bw.com.movie.utils;
 import java.util.List;
 
 import io.reactivex.Observable;
+import movie.bw.com.movie.bean.Chose_Session_Bean;
 import movie.bw.com.movie.bean.Cinema;
+import movie.bw.com.movie.bean.FilmInFoBean;
 import movie.bw.com.movie.bean.HotMovie;
 import movie.bw.com.movie.bean.MeBean;
 import movie.bw.com.movie.bean.MoviewCommentBean;
+import movie.bw.com.movie.bean.Pay_Chose_Film_Bean;
 import movie.bw.com.movie.bean.Recommend;
 import movie.bw.com.movie.bean.ParticularsBean;
 import movie.bw.com.movie.bean.Result;
@@ -112,4 +115,17 @@ public interface IRequest {
     @GET("user/v1/verify/getUserInfoByUserId")
     Observable<Result<MeBean>> getUserInfoByUserId(@Header("userId") int userId,
                                                    @Header("sessionId") String sessionId);
+    //根据影片选择影院
+    @GET("movie/v1/findCinemasListByMovieId")
+    Observable<Result<List<Pay_Chose_Film_Bean>>> PayCHOSEFILM(@Query("movieId")int movieId);
+
+    //查询该影院的此影片的排片时间
+    @GET("movie/v1/findMovieScheduleList")
+    Observable<Result<List<Chose_Session_Bean>>> CHOSESESSION(@Query("cinemasId")int cinemasId,@Query("movieId")String movieId);
+
+    //影院详情
+    @GET("cinema/v1/findCinemaInfo")
+    Observable<Result<FilmInFoBean>> FilmInfo(@Header("userId") int userId,
+                                              @Header("sessionId") String sessionId,
+                                              @Query("cinemaId")int cinemaId);
 }

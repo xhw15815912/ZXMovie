@@ -16,6 +16,8 @@ import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -50,6 +52,7 @@ public abstract class BaseActivity extends AppCompatActivity implements CustomAd
         // Android4.4的沉浸式状态栏写法
 
 
+
         DaoSession daoSession = DaoMaster.newDevSession(this, UserBeanDao.TABLENAME);
         UserBeanDao userBeanDao = daoSession.getUserBeanDao();
         list = userBeanDao.queryBuilder()
@@ -60,10 +63,24 @@ public abstract class BaseActivity extends AppCompatActivity implements CustomAd
         if (list !=null&& list.size()>0){
             USER= list.get(0);
         }
+        if (isRegisterEventBus()) {
+            if (!EventBus.getDefault().isRegistered(this)){
+                EventBus.getDefault().register(this);
+            }
+        }
         initLoad();
         setContentView(getLayoutId());
         ButterKnife.bind(this);//绑定布局
         initView();
+    }
+
+    /**
+     * 是否注册事件分发
+     *
+     * @return true绑定EventBus事件分发，默认不绑定，子类需要绑定的话复写此方法返回true.
+     */
+    protected boolean isRegisterEventBus() {
+        return false;
     }
     /**
      * 设置layoutId
@@ -122,6 +139,12 @@ public abstract class BaseActivity extends AppCompatActivity implements CustomAd
     protected void onDestroy() {
         super.onDestroy();
         destoryData();
+        if (isRegisterEventBus()){
+            if (EventBus.getDefault().isRegistered(this)){
+                EventBus.getDefault().unregister(this);
+            }
+        }
+
     }
 
     //取消操作：请求或者其他
