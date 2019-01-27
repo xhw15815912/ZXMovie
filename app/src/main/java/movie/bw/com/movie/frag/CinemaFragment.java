@@ -52,7 +52,6 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
     RadioButton nearby;
     @BindView(R.id.rad)
     RadioGroup rad;
-    Unbinder unbinder;
     @BindView(R.id.theaters_xrecyclerview)
     XRecyclerView theatersXrecyclerview;
     @BindView(R.id.image_white)
@@ -65,7 +64,6 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
     TextView recommendCinemaTextName;
     @BindView(R.id.recommend_cinema_linear)
     LinearLayout recommendCinemaLinear;
-    Unbinder unbinder4;
     private RecommendPresenter presenter;
     private RecommedAdapter adapter;
     private String sessionId;
@@ -87,8 +85,11 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
     protected void initView() {
         presenter = new RecommendPresenter(new Recomm());
         nearcinemadPresenter = new NearcinemadPresenter(new Nearcinima());
-        sessionId = USER.getSessionId();
-        userId = USER.getUserId();
+        if (USER!=null&&list.size()>0){
+            sessionId = USER.getSessionId();
+            userId = USER.getUserId();
+        }
+
         presenter.request(userId, sessionId, page, 5);
         initData();
         theatersXrecyclerview.setLoadingListener(this);

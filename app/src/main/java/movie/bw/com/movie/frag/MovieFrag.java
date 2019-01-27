@@ -106,8 +106,11 @@ public class MovieFrag extends BaseFragment {
 
     @Override
     protected void initView() {
-        sessionId = USER.getSessionId();
-        userId = USER.getUserId();
+        if (USER!=null&&list.size()>0){
+            sessionId = USER.getSessionId();
+            userId = USER.getUserId();
+        }
+
         Log.d("++++++++++++++++++++++", "initView: " + sessionId + "          " + userId);
         initFlow();
         initHotMove();

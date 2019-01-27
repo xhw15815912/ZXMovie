@@ -8,7 +8,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="230dp"
         android:layout_gravity="center"
         android:background="@mipmap/h"
         android:orientation="vertical">
@@ -18,7 +18,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginLeft="24dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="40dp"
             android:src="@mipmap/my_icon_remind" />
 
         <com.facebook.drawee.view.SimpleDraweeView
@@ -27,7 +27,7 @@
             android:layout_height="72dp"
             app:roundAsCircle="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="70dp"
             app:placeholderImage="@mipmap/m" />
 
         <TextView

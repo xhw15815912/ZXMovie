@@ -49,6 +49,7 @@ public class FlowAdapter extends RecyclerView.Adapter<FlowAdapter.ViewHolder> {
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                onItemClickListener.onItemClick(list.get(i).getId());
                 Intent intent = new Intent(context, MovieDetails.class);
                 intent.putExtra("id",list.get(i).getId());
                 context.startActivity(intent);
@@ -79,5 +80,16 @@ public class FlowAdapter extends RecyclerView.Adapter<FlowAdapter.ViewHolder> {
             name=itemView.findViewById(R.id.name);
             time=itemView.findViewById(R.id.time);
         }
+    }
+    //定义接口
+    public interface OnItemClickListener {
+        void onItemClick(int cinemaId);
+    }
+
+    //方法名
+    private OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 }

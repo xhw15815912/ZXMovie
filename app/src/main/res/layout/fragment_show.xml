@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -13,11 +12,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@mipmap/q"
-            android:layout_height="186dp"
-            android:background="@mipmap/q"
             />
         <LinearLayout
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="40dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -40,8 +37,8 @@
         <LinearLayout
             android:id="@+id/recommend_cinema_linear"
             android:layout_width="wrap_content"
-            android:layout_marginRight="-195dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginRight="-210dp"
+            android:layout_marginTop="40dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:background="@drawable/bk_radi9"
@@ -52,7 +49,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:onClick="onClick"
-                android:layout_marginRight="22dp"
+                android:layout_marginRight="30dp"
                 android:paddingLeft="6dp"
                 android:src="@mipmap/com_icon_search" />
 

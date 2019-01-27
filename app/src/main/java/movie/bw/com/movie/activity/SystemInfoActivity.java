@@ -36,8 +36,11 @@ public class SystemInfoActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        userId = USER.getUserId();
-        sessionId = USER.getSessionId();
+        if (USER != null && list.size() > 0) {
+            userId = USER.getUserId();
+            sessionId = USER.getSessionId();
+        }
+
         sysPresenter = new SysPresenter(new Sys());
         sysPresenter.request(userId,sessionId,1,10);
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);

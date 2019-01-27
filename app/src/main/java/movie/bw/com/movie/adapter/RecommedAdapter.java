@@ -1,6 +1,7 @@
 package movie.bw.com.movie.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import java.util.ArrayList;
 import java.util.List;
 
+import movie.bw.com.movie.activity.DetailsofcinemaActivity;
 import movie.bw.com.movie.bean.Recommend;
 
 /**
@@ -36,10 +38,6 @@ public class RecommedAdapter extends RecyclerView.Adapter<RecommedAdapter.VH> {
             list.clear();
             list.addAll(recommends);
         }
-    }public void deleteItem(List<Recommend> recommends) {
-        if (recommends != null) {
-            recommends.clear();
-        }
     }
 
     @NonNull
@@ -51,12 +49,24 @@ public class RecommedAdapter extends RecyclerView.Adapter<RecommedAdapter.VH> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VH vh, int i) {
-        Recommend recommend = list.get(i);
+    public void onBindViewHolder(@NonNull VH vh, final int i) {
+        final Recommend recommend = list.get(i);
         vh.item_title.setText(recommend.getName());
         vh.item_image.setImageURI(recommend.getLogo());
         vh.item_content.setText(recommend.getAddress());
         vh.item_km.setText(recommend.getDistance()+"");
+        vh.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent=new Intent(context,DetailsofcinemaActivity.class);
+                intent.putExtra("image",recommend.getLogo());
+                intent.putExtra("name",(recommend.getName()));
+                intent.putExtra("address",recommend.getAddress());
+                intent.putExtra("yid",recommend.getId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -81,4 +91,6 @@ public class RecommedAdapter extends RecyclerView.Adapter<RecommedAdapter.VH> {
             item_mind = itemView.findViewById(R.id.item_mind);
         }
     }
+
+
 }
