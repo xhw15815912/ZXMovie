@@ -87,7 +87,7 @@ public class Choose_Seat extends BaseActivity {
 
             @Override
             public void unCheck(int row, int column) {
-     
+
             }
 
             @Override
