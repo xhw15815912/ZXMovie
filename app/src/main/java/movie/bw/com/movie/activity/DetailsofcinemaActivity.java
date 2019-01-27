@@ -5,17 +5,21 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.bw.movie.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import movie.bw.com.movie.FragmentFeedCmt;
 import movie.bw.com.movie.adapter.FlowAdapter;
 import movie.bw.com.movie.adapter.TimesAdapter;
 import movie.bw.com.movie.base.BaseActivity;
@@ -46,6 +50,9 @@ public class DetailsofcinemaActivity extends BaseActivity {
     private FindMoviePresenter presenter;
     private DTPresenter dtPresenter;
     private TimesAdapter adapters;
+    private FragmentFeedCmt fragmentFeedCmt;
+    private int yid;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_detailsofcinema;
@@ -65,7 +72,7 @@ public class DetailsofcinemaActivity extends BaseActivity {
         title.setText(name);
         String address = intent.getStringExtra("address");
         content.setText(address);
-        final int yid = intent.getIntExtra("yid", 0);
+        yid = intent.getIntExtra("yid", 0);
         presenter.request(yid);
 
         flow.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {
@@ -88,7 +95,17 @@ public class DetailsofcinemaActivity extends BaseActivity {
     protected void destoryData() {
 
     }
-
+    @OnClick(R.id.content)
+    public void Content(){
+        fragmentFeedCmt = new FragmentFeedCmt();
+        String s = String.valueOf(yid);
+        Log.e("zasx",s);
+        EventBus.getDefault().postSticky(s);
+        if(fragmentFeedCmt==null){
+            fragmentFeedCmt = FragmentFeedCmt.newInstance(123L);
+        }
+        fragmentFeedCmt.show(getSupportFragmentManager(), "Dialog");
+    }
 
 
     @OnClick(R.id.finish)

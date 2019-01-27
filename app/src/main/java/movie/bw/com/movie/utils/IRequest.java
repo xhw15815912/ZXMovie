@@ -6,6 +6,7 @@ import io.reactivex.Observable;
 import movie.bw.com.movie.bean.Chose_Session_Bean;
 import movie.bw.com.movie.bean.Cinema;
 import movie.bw.com.movie.bean.DetailsofcinemaBean;
+import movie.bw.com.movie.bean.FilmCommentBean;
 import movie.bw.com.movie.bean.FilmInFoBean;
 import movie.bw.com.movie.bean.HotMovie;
 import movie.bw.com.movie.bean.MeBean;
@@ -175,4 +176,22 @@ public interface IRequest {
     Observable<Result<DetailsofcinemaBean>> findCinemaInfo(@Header("userId")int userId,
                                                            @Header("sessionId")String sessionId,
                                                            @Query("cinemaId")int cinemaId);
+    //影院详情
+    @GET("cinema/v1/findCinemaInfo")
+    Observable<Result<DetailsofcinemaBean>> FilMINFO(@Query("cinemaId")String cinemaId);
+
+    //查询影片评论
+    @GET("cinema/v1/findAllCinemaComment")
+    Observable<Result<List<FilmCommentBean>>> FilmComment(
+            @Query("cinemaId") String cinemaId,
+            @Query("page") int page,
+            @Query("count") int count
+    );
+    //修改密码
+    @FormUrlEncoded
+    @POST("user/v1/verify/modifyUserPwd")
+    Observable<Result> modifyUserPwd(@Header("userId")int userId,@Header("sessionId")String sessionId,
+                                     @Field("oldPwd")String oldPwd,
+                                     @Field("newPwd")String newPwd,
+                                     @Field("newPwd2")String newPwd2);
 }

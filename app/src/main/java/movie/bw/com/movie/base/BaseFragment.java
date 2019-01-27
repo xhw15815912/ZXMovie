@@ -62,7 +62,11 @@ public abstract class BaseFragment  extends Fragment implements CustomAdapt {
         if (list !=null&& list.size()>0){
             USER= list.get(0);
         }
-
+        if (isRegisterEventBus()) {
+            if (!EventBus.getDefault().isRegistered(this)){
+                EventBus.getDefault().register(this);
+            }
+        }
         // 每次ViewPager要展示该页面时，均会调用该方法获取显示的View
         long time = System.currentTimeMillis();
         View view = inflater.inflate(getLayoutId(),container,false);
@@ -71,12 +75,23 @@ public abstract class BaseFragment  extends Fragment implements CustomAdapt {
         //LogUtils.e(this.toString()+"页面加载使用："+(System.currentTimeMillis()-time));
         return view;
     }
-
+    /**
+     * 是否注册事件分发
+     *
+     * @return true绑定EventBus事件分发，默认不绑定，子类需要绑定的话复写此方法返回true.
+     */
+    protected boolean isRegisterEventBus() {
+        return false;
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-
+        if (isRegisterEventBus()){
+            if (EventBus.getDefault().isRegistered(this)){
+                EventBus.getDefault().unregister(this);
+            }
+        }
 
     }
 

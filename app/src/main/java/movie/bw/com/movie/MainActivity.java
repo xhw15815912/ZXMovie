@@ -1,5 +1,6 @@
 package movie.bw.com.movie;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -38,6 +40,8 @@ import movie.bw.com.movie.core.exception.ApiException;
 
 import movie.bw.com.movie.p.LoginPresenter;
 import movie.bw.com.movie.utils.EncryptUtil;
+
+import static java.security.AccessController.getContext;
 
 
 public class MainActivity extends BaseActivity {
@@ -94,17 +98,45 @@ public class MainActivity extends BaseActivity {
                 switch (event.getAction()){
                     case MotionEvent.ACTION_DOWN:
                         pwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                        pwd.setSelection(pwd.getText().length());
                         break;
                     case MotionEvent.ACTION_UP:
                         pwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
-
+                        pwd.setSelection(pwd.getText().length());
 
                         break;
                 }
                 return true;
             }
         });
+        initKey();
     }
+
+    private void initKey() {
+        moble.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(!hasFocus){
+                    InputMethodManager systemService = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (systemService != null){
+                        systemService.hideSoftInputFromWindow(view.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+                          }
+                    }
+            }
+        });
+        pwd.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(!hasFocus){
+                    InputMethodManager systemService = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (systemService != null){
+                        systemService.hideSoftInputFromWindow(view.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+                    }
+                }
+            }
+        });
+    }
+
     //点击登录按钮
     @OnClick(R.id.login)
     public void Login(){
