@@ -67,6 +67,8 @@ public class MovieDetails extends BaseActivity {
     private PhotoAdapter photoAdapter;
     private MovieReviewAdapter movieReviewAdapter;
     private MovieReview_Presenter movieReview_presenter;
+    private String sessionId;
+    private int userId;
 
     @Override
     protected int getLayoutId() {
@@ -83,8 +85,11 @@ public class MovieDetails extends BaseActivity {
 
 
         Intent intent = getIntent();
-        String sessionId = USER.getSessionId();
-        int userId = USER.getUserId();
+        if (USER!=null&&list.size()>0){
+            sessionId = USER.getSessionId();
+            userId = USER.getUserId();
+        }
+
         id = intent.getIntExtra("id", 0);
         particularsPresenter = new ParticularsPresenter(new CallBack());
         if (id != 0) {

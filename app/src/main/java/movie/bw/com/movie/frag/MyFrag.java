@@ -16,6 +16,8 @@ import com.bw.movie.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,7 +46,8 @@ import movie.bw.com.movie.p.UserSingnInPresenter;
  */
 public class MyFrag extends BaseFragment {
 
-
+    private static String oldMsg;
+    private static long time;
     @BindView(R.id.trumpet)
     ImageView trumpet;
     @BindView(R.id.headimage)
@@ -82,8 +85,11 @@ public class MyFrag extends BaseFragment {
 
     @Override
     protected void initView() {
-        userId = USER.getUserId();
-        sessionId = USER.getSessionId();
+        if (USER!=null&&list.size()>0){
+            userId = USER.getUserId();
+            sessionId = USER.getSessionId();
+        }
+
         singn = new UserSingnInPresenter(new UserSingnIn());
         mePresenter = new MePresenter(new  MeData());
         mePresenter.request(userId, sessionId);
@@ -96,6 +102,11 @@ public class MyFrag extends BaseFragment {
                 startActivity(new Intent(getContext(), SystemInfoActivity.class));
                 break;
             case R.id.headimage:
+                if (USER != null && list.size() > 0) {
+                    Toast.makeText(getContext(), "已有用户", Toast.LENGTH_SHORT).show();
+                }else {
+                    startActivity(new Intent(getContext(), MainActivity.class));
+                }
                 break;
             case R.id.my_chat:
                 Intent intent = new Intent(getContext(), MyMessageActivity.class);
@@ -120,17 +131,43 @@ public class MyFrag extends BaseFragment {
                 singn.request(userId,sessionId);
                 break;
             case R.id.my_logout:
-                DaoSession daoSession = DaoMaster.newDevSession(getActivity(), UserBeanDao.TABLENAME);
-                UserBeanDao userBeanDao = daoSession.getUserBeanDao();
-                userBeanDao.deleteAll();
-                Intent intent1 = new Intent(getActivity(), MainActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                if (USER != null && list.size() > 0) {
+                    DaoSession daoSession = DaoMaster.newDevSession(getActivity(), UserBeanDao.TABLENAME);
+                    UserBeanDao userBeanDao = daoSession.getUserBeanDao();
+                    userBeanDao.deleteAll();
+                    Intent intent1 = new Intent(getActivity(), MainActivity.class)
+                            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                startActivity(intent1);
+                    startActivity(intent1);
+                }else {
+
+                        // 显示内容一样时，只有间隔时间大于5秒时才显示
+                        if (System.currentTimeMillis() - time >5000) {
+                            Toast.makeText(getContext(), "你还未登录过！！！", Toast.LENGTH_LONG).show();
+                            time = System.currentTimeMillis();
+                        }
+
+                }
+
                 break;
         }
     }
-
+    public void showMyToast(final Toast toast, final int cnt) {
+        final Timer timer =new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                toast.show();
+            }
+        },0,60000);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                toast.cancel();
+                timer.cancel();
+            }
+        }, cnt );
+    }
 
     private class UserSingnIn implements DataCall<Result> {
         @Override

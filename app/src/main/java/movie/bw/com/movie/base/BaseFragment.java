@@ -1,8 +1,12 @@
 package movie.bw.com.movie.base;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +39,7 @@ import movie.bw.com.movie.bean.UserBean;
 public abstract class BaseFragment  extends Fragment implements CustomAdapt {
     public Gson mGson = new Gson();
 
-
+    public Dialog mLoadDialog;
     private Unbinder unbinder;
     //public UserInfo LOGIN_USER;
     public UserBean USER;
@@ -76,7 +80,25 @@ public abstract class BaseFragment  extends Fragment implements CustomAdapt {
 
     }
 
+    private void initLoad() {
+        mLoadDialog = new ProgressDialog(getContext());// 加载框
+        mLoadDialog.setCanceledOnTouchOutside(false);
+        mLoadDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode,
+                                 KeyEvent event) {
+                if (mLoadDialog.isShowing() && keyCode == KeyEvent.KEYCODE_BACK) {
+                    cancelLoadDialog();//加载消失的同时
+                    mLoadDialog.cancel();
+                }
+                return false;
+            }
+        });
+    }
+    //取消操作：请求或者其他
+    public void cancelLoadDialog() {
 
+    }
     /**
      * 设置页面名字 用于友盟统计
      */

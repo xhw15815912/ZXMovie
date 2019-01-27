@@ -5,6 +5,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import movie.bw.com.movie.bean.Chose_Session_Bean;
 import movie.bw.com.movie.bean.Cinema;
+import movie.bw.com.movie.bean.DetailsofcinemaBean;
 import movie.bw.com.movie.bean.FilmInFoBean;
 import movie.bw.com.movie.bean.HotMovie;
 import movie.bw.com.movie.bean.MeBean;
@@ -163,4 +164,15 @@ public interface IRequest {
                                                                @Header("sessionId") String sessionId,
                                                                @Query("page") int page,
                                                                @Query("count") int count);
+    @GET("movie/v1/findMovieListByCinemaId")
+    Observable<Result<List<HotMovie>>> findMovieListByCinemaId(
+            @Query("cinemaId")int cinemaId);
+    @GET("movie/v1/findMovieScheduleList")
+    Observable<Result<List<Chose_Session_Bean>>> findMovieScheduleList(@Query("cinemasId")int cinemasId,
+                                                                       @Query("movieId")int movieId);
+    //影院详情
+    @GET("cinema/v1/findCinemaInfo")
+    Observable<Result<DetailsofcinemaBean>> findCinemaInfo(@Header("userId")int userId,
+                                                           @Header("sessionId")String sessionId,
+                                                           @Query("cinemaId")int cinemaId);
 }

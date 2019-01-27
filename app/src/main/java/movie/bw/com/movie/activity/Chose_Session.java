@@ -63,6 +63,8 @@ public class Chose_Session extends BaseActivity {
     private ParticularsPresenter particularsPresenter;
     private FilmInfo_Presenter filmInfo_presenter;
     private Intent intent;
+    private String sessionId;
+    private int userId;
 
     @Override
     protected int getLayoutId() {
@@ -75,14 +77,17 @@ public class Chose_Session extends BaseActivity {
         intent = new Intent(this, Choose_Seat.class);
         filmInfo_presenter = new FilmInfo_Presenter(new FilmInfo());
         Intent intent = getIntent();
-        String sessionId = USER.getSessionId();
-        int userId = USER.getUserId();
+        if (USER!=null&&list.size()>0){
+            sessionId = USER.getSessionId();
+            userId = USER.getUserId();
+        }
+
         particularsPresenter = new ParticularsPresenter(new Chat());
-        particularsPresenter.request(userId,sessionId,Integer.valueOf(movieId));
+        particularsPresenter.request(userId, sessionId,Integer.valueOf(movieId));
 
         filmid = intent.getIntExtra("id", 1);
         Log.e("影院id",filmid+"");
-        filmInfo_presenter.request(userId,sessionId,filmid);
+        filmInfo_presenter.request(userId, sessionId,filmid);
         chose_session_presenter = new Chose_Session_Presenter(new CallBack());
         chose_session_presenter.request(filmid, movieId);
         timeAdapter = new TimeAdapter(this);

@@ -51,8 +51,11 @@ public class MyInterestActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        userId = USER.getUserId();
-        sessionId = USER.getSessionId();
+        if (USER != null && list.size() > 0) {
+            userId = USER.getUserId();
+            sessionId = USER.getSessionId();
+        }
+
         myCinemaPresenter = new MyCinemaPresenter(new CInema());
         myInterestPresenter = new MyInterestPresenter(new MyInterest());
         myInterestPresenter.request(userId, sessionId, 1, 10);

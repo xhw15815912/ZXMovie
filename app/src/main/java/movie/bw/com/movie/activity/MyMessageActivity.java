@@ -41,6 +41,8 @@ public class MyMessageActivity extends BaseActivity {
     @BindView(R.id.reset_passwords)
     ImageView resetPasswords;
     private MePresenter mePresenter;
+    private int userId;
+    private String sessionId;
 
     @Override
     protected int getLayoutId() {
@@ -49,8 +51,11 @@ public class MyMessageActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        int userId = USER.getUserId();
-        String sessionId = USER.getSessionId();
+        if (USER!=null&&list.size()>0){
+            userId = USER.getUserId();
+            sessionId = USER.getSessionId();
+        }
+
         mePresenter = new MePresenter(new MeData());
         mePresenter.request(userId, sessionId);
     }
