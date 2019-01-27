@@ -62,6 +62,7 @@ public class Chose_Session extends BaseActivity {
     private TimeAdapter timeAdapter;
     private ParticularsPresenter particularsPresenter;
     private FilmInfo_Presenter filmInfo_presenter;
+    private Intent intent;
 
     @Override
     protected int getLayoutId() {
@@ -71,6 +72,7 @@ public class Chose_Session extends BaseActivity {
 
     @Override
     protected void initView() {
+        intent = new Intent(this, Choose_Seat.class);
         filmInfo_presenter = new FilmInfo_Presenter(new FilmInfo());
         Intent intent = getIntent();
         String sessionId = USER.getSessionId();
@@ -107,6 +109,7 @@ public class Chose_Session extends BaseActivity {
         public void success(Result<List<Chose_Session_Bean>> data) {
             if (data.getStatus().equals("0000")) {
                 timeAdapter.setList(data.getResult());
+                timeAdapter.setIntent(intent);
             }
         }
         @Override
@@ -124,6 +127,8 @@ public class Chose_Session extends BaseActivity {
                    men.setText("导演:"+data.getResult().getDirector());
                    time.setText("时长:"+data.getResult().getDuration());
                    place.setText("产地:"+data.getResult().getPlaceOrigin());
+
+                   intent.putExtra("MovieNmae",data.getResult().getName());
                }
         }
 
@@ -136,11 +141,12 @@ public class Chose_Session extends BaseActivity {
     private class FilmInfo implements DataCall<Result<FilmInFoBean>> {
         @Override
         public void success(Result<FilmInFoBean> data) {
-            Log.e("影院详情",data.getMessage()+"");
-            Log.e("影院详情",data.getStatus()+"");
+
             if (data.getStatus().equals("0000")){
                 FileName.setText(data.getResult().getName());
                 Filmplace.setText(data.getResult().getAddress());
+                intent.putExtra("FimlName",data.getResult().getName());
+                intent.putExtra("FimlAddress",data.getResult().getAddress());
             }
 
         }

@@ -13,8 +13,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@mipmap/q"
-            android:layout_height="186dp"
-            android:background="@mipmap/q"
             />
         <LinearLayout
             android:layout_marginTop="30dp"
