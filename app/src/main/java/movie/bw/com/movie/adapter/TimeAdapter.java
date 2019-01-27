@@ -61,6 +61,7 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.ViewHolder> {
                 intent.putExtra("end",list.get(i).getEndTime());
                 intent.putExtra("hall",list.get(i).getScreeningHall());
                 intent.putExtra("price",list.get(i).getPrice());
+                intent.putExtra("id",list.get(i).getId());
                 context.startActivity(intent);
             }
         });

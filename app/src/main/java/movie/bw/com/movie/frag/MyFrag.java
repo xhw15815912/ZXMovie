@@ -190,9 +190,12 @@ public class MyFrag extends BaseFragment {
     private class MeData implements DataCall<Result<MeBean>> {
         @Override
         public void success(Result<MeBean> data) {
-            MeBean bean = data.getResult();
-            name.setText(bean.getNickName());
-            headimage.setImageURI(bean.getHeadPic());
+            if (data.getStatus().equals("0000")){
+                MeBean bean = data.getResult();
+                name.setText(bean.getNickName());
+                headimage.setImageURI(bean.getHeadPic());
+            }
+
         }
 
         @Override
