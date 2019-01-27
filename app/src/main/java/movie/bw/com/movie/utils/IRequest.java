@@ -121,19 +121,20 @@ public interface IRequest {
     @GET("user/v1/verify/getUserInfoByUserId")
     Observable<Result<MeBean>> getUserInfoByUserId(@Header("userId") int userId,
                                                    @Header("sessionId") String sessionId);
+
     //根据影片选择影院
     @GET("movie/v1/findCinemasListByMovieId")
-    Observable<Result<List<Pay_Chose_Film_Bean>>> PayCHOSEFILM(@Query("movieId")int movieId);
+    Observable<Result<List<Pay_Chose_Film_Bean>>> PayCHOSEFILM(@Query("movieId") int movieId);
 
     //查询该影院的此影片的排片时间
     @GET("movie/v1/findMovieScheduleList")
-    Observable<Result<List<Chose_Session_Bean>>> CHOSESESSION(@Query("cinemasId")int cinemasId,@Query("movieId")String movieId);
+    Observable<Result<List<Chose_Session_Bean>>> CHOSESESSION(@Query("cinemasId") int cinemasId, @Query("movieId") String movieId);
 
     //影院详情
     @GET("cinema/v1/findCinemaInfo")
     Observable<Result<FilmInFoBean>> FilmInfo(@Header("userId") int userId,
                                               @Header("sessionId") String sessionId,
-                                              @Query("cinemaId")int cinemaId);
+                                              @Query("cinemaId") int cinemaId);
 
     @GET("user/v1/verify/userSignIn")
     Observable<Result> userSignIn(@Header("userId") int userId,
@@ -165,12 +166,15 @@ public interface IRequest {
                                                                @Header("sessionId") String sessionId,
                                                                @Query("page") int page,
                                                                @Query("count") int count);
+
     @GET("movie/v1/findMovieListByCinemaId")
     Observable<Result<List<HotMovie>>> findMovieListByCinemaId(
-            @Query("cinemaId")int cinemaId);
+            @Query("cinemaId") int cinemaId);
+
     @GET("movie/v1/findMovieScheduleList")
-    Observable<Result<List<Chose_Session_Bean>>> findMovieScheduleList(@Query("cinemasId")int cinemasId,
-                                                                       @Query("movieId")int movieId);
+    Observable<Result<List<Chose_Session_Bean>>> findMovieScheduleList(@Query("cinemasId") int cinemasId,
+                                                                       @Query("movieId") int movieId);
+
     //影院详情
     @GET("cinema/v1/findCinemaInfo")
     Observable<Result<DetailsofcinemaBean>> findCinemaInfo(@Header("userId")int userId,
@@ -194,4 +198,24 @@ public interface IRequest {
                                      @Field("oldPwd")String oldPwd,
                                      @Field("newPwd")String newPwd,
                                      @Field("newPwd2")String newPwd2);
+    Observable<Result<DetailsofcinemaBean>> findCinemaInfo(@Header("userId") int userId,
+                                                           @Header("sessionId") String sessionId,
+                                                           @Query("cinemaId") int cinemaId);
+
+    //下单
+    @FormUrlEncoded
+    @POST("movie/v1/verify/buyMovieTicket")
+    Observable<Result> buyMovieTicket(@Header("userId") int userId,
+                                      @Header("sessionId") String sessionId,
+                                      @Field("scheduleId") int scheduleId,
+                                      @Field("amount") int amount,
+                                      @Field("sign") String sign);
+
+    //微信支付
+    @FormUrlEncoded
+    @POST("movie/v1/verify/pay")
+    Observable<Result> WxPay(@Header("userId") int userId,
+                             @Header("sessionId") String sessionId,
+                             @Field("payType") int payType,
+                             @Field("orderId") String orderId);
 }
