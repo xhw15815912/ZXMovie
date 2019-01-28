@@ -1,6 +1,7 @@
 package movie.bw.com.movie;
 
 import android.app.Application;
+import android.support.multidex.MultiDex;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 
@@ -17,6 +18,6 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         Fresco.initialize(this);
-
+        MultiDex.install(this);
     }
 }

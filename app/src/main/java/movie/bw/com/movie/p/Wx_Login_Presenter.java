@@ -8,18 +8,18 @@ import movie.bw.com.movie.utils.NotWorkUtils;
 
 /**
  * 作者：夏洪武
- * 时间：2019/1/24.
+ * 时间：2019/1/28.
  * 邮箱：
  * 说明：
  */
-public class NowMovie extends BasePresenter {
-    public NowMovie(DataCall dataCall) {
+public class Wx_Login_Presenter extends BasePresenter {
+    public Wx_Login_Presenter(DataCall dataCall) {
         super(dataCall);
     }
 
     @Override
     protected Observable observable(Object... args) {
         IRequest iRequest = NotWorkUtils.getNotWorkUtils().create(IRequest.class);
-        return iRequest.NOW((int)args[0],(int)args[1]);
+        return iRequest.WX_LOGIN((String) args[0]);
     }
 }

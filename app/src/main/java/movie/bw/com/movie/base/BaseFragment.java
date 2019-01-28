@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,9 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.google.gson.Gson;
+import com.tencent.android.tpush.XGIOperateCallback;
+import com.tencent.android.tpush.XGPushConfig;
+import com.tencent.android.tpush.XGPushManager;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -48,6 +52,29 @@ public abstract class BaseFragment  extends Fragment implements CustomAdapt {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        XGPushConfig.enableDebug(getActivity(),true);
+
+        XGPushConfig.enableOtherPush(getActivity().getApplicationContext(), true);
+        XGPushConfig.setHuaweiDebug(true);
+        XGPushConfig.setMiPushAppId(getActivity().getApplicationContext(), "058d59e5857f9");
+        XGPushConfig.setMiPushAppKey(getActivity().getApplicationContext(), "4ff705a55e72b85261cbf3a75a5cd252");
+        XGPushConfig.setMzPushAppId(getActivity(), "058d59e5857f9");
+        XGPushConfig.setMzPushAppKey(getActivity(), "4ff705a55e72b85261cbf3a75a5cd252");
+
+        XGPushManager.registerPush(getActivity(), new XGIOperateCallback() {
+            @Override
+            public void onSuccess(Object data, int flag) {
+//token在设备卸载重装的时候有可能会变
+                Log.d("TPush", "注册成功，设备token为：" + data);
+            }
+            @Override
+            public void onFail(Object data, int errCode, String msg) {
+                Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
+            }
+        });
+
+        XGPushManager.setTag(getActivity(),"XINGE");
         AutoSizeConfig.getInstance().setCustomFragment(true);
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 

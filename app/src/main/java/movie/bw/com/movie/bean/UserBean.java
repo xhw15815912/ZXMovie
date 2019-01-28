@@ -15,11 +15,6 @@ public class UserBean {
         private int userId;
         private int register;
 
-
-
-
-
-
         @Generated(hash = 1078665005)
         public UserBean(String sessionId, int userId, int register) {
             this.sessionId = sessionId;
@@ -30,11 +25,6 @@ public class UserBean {
         @Generated(hash = 1203313951)
         public UserBean() {
         }
-
-
-
-
-    
 
     public int getRegister() {
         return register;

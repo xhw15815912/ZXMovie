@@ -38,6 +38,9 @@ public interface IRequest {
     Observable<Result<UserInfo>> LOGIN(@Field("phone") String phone, @Field("pwd") String pwd);
 
     @FormUrlEncoded
+    @POST("user/v1/weChatBindingLogin")
+    Observable<Result<UserInfo>> WX_LOGIN(@Field("code") String code);
+    @FormUrlEncoded
     @POST("user/v1/registerUser")
     Observable<Result> registerUser(
             @Field("nickName") String nickName,
@@ -52,27 +55,21 @@ public interface IRequest {
             @Field("os") String os,
             @Field("email") String email
     );
-
+    //查询热门影片
     @GET("movie/v1/findHotMovieList")
     Observable<Result<List<HotMovie>>> FINDHOT(
-            @Header("userId") int userId,
-            @Header("sessionId") String sessionId,
             @Query("page") int page,
             @Query("count") int count
     );
-
+    //查看正在上映的电影
     @GET("movie/v1/findReleaseMovieList")
     Observable<Result<List<HotMovie>>> NOW(
-            @Header("userId") int userId,
-            @Header("sessionId") String sessionId,
             @Query("page") int page,
             @Query("count") int count
     );
-
+    //查看即将上映
     @GET("movie/v1/findComingSoonMovieList")
     Observable<Result<List<HotMovie>>> Soon(
-            @Header("userId") int userId,
-            @Header("sessionId") String sessionId,
             @Query("page") int page,
             @Query("count") int count
     );
@@ -198,9 +195,7 @@ public interface IRequest {
                                      @Field("oldPwd")String oldPwd,
                                      @Field("newPwd")String newPwd,
                                      @Field("newPwd2")String newPwd2);
-    Observable<Result<DetailsofcinemaBean>> findCinemaInfo(@Header("userId") int userId,
-                                                           @Header("sessionId") String sessionId,
-                                                           @Query("cinemaId") int cinemaId);
+
 
     //下单
     @FormUrlEncoded

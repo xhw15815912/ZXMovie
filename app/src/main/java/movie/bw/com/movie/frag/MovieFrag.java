@@ -110,8 +110,6 @@ public class MovieFrag extends BaseFragment {
             sessionId = USER.getSessionId();
             userId = USER.getUserId();
         }
-
-        Log.d("++++++++++++++++++++++", "initView: " + sessionId + "          " + userId);
         initFlow();
         initHotMove();
         flow.setAdapter(flowAdapter);
@@ -127,17 +125,15 @@ public class MovieFrag extends BaseFragment {
         flowAdapter = new FlowAdapter(getActivity());
         nowAdapter = new NowAdapter(getActivity());
         findHotMovieListPresenter = new FindHotMovieListPresenter(new HotMovie());
-        findHotMovieListPresenter.request(userId, sessionId, 1, 10);
+        findHotMovieListPresenter.request( 1, 10);
     }
 
     private void initHotMove() {
-        nowMovie.request(userId, sessionId, 1, 10);
-        soonMoviewPresenter.request(userId, sessionId, 1, 10);
+        nowMovie.request( 1, 10);
+        soonMoviewPresenter.request(1, 10);
         hotMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         nowMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         soonMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        nowMovie.request(userId, sessionId);
-        soonMoviewPresenter.request(userId, sessionId);
         hotMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         nowMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         soonMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
