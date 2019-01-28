@@ -42,6 +42,9 @@ public interface IRequest {
     Observable<Result<UserInfo>> LOGIN(@Field("phone") String phone, @Field("pwd") String pwd);
 
     @FormUrlEncoded
+    @POST("user/v1/weChatBindingLogin")
+    Observable<Result<UserInfo>> WX_LOGIN(@Field("code") String code);
+    @FormUrlEncoded
     @POST("user/v1/registerUser")
     Observable<Result> registerUser(
             @Field("nickName") String nickName,
@@ -56,27 +59,21 @@ public interface IRequest {
             @Field("os") String os,
             @Field("email") String email
     );
-
+    //查询热门影片
     @GET("movie/v1/findHotMovieList")
     Observable<Result<List<HotMovie>>> FINDHOT(
-            @Header("userId") int userId,
-            @Header("sessionId") String sessionId,
             @Query("page") int page,
             @Query("count") int count
     );
-
+    //查看正在上映的电影
     @GET("movie/v1/findReleaseMovieList")
     Observable<Result<List<HotMovie>>> NOW(
-            @Header("userId") int userId,
-            @Header("sessionId") String sessionId,
             @Query("page") int page,
             @Query("count") int count
     );
-
+    //查看即将上映
     @GET("movie/v1/findComingSoonMovieList")
     Observable<Result<List<HotMovie>>> Soon(
-            @Header("userId") int userId,
-            @Header("sessionId") String sessionId,
             @Query("page") int page,
             @Query("count") int count
     );
@@ -181,13 +178,12 @@ public interface IRequest {
 
     //影院详情
     @GET("cinema/v1/findCinemaInfo")
-    Observable<Result<DetailsofcinemaBean>> findCinemaInfo(@Header("userId") int userId,
-                                                           @Header("sessionId") String sessionId,
-                                                           @Query("cinemaId") int cinemaId);
-
+    Observable<Result<DetailsofcinemaBean>> findCinemaInfo(@Header("userId")int userId,
+                                                           @Header("sessionId")String sessionId,
+                                                           @Query("cinemaId")int cinemaId);
     //影院详情
     @GET("cinema/v1/findCinemaInfo")
-    Observable<Result<DetailsofcinemaBean>> FilMINFO(@Query("cinemaId") String cinemaId);
+    Observable<Result<DetailsofcinemaBean>> FilMINFO(@Query("cinemaId")String cinemaId);
 
     //查询影片评论
     @GET("cinema/v1/findAllCinemaComment")
@@ -196,7 +192,6 @@ public interface IRequest {
             @Query("page") int page,
             @Query("count") int count
     );
-
     //修改密码
     @FormUrlEncoded
     @POST("user/v1/verify/modifyUserPwd")

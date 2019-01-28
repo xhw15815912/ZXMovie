@@ -23,6 +23,7 @@ import java.text.NumberFormat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import movie.bw.com.movie.MainActivity;
 import movie.bw.com.movie.base.BaseActivity;
 import movie.bw.com.movie.bean.Result;
 import movie.bw.com.movie.core.DataCall;
@@ -93,8 +94,7 @@ public class Choose_Seat extends BaseActivity {
         }
         w.setBackgroundColor(0x77ffffff);
         seatTableView = (SeatTable) findViewById(R.id.seatView);
-        seatTableView.setScreenName("8号厅荧幕");//设置屏幕名称
-        seatTableView.setMaxSelected(3);//设置最多选中
+
         Intent intent = getIntent();
         String start = intent.getStringExtra("start");
         String end = intent.getStringExtra("end");
@@ -110,6 +110,8 @@ public class Choose_Seat extends BaseActivity {
         MovieName.setText(MovieNmae);
         time.setText(start + "-" + end);
         type.setText(hall);
+        seatTableView.setScreenName(hall);//设置屏幕名称
+        seatTableView.setMaxSelected(3);//设置最多选中
         buyMovieTicketPresenter = new BuyMovieTicketPresenter(new Buy());
 
         seatTableView.setSeatChecker(new SeatTable.SeatChecker() {
@@ -213,17 +215,28 @@ public class Choose_Seat extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.affirm:
+                if (USER==null){
+                    Intent intent = new Intent(Choose_Seat.this, MainActivity.class);
+                    intent.putExtra("id",1);
+                    startActivity(intent);
+                }
                 String sourceStr = userId + "" + id + "" + num + "movie";
                 sss = MD5(sourceStr);
                 buyMovieTicketPresenter.request(userId, sessionId, id, num, sss);
                 break;
             case R.id.cancel:
+                di.setVisibility(View.GONE);
                 break;
             case R.id.weixin_radio_button:
                 Log.e("qwer3",111+"====");
                 wxPay_presenter.request(userId,sessionId,1, orderId);
                 break;
             case R.id.zhifubao_radio_button:
+                break;
+            case R.id.finishssss:
+                Toast.makeText(this,"1111",Toast.LENGTH_LONG).show();
+                cenggong.setVisibility(View.GONE);
+                back.setVisibility(View.VISIBLE);
                 break;
         }
     }

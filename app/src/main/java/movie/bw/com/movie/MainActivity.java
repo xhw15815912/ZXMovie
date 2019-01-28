@@ -19,6 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.movie.R;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -29,6 +32,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import movie.bw.com.movie.UserBeanDao;
+import movie.bw.com.movie.activity.Choose_Seat;
 import movie.bw.com.movie.activity.RegiterActivity;
 import movie.bw.com.movie.activity.ShowActivity;
 import movie.bw.com.movie.base.BaseActivity;
@@ -69,6 +73,9 @@ public class MainActivity extends BaseActivity {
     private boolean canSee=false;
     private SharedPreferences share;
     private SharedPreferences.Editor edit;
+    private IWXAPI api;
+    private String text="zgwhjhjjh";
+    private int id;
 
     @Override
     protected int getLayoutId() {
@@ -77,6 +84,10 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        Intent intent = getIntent();
+        id = intent.getIntExtra("id", 0);
+        api= WXAPIFactory.createWXAPI(this, "wxb3852e6a6b7d9516",true);
+        api.registerApp("wxb3852e6a6b7d9516");
         pwd.setTransformationMethod(PasswordTransformationMethod.getInstance());
         loginPresenter = new LoginPresenter(new CallBack());
         share = getSharedPreferences("a", MODE_PRIVATE);
@@ -152,6 +163,11 @@ public class MainActivity extends BaseActivity {
     //微信登录
     @OnClick(R.id.weixin)
     public void LoginWeixin(){
+        SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "wechat_sdk_demo_test";
+        api.sendReq(req);
+
 
     }
     @OnClick(R.id.regist)
@@ -202,9 +218,15 @@ public class MainActivity extends BaseActivity {
                     edit.commit();
                 }
 
+                if (id==1){
+                    startActivity(new Intent(MainActivity.this,Choose_Seat.class));
+                    finish();
+                }else{
+                    startActivity(new Intent(MainActivity.this,ShowActivity.class));
+                    finish();
+                }
 
-                startActivity(new Intent(MainActivity.this,ShowActivity.class));
-                finish();
+
             }
             Toast.makeText(MainActivity.this,data.getMessage(),Toast.LENGTH_LONG).show();
         }
@@ -221,7 +243,6 @@ public class MainActivity extends BaseActivity {
             Toast.makeText(this, "手机号", Toast.LENGTH_SHORT).show();
             return false;
         }
-
         String pwdString = pwd.getText().toString().trim();
         if (TextUtils.isEmpty(pwdString)) {
             Toast.makeText(this, "密码", Toast.LENGTH_SHORT).show();

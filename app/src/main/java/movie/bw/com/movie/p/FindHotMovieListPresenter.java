@@ -20,6 +20,6 @@ public class FindHotMovieListPresenter extends BasePresenter {
     @Override
     protected Observable observable(Object... args) {
         IRequest iRequest = NotWorkUtils.getNotWorkUtils().create(IRequest.class);
-        return iRequest.FINDHOT((int)args[0],(String)args[1],(int)args[2],(int)args[3]);
+        return iRequest.FINDHOT((int)args[0],(int)args[1]);
     }
 }
