@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
+import com.umeng.analytics.MobclickAgent;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -227,5 +228,15 @@ public abstract class BaseActivity extends AppCompatActivity implements CustomAd
     @Override
     public float getSizeInDp() {
         return 720;
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

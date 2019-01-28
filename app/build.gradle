@@ -101,4 +101,8 @@ dependencies {
     implementation 'com.tencent.wup:wup:1.0.0.E-release'
     //mid包，minSdkVersion 14
     implementation 'com.tencent.mid:mid:4.0.7-Release'
+
+    implementation  'com.umeng.umsdk:analytics:8.0.0'
+    implementation  'com.umeng.umsdk:common:2.0.0'
+    implementation  'com.umeng.umsdk:utdid:1.1.5.3'
 }

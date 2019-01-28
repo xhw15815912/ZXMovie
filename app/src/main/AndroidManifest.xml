@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.bw.movie">
-
+    <uses-sdk android:minSdkVersion="8"></uses-sdk>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 这个权限用于访问GPS定位 -->
@@ -48,6 +48,12 @@
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5c4ef6a1f1f556f631000f55"/>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="ceshi"/>
 
         <activity android:name="movie.bw.com.movie.activity.MyMessageActivity" />
         <activity android:name="movie.bw.com.movie.activity.MyInterestActivity" />
