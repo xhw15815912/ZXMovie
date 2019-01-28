@@ -22,5 +22,6 @@ public class App extends Application {
         MultiDex.install(this);
         UMConfigure.init(this,  UMConfigure.DEVICE_TYPE_PHONE, null);
 
+//        CrashReport.initCrashReport(getApplicationContext(), "5d3c07724a", false);
     }
 }

@@ -1,8 +1,12 @@
 package movie.bw.com.movie.frag;
 
 
+import android.Manifest;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +19,7 @@ import android.widget.Toast;
 import com.bw.movie.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.io.File;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -37,9 +42,11 @@ import movie.bw.com.movie.bean.MyInterestBean;
 import movie.bw.com.movie.bean.Result;
 import movie.bw.com.movie.core.DataCall;
 import movie.bw.com.movie.core.exception.ApiException;
+import movie.bw.com.movie.p.ChangeHeadImage_Presenter;
 import movie.bw.com.movie.p.MePresenter;
 import movie.bw.com.movie.p.MyInterestPresenter;
 import movie.bw.com.movie.p.UserSingnInPresenter;
+import movie.bw.com.movie.utils.ImageUtil;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,6 +80,8 @@ public class MyFrag extends BaseFragment {
     private int userId;
     private String sessionId;
     private MePresenter mePresenter;
+    private ChangeHeadImage_Presenter changeHeadImage_presenter;
+
     @Override
     public String getPageName() {
         return null;
@@ -85,14 +94,17 @@ public class MyFrag extends BaseFragment {
 
     @Override
     protected void initView() {
+
+
+
         if (USER!=null&&list.size()>0){
             userId = USER.getUserId();
             sessionId = USER.getSessionId();
         }
-
         singn = new UserSingnInPresenter(new UserSingnIn());
         mePresenter = new MePresenter(new  MeData());
         mePresenter.request(userId, sessionId);
+        changeHeadImage_presenter = new ChangeHeadImage_Presenter(new HeadImag());
     }
 
     @OnClick({R.id.trumpet, R.id.headimage, R.id.my_chat, R.id.my_attention, R.id.my_rccord, R.id.my_feedback, R.id.my_version, R.id.sign_in, R.id.my_logout})
@@ -104,6 +116,11 @@ public class MyFrag extends BaseFragment {
             case R.id.headimage:
                 if (USER != null && list.size() > 0) {
                     Toast.makeText(getContext(), "已有用户", Toast.LENGTH_SHORT).show();
+                    //Intent隐式跳转至相册
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    intent.setType("image/*");
+                        startActivityForResult(intent,1);
                 }else {
                     startActivity(new Intent(getContext(), MainActivity.class));
                 }
@@ -135,6 +152,7 @@ public class MyFrag extends BaseFragment {
                     DaoSession daoSession = DaoMaster.newDevSession(getActivity(), UserBeanDao.TABLENAME);
                     UserBeanDao userBeanDao = daoSession.getUserBeanDao();
                     userBeanDao.deleteAll();
+                    mePresenter.request(userId, sessionId);
                     Intent intent1 = new Intent(getActivity(), MainActivity.class)
                             .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -186,7 +204,45 @@ public class MyFrag extends BaseFragment {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case 1:
+                //得到相册图片,转为file类型
+                if(data.getData() != null){
+                    Uri uri = data.getData();
+                    if(uri != null){
+                        //调用工具类将uri图片转为path
+                        String path = ImageUtil.getPath(getContext(), uri);
+                        if(path != null){
+                            //将图片转为file
+                            File file = new File(path);
+                            //调用P层
+                            changeHeadImage_presenter.request(userId,sessionId,file);
+                        }
+                    }
+                }else {
+                    return;
+                }
+                break;
+        }
+    }
+    //剪切
+    private Intent crop(Uri uri) {
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("crop", true);
+        intent.putExtra("acceptX", 1);
+        intent.putExtra("acceptY", 1);
+        intent.putExtra("outputX", 250);
+        intent.putExtra("outputY", 250);
+        intent.putExtra("outputFormat", "JPEG");
+        intent.putExtra("return-data", true);
+        return intent;
+    }
     private class MeData implements DataCall<Result<MeBean>> {
         @Override
         public void success(Result<MeBean> data) {
@@ -195,6 +251,30 @@ public class MyFrag extends BaseFragment {
                 name.setText(bean.getNickName());
                 headimage.setImageURI(bean.getHeadPic());
             }
+
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    private class Change implements DataCall<Result> {
+        @Override
+        public void success(Result data) {
+
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    private class HeadImag implements DataCall<Result> {
+        @Override
+        public void success(Result data) {
 
         }
 

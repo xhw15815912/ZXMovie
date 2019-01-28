@@ -16,6 +16,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.config
         multiDexEnabled true
@@ -88,6 +89,8 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation project(':SeatTable')
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+//    implementation 'com.tencent.bugly:crashreport:2.8.6'
+//    implementation 'com.tencent.bugly:nativecrashreport:3.6.0.1'
     implementation 'com.android.support:multidex:1.0.3'
     //信鸽普通版本jar，不包含厂商通道
     implementation  'com.tencent.xinge:xinge:4.0.5-release'

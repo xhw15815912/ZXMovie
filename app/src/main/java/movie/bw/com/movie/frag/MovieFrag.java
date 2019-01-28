@@ -2,26 +2,18 @@ package movie.bw.com.movie.frag;
 
 
 import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.graphics.Color;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.transition.AutoTransition;
-import android.support.transition.TransitionManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
@@ -37,6 +29,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import movie.bw.com.movie.activity.MoreMovie;
+import movie.bw.com.movie.activity.MovieDetails;
 import movie.bw.com.movie.adapter.FlowAdapter;
 import movie.bw.com.movie.adapter.HotMovieAdapter;
 import movie.bw.com.movie.adapter.NowAdapter;
@@ -77,6 +70,7 @@ public class MovieFrag extends BaseFragment {
     TextView now;
     @BindView(R.id.soon)
     TextView soon;
+    Unbinder unbinder;
 
     private MyLocationListener myListener = new MyLocationListener();
     @BindView(R.id.image_location)
@@ -106,7 +100,7 @@ public class MovieFrag extends BaseFragment {
 
     @Override
     protected void initView() {
-        if (USER!=null&&list.size()>0){
+        if (USER != null && list.size() > 0) {
             sessionId = USER.getSessionId();
             userId = USER.getUserId();
         }
@@ -141,13 +135,6 @@ public class MovieFrag extends BaseFragment {
 
     }
 
-    @OnClick(R.id.image_location)
-    public void onViewClicked() {
-        if (mLocationClient==null){
-            orientation();
-        }
-
-    }
 
     @OnClick(R.id.hot)
     public void Hot() {
@@ -203,8 +190,7 @@ public class MovieFrag extends BaseFragment {
     }
 
 
-
-    @OnClick({R.id.recommend_cinem_search_image, R.id.recommend_cinema_textName})
+    @OnClick({R.id.recommend_cinem_search_image, R.id.recommend_cinema_textName,R.id.image_location,R.id.next,R.id.next1,R.id.next2})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.recommend_cinem_search_image:
@@ -219,8 +205,33 @@ public class MovieFrag extends BaseFragment {
                 animator.setInterpolator(new LinearInterpolator());
                 animator.start();
                 break;
+            case R.id.image_location:
+                if (mLocationClient == null) {
+                    orientation();
+                }
+                break;
+            case R.id.next:
+                Intent intent = new Intent(getActivity(), MoreMovie.class);
+                intent.putExtra("id", 1);
+                startActivity(intent);
+                break;
+            case R.id.next1:
+                Intent intent1 = new Intent(getActivity(), MoreMovie.class);
+                intent1.putExtra("id", 2);
+                startActivity(intent1);
+                break;
+            case R.id.next2:
+                Intent intent2 = new Intent(getActivity(), MoreMovie.class);
+                intent2.putExtra("id", 3);
+                startActivity(intent2);
+                break;
         }
     }
+
+
+
+
+
 
 
     public class MyLocationListener implements BDLocationListener {

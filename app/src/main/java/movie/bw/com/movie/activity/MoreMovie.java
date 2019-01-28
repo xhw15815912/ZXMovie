@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -16,6 +19,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import movie.bw.com.movie.adapter.RecommedAdapter;
 import movie.bw.com.movie.adapter.XHotAdapter;
 import movie.bw.com.movie.base.BaseActivity;
 import movie.bw.com.movie.bean.HotMovie;
@@ -26,6 +30,8 @@ import movie.bw.com.movie.frag.MovieFrag;
 import movie.bw.com.movie.p.FindHotMovieListPresenter;
 import movie.bw.com.movie.p.NowMovie;
 import movie.bw.com.movie.p.SoonMoviewPresenter;
+import movie.bw.com.movie.p.UnfollowPresenter;
+import movie.bw.com.movie.p.UnfollowcinemasPresenter;
 
 public class MoreMovie extends BaseActivity implements XRecyclerView.LoadingListener {
 
@@ -39,13 +45,15 @@ public class MoreMovie extends BaseActivity implements XRecyclerView.LoadingList
     @BindView(R.id.comment)
     Button comment;
     @BindView(R.id.xrecy)
-    XRecyclerView xrecy;
+    RecyclerView xrecy;
     private NowMovie nowMovie;
     private SoonMoviewPresenter soonMoviewPresenter;
     private FindHotMovieListPresenter findHotMovieListPresenter;
     private String sessionId;
     private int userId;
     private XHotAdapter xHotAdapter;
+    private UnfollowcinemasPresenter unfollowcinemasPresenter;
+    private UnfollowPresenter unfollowPresenter;
 
     @Override
     protected int getLayoutId() {
@@ -90,12 +98,46 @@ public class MoreMovie extends BaseActivity implements XRecyclerView.LoadingList
     }
 
     private void initP() {
+        unfollowcinemasPresenter = new UnfollowcinemasPresenter(new Unfo());
+        unfollowPresenter = new UnfollowPresenter(new UnF());
         xrecy.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-        xrecy.setLoadingListener(this);
+        if (USER!=null&&list.size()>0){
+            sessionId = USER.getSessionId();
+            userId = USER.getUserId();
+        }
+
         nowMovie = new NowMovie(new Now());
         soonMoviewPresenter = new SoonMoviewPresenter(new Soon());
         findHotMovieListPresenter = new FindHotMovieListPresenter(new Hot());
         xHotAdapter = new XHotAdapter(this);
+        xHotAdapter.setOnItemClickListener(new RecommedAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int cinemaId, int isFollow) {
+                Log.d("状态渍渍渍++++++++++", "onItemClick: "+isFollow);
+                if (hot.isClickable()){
+                   if (isFollow==1){
+                       unfollowPresenter.request(userId,sessionId,cinemaId);
+                   }else if (isFollow==2){
+                       unfollowcinemasPresenter.request(userId,sessionId,cinemaId);
+
+                   }
+                } else if (photo.isClickable()) {
+                    if (isFollow==1){
+                        unfollowPresenter.request(userId,sessionId,cinemaId);
+                    }else if (isFollow==2){
+                        unfollowcinemasPresenter.request(userId,sessionId,cinemaId);
+
+                    }
+                } else if (comment.isClickable()) {
+                    if (isFollow==1){
+                        unfollowPresenter.request(userId,sessionId,cinemaId);
+                    }else if (isFollow==2){
+                        unfollowcinemasPresenter.request(userId,sessionId,cinemaId);
+
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -184,6 +226,52 @@ public class MoreMovie extends BaseActivity implements XRecyclerView.LoadingList
             if (data.getStatus().equals("0000")){
                   xHotAdapter.setData(data.getResult());
                 xHotAdapter.notifyDataSetChanged();
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    private class Unfo implements DataCall<Result> {
+        @Override
+        public void success(Result data) {
+            if (data.getStatus().equals("0000")){
+                Toast.makeText(MoreMovie.this, data.getMessage(), Toast.LENGTH_SHORT).show();
+                if (hot.isClickable()){
+                    findHotMovieListPresenter.request(userId,sessionId,1,10);
+                }else if (photo.isClickable()){
+                    nowMovie.request(userId,sessionId,1,10);
+                }else if(comment.isClickable()){
+                    soonMoviewPresenter.request(userId,sessionId,1,10);
+                }
+            }else {
+                Toast.makeText(MoreMovie.this, data.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    private class UnF implements DataCall<Result> {
+        @Override
+        public void success(Result data) {
+            if (data.getStatus().equals("0000")){
+                Toast.makeText(MoreMovie.this, data.getMessage(), Toast.LENGTH_SHORT).show();
+                if (hot.isClickable()){
+                    findHotMovieListPresenter.request(userId,sessionId,1,10);
+                }else if (photo.isClickable()){
+                    nowMovie.request(userId,sessionId,1,10);
+                }else if(comment.isClickable()){
+                    soonMoviewPresenter.request(userId,sessionId,1,10);
+                }
+            }else {
+                Toast.makeText(MoreMovie.this, data.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
 

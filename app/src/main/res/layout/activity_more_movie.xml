@@ -64,14 +64,14 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <com.jcodecraeer.xrecyclerview.XRecyclerView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
         android:id="@+id/xrecy"
         android:layout_marginTop="80dp"
-        ></com.jcodecraeer.xrecyclerview.XRecyclerView>
+        ></android.support.v7.widget.RecyclerView>
 
     <RelativeLayout
         android:layout_width="match_parent"

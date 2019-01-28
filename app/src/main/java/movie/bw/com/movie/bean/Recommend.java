@@ -20,6 +20,15 @@ public class Recommend {
     private int id;
     private String logo;
     private String name;
+    private boolean isChecked;
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
 
     public String getAddress() {
         return address;

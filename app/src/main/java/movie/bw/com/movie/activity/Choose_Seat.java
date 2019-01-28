@@ -272,7 +272,7 @@ public class Choose_Seat extends BaseActivity {
             final IWXAPI msgApi = WXAPIFactory.createWXAPI(Choose_Seat.this, null);
             // 将该app注册到微信
             Log.e("qwer",data.getAppId()+"====");
-            msgApi.registerApp("wxd930ea5d5a258f4f");
+            msgApi.registerApp("wxb3852e6a6b7d9516");
             PayReq request = new PayReq();
             request.appId = data.getAppId();
             request.partnerId = data.getPartnerId();
