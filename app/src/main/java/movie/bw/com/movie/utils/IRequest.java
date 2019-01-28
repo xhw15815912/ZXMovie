@@ -1,5 +1,6 @@
 package movie.bw.com.movie.utils;
 
+import java.io.File;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -19,11 +20,14 @@ import movie.bw.com.movie.bean.ParticularsBean;
 import movie.bw.com.movie.bean.Result;
 import movie.bw.com.movie.bean.SystemInfoBean;
 import movie.bw.com.movie.bean.UserInfo;
+import okhttp3.MultipartBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 /**
@@ -177,12 +181,13 @@ public interface IRequest {
 
     //影院详情
     @GET("cinema/v1/findCinemaInfo")
-    Observable<Result<DetailsofcinemaBean>> findCinemaInfo(@Header("userId")int userId,
-                                                           @Header("sessionId")String sessionId,
-                                                           @Query("cinemaId")int cinemaId);
+    Observable<Result<DetailsofcinemaBean>> findCinemaInfo(@Header("userId") int userId,
+                                                           @Header("sessionId") String sessionId,
+                                                           @Query("cinemaId") int cinemaId);
+
     //影院详情
     @GET("cinema/v1/findCinemaInfo")
-    Observable<Result<DetailsofcinemaBean>> FilMINFO(@Query("cinemaId")String cinemaId);
+    Observable<Result<DetailsofcinemaBean>> FilMINFO(@Query("cinemaId") String cinemaId);
 
     //查询影片评论
     @GET("cinema/v1/findAllCinemaComment")
@@ -191,16 +196,14 @@ public interface IRequest {
             @Query("page") int page,
             @Query("count") int count
     );
+
     //修改密码
     @FormUrlEncoded
     @POST("user/v1/verify/modifyUserPwd")
-    Observable<Result> modifyUserPwd(@Header("userId")int userId,@Header("sessionId")String sessionId,
-                                     @Field("oldPwd")String oldPwd,
-                                     @Field("newPwd")String newPwd,
-                                     @Field("newPwd2")String newPwd2);
-    Observable<Result<DetailsofcinemaBean>> findCinemaInfo(@Header("userId") int userId,
-                                                           @Header("sessionId") String sessionId,
-                                                           @Query("cinemaId") int cinemaId);
+    Observable<Result> modifyUserPwd(@Header("userId") int userId, @Header("sessionId") String sessionId,
+                                     @Field("oldPwd") String oldPwd,
+                                     @Field("newPwd") String newPwd,
+                                     @Field("newPwd2") String newPwd2);
 
     //下单
     @FormUrlEncoded
@@ -218,4 +221,37 @@ public interface IRequest {
                              @Header("sessionId") String sessionId,
                              @Field("payType") int payType,
                              @Field("orderId") String orderId);
+
+    //关注电影
+    @GET("movie/v1/verify/followMovie")
+    Observable<Result> followMovie(@Header("userId") int userId, @Header("sessionId") String sessionId,
+                                   @Query("movieId") int movieId
+    );
+
+    //取消关注电影
+    @GET("movie/v1/verify/cancelFollowMovie")
+    Observable<Result> cancelFollowMovie(@Header("userId") int userId, @Header("sessionId") String sessionId,
+                                         @Query("movieId") int movieId
+    );
+    //关注影院
+    @GET("cinema/v1/verify/followCinema")
+    Observable<Result> followCinema(@Header("userId") int userId, @Header("sessionId") String sessionId,
+                                    @Query("cinemaId") int cinemaId
+    );
+    //取消关注影院
+    @GET("cinema/v1/verify/cancelFollowCinema")
+    Observable<Result> cancelFollowCinema(@Header("userId") int userId, @Header("sessionId") String sessionId,
+                                    @Query("cinemaId") int cinemaId
+    );
+//    //头像上传
+//    @FormUrlEncoded
+//    @POST("user/v1/verify/uploadHeadPic")
+//    Observable<Result> HeadImage(@Header("userId") int userId,
+//                             @Header("sessionId") String sessionId,
+//                             @Field("image") File image);
+    //修改用户头像
+    @Multipart
+    @POST("user/v1/verify/uploadHeadPic")
+    Observable<Result> HeadImage(@Header("userId")int userId, @Header("sessionId")String sessionId,
+                                      @Part MultipartBody.Part image);
 }

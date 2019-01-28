@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'bw_movie'
             keyPassword '123456'
-            storeFile file('C:/Users/asus-/Downloads/movie.keystore')
+            storeFile file('C:/Users/LENOVO/Desktop/movie.keystore')
             storePassword '123456'
         }
     }
@@ -16,6 +16,7 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.config
     }
@@ -76,4 +77,6 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation project(':SeatTable')
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+//    implementation 'com.tencent.bugly:crashreport:2.8.6'
+//    implementation 'com.tencent.bugly:nativecrashreport:3.6.0.1'
 }

@@ -44,8 +44,8 @@
                 android:text="2.3km"/>
             <ImageView
                 android:id="@+id/item_mind"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_marginRight="20dp"
                 android:src="@mipmap/com_icon_collection"
                 android:layout_alignParentRight="true"

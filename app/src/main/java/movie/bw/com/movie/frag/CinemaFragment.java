@@ -10,6 +10,7 @@ import android.support.transition.TransitionManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -37,6 +39,8 @@ import movie.bw.com.movie.bean.Recommend;
 import movie.bw.com.movie.bean.Result;
 import movie.bw.com.movie.core.DataCall;
 import movie.bw.com.movie.core.exception.ApiException;
+import movie.bw.com.movie.p.AttentiontocinemaPresenter;
+import movie.bw.com.movie.p.FocusonFilmPresenter;
 import movie.bw.com.movie.p.NearcinemadPresenter;
 import movie.bw.com.movie.p.RecommendPresenter;
 
@@ -70,6 +74,8 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
     private int userId;
     private NearcinemadPresenter nearcinemadPresenter;
     private int page = 1;
+    private AttentiontocinemaPresenter attentiontocinemaPresenter;
+    private FocusonFilmPresenter focusonFilmPresenter;
 
     @Override
     public String getPageName() {
@@ -165,10 +171,37 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
     }
 
     private void initData() {
+        focusonFilmPresenter = new FocusonFilmPresenter(new FOCU());
+        attentiontocinemaPresenter = new AttentiontocinemaPresenter(new ZAn());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(OrientationHelper.VERTICAL);
         theatersXrecyclerview.setLayoutManager(layoutManager);
         adapter = new RecommedAdapter(getContext());
+        adapter.setOnItemClickListener(new RecommedAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int cinemaId, int isFollow) {
+                Log.d("状态值++++++++++++++++", "onItemClick: "+isFollow);
+                if (recommend.isChecked()){
+                    if (isFollow==1){
+                        focusonFilmPresenter.request(userId,sessionId,cinemaId);
+
+                    }else if (isFollow==2){
+                        attentiontocinemaPresenter.request(userId,sessionId,cinemaId);
+
+                    }
+                }else if (nearby.isChecked()){
+                    if (isFollow==1){
+                        focusonFilmPresenter.request(userId,sessionId,cinemaId);
+
+                    }else if (isFollow==2){
+                        attentiontocinemaPresenter.request(userId,sessionId,cinemaId);
+
+                    }
+                }
+
+              adapter.notifyDataSetChanged();
+            }
+        });
         theatersXrecyclerview.setAdapter(adapter);
     }
 
@@ -177,6 +210,7 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
     public void onResume() {
         super.onResume();
         presenter.request(userId, sessionId, page, 10);
+
     }
 
     @OnClick({R.id.recommend, R.id.nearby, R.id.rad, R.id.recommend_cinem_search_image, R.id.recommend_cinema_textName})
@@ -259,4 +293,51 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
         }
     }
 
+    private class ZAn implements DataCall<Result> {
+        @Override
+        public void success(Result data) {
+            if (data.getStatus().equals("0000")){
+                Toast.makeText(getContext(), data.getMessage(), Toast.LENGTH_SHORT).show();
+                if(recommend.isChecked()){
+                    presenter.request(userId, sessionId, page, 10);
+
+                }else if (nearby.isChecked()){
+                    nearcinemadPresenter.request(userId, sessionId, "116.30551391385724", "40.04571807462411", page, 10);
+                }
+                adapter.notifyDataSetChanged();
+
+            }else {
+                Toast.makeText(getContext(), data.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    private class FOCU implements DataCall<Result> {
+        @Override
+        public void success(Result data) {
+            if (data.getStatus().equals("0000")){
+                Toast.makeText(getContext(), data.getMessage(), Toast.LENGTH_SHORT).show();
+                if(recommend.isChecked()){
+                    presenter.request(userId, sessionId, page, 10);
+
+                }else if (nearby.isChecked()){
+                    nearcinemadPresenter.request(userId, sessionId, "116.30551391385724", "40.04571807462411", page, 10);
+                }
+                adapter.notifyDataSetChanged();
+            }else {
+                Toast.makeText(getContext(), data.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
 }

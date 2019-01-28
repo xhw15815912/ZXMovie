@@ -65,7 +65,6 @@
         <activity android:name="movie.bw.com.movie.activity.SystemInfoActivity" />
         <activity android:name="movie.bw.com.movie.activity.DetailsofcinemaActivity" />
         <activity android:name="movie.bw.com.movie.activity.ChangePasswordActivity"></activity>
-        <activity android:name="movie.bw.com.movie.activity.DetailsofcinemaActivity"></activity>
         <!-- 微信支付 -->
         <activity android:name="com.bw.movie.wxapi.WXPayEntryActivity"
             android:exported="true"

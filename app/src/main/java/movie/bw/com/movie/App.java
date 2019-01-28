@@ -17,6 +17,6 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         Fresco.initialize(this);
-
+//        CrashReport.initCrashReport(getApplicationContext(), "5d3c07724a", false);
     }
 }

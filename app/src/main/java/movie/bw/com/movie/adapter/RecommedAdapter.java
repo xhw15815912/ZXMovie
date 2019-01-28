@@ -18,6 +18,12 @@ import java.util.List;
 
 import movie.bw.com.movie.activity.DetailsofcinemaActivity;
 import movie.bw.com.movie.bean.Recommend;
+import movie.bw.com.movie.bean.Result;
+import movie.bw.com.movie.bean.UserBean;
+import movie.bw.com.movie.bean.UserInfo;
+import movie.bw.com.movie.core.DataCall;
+import movie.bw.com.movie.core.exception.ApiException;
+import movie.bw.com.movie.p.AttentiontocinemaPresenter;
 
 /**
  * Created by zxk
@@ -55,6 +61,7 @@ public class RecommedAdapter extends RecyclerView.Adapter<RecommedAdapter.VH> {
         vh.item_image.setImageURI(recommend.getLogo());
         vh.item_content.setText(recommend.getAddress());
         vh.item_km.setText(recommend.getDistance()+"");
+
         vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,6 +74,18 @@ public class RecommedAdapter extends RecyclerView.Adapter<RecommedAdapter.VH> {
                 context.startActivity(intent);
             }
         });
+        vh.item_mind.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                 onItemClickListener.onItemClick(recommend.getId(),recommend.getFollowCinema());
+            }
+        });
+        if (recommend.getFollowCinema()==1){
+            vh.item_mind.setImageResource(R.mipmap.com_icon_collection);
+        }else if (recommend.getFollowCinema()==2){
+            vh.item_mind.setImageResource(R.drawable.aixin);
+        }
     }
 
     @Override
@@ -92,5 +111,29 @@ public class RecommedAdapter extends RecyclerView.Adapter<RecommedAdapter.VH> {
         }
     }
 
+
+    private class ZAN implements DataCall<Result> {
+        @Override
+        public void success(Result data) {
+
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+    //定义接口
+    public interface OnItemClickListener {
+        void onItemClick(int cinemaId, int isFollow);
+    }
+
+    //方法名
+    private OnItemClickListener onItemClickListener;
+
+    //方法      设置点击方法
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 
 }
