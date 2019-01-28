@@ -59,6 +59,7 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
                 case BaseResp.ErrCode.ERR_OK:
                     //支付成功后的逻辑
                     result = "微信支付成功";
+
                     break;
                 case BaseResp.ErrCode.ERR_COMM:
                     result = "微信支付失败：" + resp.errCode + "，" + resp.errStr;
@@ -72,6 +73,10 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
             }
             payResult.setText(result);
         }
+        if (result.equals("微信支付成功")){
+
+        }
+
         Toast.makeText(this, result, Toast.LENGTH_LONG).show();
     }
 
