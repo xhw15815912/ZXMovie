@@ -33,6 +33,7 @@ public class PingFragment extends BaseFragment {
     Unbinder unbinder;
     private Film_Comment film_comment;
     private FilmComment_Adapter filmComment_adapter;
+    private String s;
 
     @Override
     public String getPageName() {
@@ -46,6 +47,8 @@ public class PingFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        film_comment = new Film_Comment(new CallBack());
+        film_comment.request(s);
         recy.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         filmComment_adapter = new FilmComment_Adapter(getActivity());
         recy.setAdapter(filmComment_adapter);
@@ -53,7 +56,7 @@ public class PingFragment extends BaseFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void FilmNum(String s) {
-        film_comment = new Film_Comment(new CallBack());
+        this.s=s;
         film_comment.request(s);
     }
 
@@ -73,5 +76,17 @@ public class PingFragment extends BaseFragment {
         public void fail(ApiException e) {
 
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        film_comment.request(s);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        film_comment.request(s);
     }
 }

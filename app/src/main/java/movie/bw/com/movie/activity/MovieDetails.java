@@ -1,6 +1,7 @@
 package movie.bw.com.movie.activity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ import android.widget.TextView;
 import com.bw.movie.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -37,6 +40,8 @@ import movie.bw.com.movie.bean.ParticularsBean;
 import movie.bw.com.movie.bean.Result;
 import movie.bw.com.movie.core.DataCall;
 import movie.bw.com.movie.core.exception.ApiException;
+import movie.bw.com.movie.frag.InputDialog;
+import movie.bw.com.movie.frag.MovieInpuDialog;
 import movie.bw.com.movie.p.MovieReview_Presenter;
 import movie.bw.com.movie.p.ParticularsPresenter;
 
@@ -69,6 +74,8 @@ public class MovieDetails extends BaseActivity {
     private MovieReview_Presenter movieReview_presenter;
     private String sessionId;
     private int userId;
+    private MovieInpuDialog inputDialog;
+
 
     @Override
     protected int getLayoutId() {
@@ -208,8 +215,12 @@ public class MovieDetails extends BaseActivity {
     }
     @OnClick(R.id.comment)
     public void Cooment(){
+
         View inflate = View.inflate(this, R.layout.dia_movie_review, null);
+        inflate.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                getScreenHeight(MovieDetails.this) / 2));
         dialog.setContentView(inflate);
+        ImageView write=inflate.findViewById(R.id.write);
         Window dialogWindow = dialog.getWindow();
         WindowManager m = getWindow().getWindowManager();
         Display d = m.getDefaultDisplay(); // 获取屏幕宽、高度
@@ -235,6 +246,24 @@ public class MovieDetails extends BaseActivity {
             public void onClick(View v) {
                 dialog.dismiss();
                 finish();
+            }
+        });
+        write.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().postSticky(String.valueOf(id));
+                inputDialog = new MovieInpuDialog(MovieDetails.this);
+                Window window = inputDialog.getWindow();
+                WindowManager.LayoutParams params = window.getAttributes();
+                //设置软键盘通常是可见的
+                window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                inputDialog.show();
+                inputDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        movieReview_presenter.request(userId,sessionId,id);
+                    }
+                });
             }
         });
 
@@ -279,5 +308,10 @@ public class MovieDetails extends BaseActivity {
         public void fail(ApiException e) {
 
         }
+    }
+    public static int getScreenHeight(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        int height = wm.getDefaultDisplay().getHeight();
+        return height;
     }
 }

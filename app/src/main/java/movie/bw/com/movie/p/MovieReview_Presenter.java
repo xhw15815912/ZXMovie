@@ -20,6 +20,6 @@ public class MovieReview_Presenter extends BasePresenter {
     @Override
     protected Observable observable(Object... args) {
         IRequest iRequest = NotWorkUtils.getNotWorkUtils().create(IRequest.class);
-        return iRequest.MoviewComment((int)args[0],(String) args[1],(int)args[2],1,10);
+        return iRequest.MoviewComment((int)args[0],(String) args[1],(int)args[2],1,30);
     }
 }

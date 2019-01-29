@@ -57,6 +57,7 @@
     <ImageView
         android:layout_width="16dp"
         android:layout_height="16dp"
+        android:src="@mipmap/com_icon_comment_default"
         android:layout_below="@id/message"
         android:layout_toLeftOf="@id/num"
         android:layout_marginTop="10dp"
@@ -77,6 +78,7 @@
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:id="@+id/praise"
+        android:src="@mipmap/com_icon_praise_default"
         android:layout_marginTop="10dp"
         android:layout_below="@id/message"
         android:layout_toLeftOf="@id/great"
