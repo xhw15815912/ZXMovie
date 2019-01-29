@@ -4,6 +4,7 @@ import android.app.Application;
 import android.support.multidex.MultiDex;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.commonsdk.UMConfigure;
 
 import org.greenrobot.eventbus.EventBus;
@@ -22,6 +23,6 @@ public class App extends Application {
         MultiDex.install(this);
         UMConfigure.init(this,  UMConfigure.DEVICE_TYPE_PHONE, null);
 
-//        CrashReport.initCrashReport(getApplicationContext(), "5d3c07724a", false);
+        CrashReport.initCrashReport(getApplicationContext(), "5d3c07724a", false);
     }
 }

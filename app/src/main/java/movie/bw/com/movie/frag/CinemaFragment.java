@@ -91,7 +91,7 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
     protected void initView() {
         presenter = new RecommendPresenter(new Recomm());
         nearcinemadPresenter = new NearcinemadPresenter(new Nearcinima());
-        if (USER!=null&&list.size()>0){
+        if (list!=null&&list.size()>0){
             sessionId = USER.getSessionId();
             userId = USER.getUserId();
         }

@@ -73,7 +73,7 @@ public class MoreMovie extends BaseActivity implements XRecyclerView.LoadingList
             photo.setTextColor(Color.BLACK);
             comment.setBackgroundResource(R.drawable.kuang_8dp_touying);
             comment.setTextColor(Color.BLACK);
-            findHotMovieListPresenter.request(1,10);
+            findHotMovieListPresenter.request(userId,sessionId,1,10);
 
         }else if (id==2){
             hot.setBackgroundResource(R.drawable.kuang_8dp_touying);
@@ -82,7 +82,7 @@ public class MoreMovie extends BaseActivity implements XRecyclerView.LoadingList
             photo.setTextColor(Color.WHITE);
             comment.setBackgroundResource(R.drawable.kuang_8dp_touying);
             comment.setTextColor(Color.BLACK);
-            nowMovie.request(1,10);
+            nowMovie.request(userId,sessionId,1,10);
         }else if (id==3){
             hot.setBackgroundResource(R.drawable.kuang_8dp_touying);
             hot.setTextColor(Color.BLACK);
@@ -90,7 +90,7 @@ public class MoreMovie extends BaseActivity implements XRecyclerView.LoadingList
             photo.setTextColor(Color.BLACK);
             comment.setBackgroundResource(R.drawable.bg_dividing_line_title_rectangle);
             comment.setTextColor(Color.WHITE);
-            soonMoviewPresenter.request(1,10);
+            soonMoviewPresenter.request(userId,sessionId,1,10);
 
         }
 
@@ -101,7 +101,7 @@ public class MoreMovie extends BaseActivity implements XRecyclerView.LoadingList
         unfollowcinemasPresenter = new UnfollowcinemasPresenter(new Unfo());
         unfollowPresenter = new UnfollowPresenter(new UnF());
         xrecy.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-        if (USER!=null&&list.size()>0){
+        if (list!=null&&list.size()>0){
             sessionId = USER.getSessionId();
             userId = USER.getUserId();
         }
@@ -157,7 +157,7 @@ public class MoreMovie extends BaseActivity implements XRecyclerView.LoadingList
                     photo.setTextColor(Color.BLACK);
                     comment.setBackgroundResource(R.drawable.kuang_8dp_touying);
                     comment.setTextColor(Color.BLACK);
-                    findHotMovieListPresenter.request(1,10);
+                    findHotMovieListPresenter.request(userId,sessionId,1,10);
                 break;
             case R.id.photo:
                 hot.setBackgroundResource(R.drawable.kuang_8dp_touying);
@@ -166,7 +166,7 @@ public class MoreMovie extends BaseActivity implements XRecyclerView.LoadingList
                 photo.setTextColor(Color.WHITE);
                 comment.setBackgroundResource(R.drawable.kuang_8dp_touying);
                 comment.setTextColor(Color.BLACK);
-                nowMovie.request(1,10);
+                nowMovie.request(userId,sessionId,1,10);
                 break;
             case R.id.comment:
                 hot.setBackgroundResource(R.drawable.kuang_8dp_touying);
@@ -175,7 +175,7 @@ public class MoreMovie extends BaseActivity implements XRecyclerView.LoadingList
                 photo.setTextColor(Color.BLACK);
                 comment.setBackgroundResource(R.drawable.bg_dividing_line_title_rectangle);
                 comment.setTextColor(Color.WHITE);
-                soonMoviewPresenter.request(1,10);
+                soonMoviewPresenter.request(userId,sessionId,1,10);
                 break;
         }
     }

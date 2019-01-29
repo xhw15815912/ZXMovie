@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name">Movie</string>
+    <string name="app_name">维度影院</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-        <string name="errcode_success">发送成功</string>
-        <string name="errcode_cancel">发送取消</string>
-        <string name="errcode_deny">发送被拒绝</string>
-        <string name="errcode_unsupported">不支持错误</string>
-        <string name="errcode_unknown">发送返回</string>
+    <string name="errcode_success">发送成功</string>
+    <string name="errcode_cancel">发送取消</string>
+    <string name="errcode_deny">发送被拒绝</string>
+    <string name="errcode_unsupported">不支持错误</string>
+    <string name="errcode_unknown">发送返回</string>
 
     <string name="enter">这是SDK_Sample的入口界面</string>
     <string name="reg">将该app注册到微信</string>

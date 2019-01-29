@@ -36,6 +36,7 @@ import movie.bw.com.movie.activity.FeedbackActivity;
 import movie.bw.com.movie.activity.MyInterestActivity;
 import movie.bw.com.movie.activity.MyMessageActivity;
 import movie.bw.com.movie.activity.SystemInfoActivity;
+import movie.bw.com.movie.activity.TickethistorypageActivity;
 import movie.bw.com.movie.base.BaseFragment;
 import movie.bw.com.movie.bean.MeBean;
 import movie.bw.com.movie.bean.MyInterestBean;
@@ -97,7 +98,7 @@ public class MyFrag extends BaseFragment {
 
 
 
-        if (USER!=null&&list.size()>0){
+        if (list!=null&&list.size()>0){
             userId = USER.getUserId();
             sessionId = USER.getSessionId();
         }
@@ -114,7 +115,7 @@ public class MyFrag extends BaseFragment {
                 startActivity(new Intent(getContext(), SystemInfoActivity.class));
                 break;
             case R.id.headimage:
-                if (USER != null && list.size() > 0) {
+                if (list != null && list.size() > 0) {
                     Toast.makeText(getContext(), "已有用户", Toast.LENGTH_SHORT).show();
                     //Intent隐式跳转至相册
                     Intent intent = new Intent();
@@ -135,7 +136,7 @@ public class MyFrag extends BaseFragment {
                 startActivity(new Intent(getContext(),MyInterestActivity.class));
                 break;
             case R.id.my_rccord:
-
+                  startActivity(new Intent(getActivity(), TickethistorypageActivity.class));
                 break;
             case R.id.my_feedback:
                 startActivity(new Intent(getContext(),FeedbackActivity.class));
@@ -148,7 +149,7 @@ public class MyFrag extends BaseFragment {
                 singn.request(userId,sessionId);
                 break;
             case R.id.my_logout:
-                if (USER != null && list.size() > 0) {
+                if (list != null && list.size() > 0) {
                     DaoSession daoSession = DaoMaster.newDevSession(getActivity(), UserBeanDao.TABLENAME);
                     UserBeanDao userBeanDao = daoSession.getUserBeanDao();
                     userBeanDao.deleteAll();

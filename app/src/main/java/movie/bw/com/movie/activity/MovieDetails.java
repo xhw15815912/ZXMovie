@@ -85,7 +85,7 @@ public class MovieDetails extends BaseActivity {
 
 
         Intent intent = getIntent();
-        if (USER!=null&&list.size()>0){
+        if (list!=null&&list.size()>0){
             sessionId = USER.getSessionId();
             userId = USER.getUserId();
         }

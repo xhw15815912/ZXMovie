@@ -90,7 +90,7 @@ public class RecommedAdapter extends RecyclerView.Adapter<RecommedAdapter.VH> {
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return list.    size();
     }
 
     class VH extends RecyclerView.ViewHolder {

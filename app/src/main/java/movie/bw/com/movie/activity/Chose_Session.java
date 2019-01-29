@@ -77,7 +77,7 @@ public class Chose_Session extends BaseActivity {
         intent = new Intent(this, Choose_Seat.class);
         filmInfo_presenter = new FilmInfo_Presenter(new FilmInfo());
         Intent intent = getIntent();
-        if (USER!=null&&list.size()>0){
+        if (list!=null&&list.size()>0){
             sessionId = USER.getSessionId();
             userId = USER.getUserId();
         }

@@ -51,7 +51,7 @@ public class MyInterestActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        if (USER != null && list.size() > 0) {
+        if (list != null && list.size() > 0) {
             userId = USER.getUserId();
             sessionId = USER.getSessionId();
         }

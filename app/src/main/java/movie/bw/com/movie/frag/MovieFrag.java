@@ -100,7 +100,7 @@ public class MovieFrag extends BaseFragment {
 
     @Override
     protected void initView() {
-        if (USER != null && list.size() > 0) {
+        if (list != null && list.size() > 0) {
             sessionId = USER.getSessionId();
             userId = USER.getUserId();
         }
@@ -119,12 +119,12 @@ public class MovieFrag extends BaseFragment {
         flowAdapter = new FlowAdapter(getActivity());
         nowAdapter = new NowAdapter(getActivity());
         findHotMovieListPresenter = new FindHotMovieListPresenter(new HotMovie());
-        findHotMovieListPresenter.request( 1, 10);
+        findHotMovieListPresenter.request( userId,sessionId,1, 10);
     }
 
     private void initHotMove() {
-        nowMovie.request( 1, 10);
-        soonMoviewPresenter.request(1, 10);
+        nowMovie.request( userId,sessionId,1, 10);
+        soonMoviewPresenter.request(userId,sessionId,1, 10);
         hotMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         nowMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         soonMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));

@@ -28,6 +28,7 @@
         <activity android:name="movie.bw.com.movie.activity.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -48,12 +49,13 @@
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
+
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5c4ef6a1f1f556f631000f55"/>
+            android:value="5c4ef6a1f1f556f631000f55" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="ceshi"/>
+            android:value="${UMENG_CHANNEL_VALUE}" />
 
         <activity android:name="movie.bw.com.movie.activity.MyMessageActivity" />
         <activity android:name="movie.bw.com.movie.activity.MyInterestActivity" />
@@ -69,14 +71,17 @@
         <activity android:name="movie.bw.com.movie.activity.FeedActivity" />
         <activity android:name="movie.bw.com.movie.activity.SystemInfoActivity" />
         <activity android:name="movie.bw.com.movie.activity.DetailsofcinemaActivity" />
-        <activity android:name="movie.bw.com.movie.activity.ChangePasswordActivity"></activity>
+        <activity android:name="movie.bw.com.movie.activity.ChangePasswordActivity" />
         <!-- 微信支付 -->
-        <activity android:name="com.bw.movie.wxapi.WXPayEntryActivity"
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
-            android:launchMode="singleTop"
-            />
-        <activity android:name="com.bw.movie.wxapi.WXEntryActivity"
-            android:exported="true" android:launchMode="singleTop" />
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+        <activity android:name="movie.bw.com.movie.activity.TickethistorypageActivity"></activity>
     </application>
 
 </manifest>

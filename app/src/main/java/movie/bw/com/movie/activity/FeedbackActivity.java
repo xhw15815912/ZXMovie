@@ -56,7 +56,7 @@ public class FeedbackActivity extends BaseActivity {
     @Override
     protected void initView() {
         feedPresenter = new FeedPresenter(new Feed());
-        if (USER != null && list.size() > 0) {
+        if (list != null && list.size() > 0) {
             userId = USER.getUserId();
             sessionId = USER.getSessionId();
         }

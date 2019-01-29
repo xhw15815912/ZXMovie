@@ -19,6 +19,7 @@ import movie.bw.com.movie.bean.Recommend;
 import movie.bw.com.movie.bean.ParticularsBean;
 import movie.bw.com.movie.bean.Result;
 import movie.bw.com.movie.bean.SystemInfoBean;
+import movie.bw.com.movie.bean.TheticketrecordBean;
 import movie.bw.com.movie.bean.UserInfo;
 import okhttp3.MultipartBody;
 import retrofit2.http.Field;
@@ -62,18 +63,24 @@ public interface IRequest {
     //查询热门影片
     @GET("movie/v1/findHotMovieList")
     Observable<Result<List<HotMovie>>> FINDHOT(
+            @Header("userId")int userId,
+            @Header("sessionId")String sessionId,
             @Query("page") int page,
             @Query("count") int count
     );
     //查看正在上映的电影
     @GET("movie/v1/findReleaseMovieList")
     Observable<Result<List<HotMovie>>> NOW(
+            @Header("userId")int userId,
+            @Header("sessionId")String sessionId,
             @Query("page") int page,
             @Query("count") int count
     );
     //查看即将上映
     @GET("movie/v1/findComingSoonMovieList")
     Observable<Result<List<HotMovie>>> Soon(
+            @Header("userId")int userId,
+            @Header("sessionId")String sessionId,
             @Query("page") int page,
             @Query("count") int count
     );
@@ -249,4 +256,11 @@ public interface IRequest {
     @POST("user/v1/verify/uploadHeadPic")
     Observable<Result> HeadImage(@Header("userId")int userId, @Header("sessionId")String sessionId,
                                       @Part MultipartBody.Part image);
+    @GET("user/v1/verify/findUserBuyTicketRecordList")
+    Observable<Result<List<TheticketrecordBean>>> findUserBuyTicketRecordList(
+            @Header("userId") int userId, @Header("sessionId") String sessionId,
+            @Query("page") int page,
+            @Query("count") int count,
+            @Query("status") int status
+    );
 }

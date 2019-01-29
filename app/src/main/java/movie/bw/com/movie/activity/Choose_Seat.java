@@ -88,7 +88,7 @@ public class Choose_Seat extends BaseActivity {
     @Override
     protected void initView() {
         wxPay_presenter = new WxPay_Presenter(new Pay());
-        if (USER != null && list.size() > 0) {
+        if (list != null && list.size() > 0) {
             userId = USER.getUserId();
             sessionId = USER.getSessionId();
         }
