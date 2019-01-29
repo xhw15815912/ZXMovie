@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.bw.movie.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import org.xml.sax.helpers.LocatorImpl;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,8 +44,8 @@ public class MovieReviewAdapter extends RecyclerView.Adapter<MovieReviewAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         viewHolder.head.setImageURI(list.get(i).getCommentHeadPic());
-        Log.e("1111","===="+list.get(i).getMovieComment());
-        viewHolder.message.setText(list.get(i).getMovieComment());
+        viewHolder.message.setText(list.get(i).getCommentContent());
+
         viewHolder.name.setText(list.get(i).getCommentUserName());
         viewHolder.time.setText(list.get(i).getCommentTime()+"");
         viewHolder.num.setText(list.get(i).getReplyNum()+"");

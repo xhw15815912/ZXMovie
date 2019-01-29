@@ -28,11 +28,14 @@ import movie.bw.com.movie.bean.Chose_Session_Bean;
  */
 public class TimesAdapter extends RecyclerView.Adapter<TimesAdapter.ViewHolder> {
     private final Context context;
+
     private List<Chose_Session_Bean> list;
+    private Intent intent;
 
     public TimesAdapter(Context context) {
         this.context=context;
         this.list=new ArrayList<>();
+        intent = new Intent();
     }
 
     @NonNull
@@ -43,7 +46,7 @@ public class TimesAdapter extends RecyclerView.Adapter<TimesAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
           viewHolder.start.setText(list.get(i).getBeginTime()+"");
           viewHolder.end.setText(list.get(i).getEndTime()+"");
           viewHolder.name.setText(list.get(i).getScreeningHall());
@@ -57,7 +60,13 @@ public class TimesAdapter extends RecyclerView.Adapter<TimesAdapter.ViewHolder> 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context,Choose_Seat.class));
+                intent.putExtra("start",list.get(i).getBeginTime());
+                intent.putExtra("end",list.get(i).getEndTime());
+                intent.putExtra("hall",list.get(i).getScreeningHall());
+                intent.putExtra("price",list.get(i).getPrice());
+                intent.putExtra("id",list.get(i).getId());
+
+                context.startActivity(intent);
             }
         });
     }
@@ -74,6 +83,10 @@ public class TimesAdapter extends RecyclerView.Adapter<TimesAdapter.ViewHolder> 
             notifyDataSetChanged();
         }
 
+    }
+
+    public void setIntent(Intent intent1) {
+        this.intent=intent1;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

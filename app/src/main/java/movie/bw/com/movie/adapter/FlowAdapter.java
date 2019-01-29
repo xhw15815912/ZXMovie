@@ -27,10 +27,12 @@ import movie.bw.com.movie.bean.HotMovie;
 public class FlowAdapter extends RecyclerView.Adapter<FlowAdapter.ViewHolder> {
     private final FragmentActivity context;
     private List<HotMovie> list;
+    private Intent intent1;
 
     public FlowAdapter(FragmentActivity activity) {
         this.context=activity;
         this.list=new ArrayList<>();
+        intent1=new Intent();
     }
 
     @NonNull
@@ -46,12 +48,14 @@ public class FlowAdapter extends RecyclerView.Adapter<FlowAdapter.ViewHolder> {
         String name = list.get(i).getName();
         viewHolder.image.setImageURI(imageUrl);
         viewHolder.name.setText(name);
+        intent1.putExtra("MovieNmae",list.get(i).getName());
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                onItemClickListener.onItemClick(list.get(i).getId());
                 Intent intent = new Intent(context, MovieDetails.class);
                 intent.putExtra("id",list.get(i).getId());
+
                 context.startActivity(intent);
             }
         });
@@ -69,6 +73,10 @@ public class FlowAdapter extends RecyclerView.Adapter<FlowAdapter.ViewHolder> {
             notifyDataSetChanged();
         }
 
+    }
+
+    public void setIntent(Intent intent1) {
+        this.intent1=intent1;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

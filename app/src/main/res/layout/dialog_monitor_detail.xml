@@ -1,4 +1,4 @@
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -97,5 +97,31 @@
             />
 
     </android.support.design.widget.CoordinatorLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:id="@+id/rea"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_show"
+        >
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/back"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/com_icon_my"
+            />
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/write"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/com_icon_publish_default"
+            android:layout_alignParentRight="true"
+            />
 
-</FrameLayout>
+    </RelativeLayout>
+</RelativeLayout>

@@ -249,4 +249,20 @@ public interface IRequest {
     @POST("user/v1/verify/uploadHeadPic")
     Observable<Result> HeadImage(@Header("userId")int userId, @Header("sessionId")String sessionId,
                                       @Part MultipartBody.Part image);
+    //影院评论
+    @FormUrlEncoded
+    @POST("cinema/v1/verify/cinemaComment")
+    Observable<Result> FilmComment(@Header("userId") int userId,
+                                   @Header("sessionId") String sessionId,
+                                   @Field("cinemaId") String cinemaId,
+                                     @Field("commentContent") String commentContent
+    );
+    //影院评论
+    @FormUrlEncoded
+    @POST("movie/v1/verify/movieComment")
+    Observable<Result> MovieComment(@Header("userId") int userId,
+                                   @Header("sessionId") String sessionId,
+                                   @Field("movieId") String movieId,
+                                   @Field("commentContent") String commentContent
+    );
 }

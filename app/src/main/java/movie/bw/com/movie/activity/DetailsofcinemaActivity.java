@@ -52,6 +52,9 @@ public class DetailsofcinemaActivity extends BaseActivity {
     private TimesAdapter adapters;
     private FragmentFeedCmt fragmentFeedCmt;
     private int yid;
+    private Intent intent;
+    private Intent intent1;
+    private List<HotMovie> result;
 
     @Override
     protected int getLayoutId() {
@@ -60,29 +63,31 @@ public class DetailsofcinemaActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+        Intent intent = getIntent();
         adapter = new FlowAdapter(this);
-
+        intent1 = new Intent(this, Choose_Seat.class);
         flow.setAdapter(adapter);
         presenter = new FindMoviePresenter(new FindMovie());
-        Intent intent = getIntent();
+        yid = intent.getIntExtra("yid", 0);
+        presenter.request(yid);
         String image = intent.getStringExtra("image");
         image_sim.setImageURI(image);
         String name = intent.getStringExtra("name");
         title.setText(name);
         String address = intent.getStringExtra("address");
         content.setText(address);
-        yid = intent.getIntExtra("yid", 0);
-        presenter.request(yid);
+        intent1.putExtra("FimlName",name);
+        intent1.putExtra("FimlAddress",address);
+        dtPresenter = new DTPresenter(new DT());
 
         flow.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {
             @Override
             public void onItemSelected(int position) {
-
-                dtPresenter.request(yid,position);
+                //请求当前影院当前电影的排场
+                dtPresenter.request(yid,result.get(position).getId());
             }
         });
-        dtPresenter = new DTPresenter(new DT());
+
 
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
         layoutManager.setOrientation(OrientationHelper.VERTICAL);
@@ -117,9 +122,10 @@ public class DetailsofcinemaActivity extends BaseActivity {
     private class FindMovie implements DataCall<Result<List<HotMovie>>> {
         @Override
         public void success(Result<List<HotMovie>> data) {
-            List<HotMovie> result = data.getResult();
+            result = data.getResult();
+            dtPresenter.request(yid,result.get(0).getId());
             adapter.setData(result);
-
+            adapter.setIntent(intent1);
             adapter.notifyDataSetChanged();
         }
 
@@ -134,7 +140,10 @@ public class DetailsofcinemaActivity extends BaseActivity {
         @Override
         public void success(Result<List<Chose_Session_Bean>> data) {
             List<Chose_Session_Bean> result = data.getResult();
+            intent = new Intent(DetailsofcinemaActivity.this, Choose_Seat.class);
             adapters.setList(result);
+            adapters.setIntent(intent1);
+
             adapters.notifyDataSetChanged();
         }
 

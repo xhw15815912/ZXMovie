@@ -29,7 +29,7 @@ public class MoviewCommentBean {
          * commentUserId : 6
          * commentUserName : 谁的益达
          */
-
+        private String commentContent;
         private int commentId;
         private long commentTime;
         private int greatNum;
@@ -41,7 +41,15 @@ public class MoviewCommentBean {
         private int commentUserId;
         private String commentUserName;
 
-        public int getCommentId() {
+    public String getCommentContent() {
+        return commentContent;
+    }
+
+    public void setCommentContent(String commentContent) {
+        this.commentContent = commentContent;
+    }
+
+    public int getCommentId() {
             return commentId;
         }
 
