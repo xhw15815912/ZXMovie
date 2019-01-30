@@ -1,6 +1,10 @@
 package movie.bw.com.movie.activity;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -10,9 +14,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -21,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bw.movie.R;
+import com.facebook.common.file.FileUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.io.File;
@@ -64,6 +72,7 @@ public class MyMessageActivity extends BaseActivity {
     private String sessionId;
     private File file;
     private Change_UserHead_Presenter change_userHead_presenter;
+    private PopupWindow popupWindow;
 
     @Override
     protected int getLayoutId() {
@@ -87,6 +96,9 @@ public class MyMessageActivity extends BaseActivity {
 
     }
 
+
+
+
     @OnClick({R.id.back,R.id.user_avatar})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -95,48 +107,40 @@ public class MyMessageActivity extends BaseActivity {
                 break;
             case R.id.user_avatar:
                 View view1 = View.inflate(getBaseContext(), R.layout.popwind_item, null);
-                final PopupWindow popupWindow = new PopupWindow(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                popupWindow = new PopupWindow(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 popupWindow.setContentView(view1);
                 popupWindow.setFocusable(true);
                 popupWindow.setOutsideTouchable(true);
                 popupWindow.setBackgroundDrawable(new ColorDrawable(Color.RED));
-                View photo_album = view1.findViewById(R.id.photo_album);
-                View viewById = view1.findViewById(R.id.camera);
-                viewById.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //用于保存调用相机拍照后所生成的文件
-                        file = new File(Environment.getExternalStorageDirectory().getPath(), System.currentTimeMillis() + ".jpg");
-                        //跳转到调用系统相机
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        //判断版本
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            //如果在Android7.0以上,使用FileProvider获取Uri
-                            intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                            Uri contentUri = FileProvider.getUriForFile(MyMessageActivity.this, "com.bw.movie", file);
-                            intent.putExtra(MediaStore.EXTRA_OUTPUT, contentUri);
-                            Log.e("dasd", contentUri.toString());
-                        } else {
-                            //否则使用Uri.fromFile(file)方法获取Uri
-                            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-                        }
-                        startActivityForResult(intent, 1);
-                        if (popupWindow != null && popupWindow.isShowing()) {
-                            popupWindow.dismiss();
-                        }
+                Button photo_album = view1.findViewById(R.id.photo_album);
 
-                    }
-                });
+                //相机的点击事件
+
+                //相册的点击事件
                 photo_album.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Toast.makeText(MyMessageActivity.this,"111",Toast.LENGTH_LONG).show();
                         //调用相册
-                        Intent intent = new Intent(Intent.ACTION_PICK);
+                        /*Intent intent = new Intent(Intent.ACTION_PICK);
                         intent.setType("image/*");
                         startActivityForResult(intent, 2);
                         if (popupWindow != null && popupWindow.isShowing()) {
                             popupWindow.dismiss();
+                        }*/
+
+                        if (ContextCompat.checkSelfPermission(MyMessageActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                            //权限还没有授予，需要在这里写申请权限的代码
+                            ActivityCompat.requestPermissions(MyMessageActivity.this,
+                                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+                        } else {
+                            Intent openAlbumIntent = new Intent(
+                                    Intent.ACTION_PICK);
+                            openAlbumIntent.setType("image/*");
+                            //用startActivityForResult方法，待会儿重写onActivityResult()方法，拿到图片做裁剪操作
+                            startActivityForResult(openAlbumIntent, 2);
                         }
+                        popupWindow.dismiss();
                     }
                 });
                 popupWindow.showAtLocation(view1, 1, 0, 0);
@@ -155,7 +159,7 @@ public class MyMessageActivity extends BaseActivity {
         @Override
         public void success(Result<MeBean> result) {
             if (result.getStatus().equals("0000")) {
-                Toast.makeText(MyMessageActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MyMessageActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                 MeBean meBean = result.getResult();
 
                 userAvatar.setImageURI(meBean.getHeadPic());
@@ -185,9 +189,14 @@ public class MyMessageActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 2 && resultCode == RESULT_OK) {
             //用户从图库选择图片后会返回所选图片的Uri
-
-            String filePath = getFilePath(null, requestCode, data);
-            change_userHead_presenter.request(userId,sessionId,filePath);
+            Uri uri = data.getData();
+            String[] proj = {MediaStore.Images.Media.DATA};
+            Cursor actualimagecursor = getContentResolver().query(uri, proj, null, null, null);
+            int actual_image_column_index = actualimagecursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            actualimagecursor.moveToFirst();
+            String img_path = actualimagecursor.getString(actual_image_column_index);
+            change_userHead_presenter.request(userId,sessionId,img_path);
         }
        //调用相机后返回
         if (requestCode == 1 && resultCode == RESULT_OK) {
@@ -220,7 +229,8 @@ public class MyMessageActivity extends BaseActivity {
 
                 HashMap<String, String> map = new HashMap<>();
                 map.put("image", path + "");
-
+                String filePath = getFilePath(null, requestCode, data);
+                change_userHead_presenter.request(userId,sessionId,filePath);
                 //change_userHead_presenter.request(userId,sessionId,map);
 
             }
@@ -287,6 +297,11 @@ public class MyMessageActivity extends BaseActivity {
     private class Change implements DataCall<Result> {
         @Override
         public void success(Result data) {
+            if (data.getStatus().equals("0000")){
+                Toast.makeText(MyMessageActivity.this,data.getMessage(),Toast.LENGTH_LONG).show();
+                mePresenter.request(userId, sessionId);
+                popupWindow.dismiss();
+            }
 
         }
 

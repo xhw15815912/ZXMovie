@@ -1,7 +1,9 @@
 package movie.bw.com.movie.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -42,6 +44,39 @@ public class ChangePasswordActivity extends BaseActivity {
             userId = USER.getUserId();
         }
         changePwdPresenter = new ChangePwdPresenter(new Change());
+        textLpwd.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(!hasFocus){
+                    InputMethodManager systemService = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (systemService != null){
+                        systemService.hideSoftInputFromWindow(view.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+                    }
+                }
+            }
+        });
+        textXpwd.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(!hasFocus){
+                    InputMethodManager systemService = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (systemService != null){
+                        systemService.hideSoftInputFromWindow(view.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+                    }
+                }
+            }
+        });
+        textXxpwd.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(!hasFocus){
+                    InputMethodManager systemService = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (systemService != null){
+                        systemService.hideSoftInputFromWindow(view.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -57,7 +92,15 @@ public class ChangePasswordActivity extends BaseActivity {
                 String lpwd = textLpwd.getText().toString();
                 String xpwd = textXpwd.getText().toString();
                 String xxpwd = textXxpwd.getText().toString();
-                changePwdPresenter.request(userId,sessionId,EncryptUtil.encrypt(lpwd),EncryptUtil.encrypt(xpwd) ,EncryptUtil.encrypt(xxpwd) );
+                if (lpwd.equals(xpwd)){
+                    Toast.makeText(ChangePasswordActivity.this,"新密码与旧密码相同请更改",Toast.LENGTH_LONG).show();
+                }else{
+                    if (xxpwd.equals(xpwd)){
+                        changePwdPresenter.request(userId,sessionId,EncryptUtil.encrypt(lpwd),EncryptUtil.encrypt(xpwd) ,EncryptUtil.encrypt(xxpwd) );
+                    }else{
+                        Toast.makeText(ChangePasswordActivity.this,"两次新密码不相同请核对",Toast.LENGTH_LONG).show();
+                    }
+                }
                 break;
             case R.id.finif:
                     finish();

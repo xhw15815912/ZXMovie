@@ -67,6 +67,8 @@ public class MyFrag extends BaseFragment {
     SimpleDraweeView headimage;
     @BindView(R.id.name)
     TextView name;
+    @BindView(R.id.sign_in)
+    TextView sign_in;
     @BindView(R.id.my_chat)
     RelativeLayout myChat;
     @BindView(R.id.my_attention)
@@ -108,11 +110,26 @@ public class MyFrag extends BaseFragment {
             sessionId = USER.getSessionId();
         }
         singn = new UserSingnInPresenter(new UserSingnIn());
+        if (list.size()>0&&list!=null){
+            singn.request(userId,sessionId);
+        }
         mePresenter = new MePresenter(new  MeData());
         mePresenter.request(userId, sessionId);
         changeHeadImage_presenter = new ChangeHeadImage_Presenter(new HeadImag());
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mePresenter.request(userId, sessionId);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mePresenter.request(userId, sessionId);
+    }
 
     @OnClick({R.id.trumpet, R.id.headimage, R.id.my_chat, R.id.my_attention, R.id.my_rccord, R.id.my_feedback, R.id.my_version, R.id.sign_in, R.id.my_logout})
     public void onViewClicked(View view) {
@@ -130,6 +147,8 @@ public class MyFrag extends BaseFragment {
 //                        startActivityForResult(intent,1);
                     startActivity(new Intent(getContext(), MainActivity.class));
                     getActivity().finish();
+                }else{
+
                 }
 
                 break;
@@ -203,9 +222,10 @@ public class MyFrag extends BaseFragment {
         @Override
         public void success(Result data) {
             if (data.getStatus().equals("0000")) {
+                sign_in.setText("签到");
                 Toast.makeText(getContext(), data.getMessage(), Toast.LENGTH_SHORT).show();
-
             } else {
+                sign_in.setText("已签到");
                 Toast.makeText(getContext(), data.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
