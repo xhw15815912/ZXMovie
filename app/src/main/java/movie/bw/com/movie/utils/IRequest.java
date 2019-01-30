@@ -22,6 +22,7 @@ import movie.bw.com.movie.bean.SystemInfoBean;
 import movie.bw.com.movie.bean.TheticketrecordBean;
 import movie.bw.com.movie.bean.UserInfo;
 import okhttp3.MultipartBody;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -252,10 +253,10 @@ public interface IRequest {
 //                             @Header("sessionId") String sessionId,
 //                             @Field("image") File image);
     //修改用户头像
-    @Multipart
+
     @POST("user/v1/verify/uploadHeadPic")
     Observable<Result> HeadImage(@Header("userId")int userId, @Header("sessionId")String sessionId,
-                                      @Part MultipartBody.Part image);
+                                      @Body MultipartBody  body);
     @GET("user/v1/verify/findUserBuyTicketRecordList")
     Observable<Result<List<TheticketrecordBean>>> findUserBuyTicketRecordList(
             @Header("userId") int userId, @Header("sessionId") String sessionId,

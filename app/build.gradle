@@ -5,7 +5,6 @@ android {
         config {
             keyAlias 'bw_movie'
             keyPassword '123456'
-
             storePassword '123456'
             storeFile file('C:/Users/LENOVO/Desktop/movie.keystore')
         }
@@ -29,8 +28,8 @@ android {
 
         manifestPlaceholders = [
 
-                XG_ACCESS_ID : "2100326279",
-                XG_ACCESS_KEY: "A77X9DXY82DN",
+                XG_ACCESS_ID : "2100300660",
+                XG_ACCESS_KEY: "A44FJ9N7N9EY",
         ]
     }
     buildTypes {
