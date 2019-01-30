@@ -41,9 +41,10 @@ public class GuidePageActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        preferences = getSharedPreferences("isFirstUse", MODE_WORLD_READABLE);
-        if (!preferences.getBoolean("isFirstUse", true)) {
-            startActivity(new Intent(GuidePageActivity.this, MainActivity.class));
+        preferences = getSharedPreferences("config", MODE_WORLD_READABLE);
+        boolean isFirstUse = preferences.getBoolean("isFirstUse", false);
+        if (isFirstUse) {
+            startActivity(new Intent(GuidePageActivity.this, ShowActivity.class));
             return;
         }
         list = new ArrayList<>();
@@ -59,13 +60,13 @@ public class GuidePageActivity extends BaseActivity {
                 radio.check(radio.getChildAt(i).getId());
                 if (i == list.size() - 1) {
 
-                    startActivity(new Intent(GuidePageActivity.this, MainActivity.class));
+                    startActivity(new Intent(GuidePageActivity.this, ShowActivity.class));
 
                     finish();
                     //实例化Editor对象
                     SharedPreferences.Editor editor = preferences.edit();
                     //存入数据
-                    editor.putBoolean("isFirstUse", false);
+                    editor.putBoolean("isFirstUse", true);
                     //提交修改
                     editor.commit();
                 }

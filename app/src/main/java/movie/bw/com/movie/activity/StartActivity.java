@@ -21,10 +21,10 @@ public class StartActivity extends BaseActivity {
 
             if (time == 0) {
                 if (USER != null && list.size() > 0) {
-                    startActivity(new Intent(StartActivity.this, ShowActivity.class));
+                    startActivity(new Intent(StartActivity.this, GuidePageActivity.class));
                     finish();
                 } else {
-                    startActivity(new Intent(StartActivity.this, ShowActivity.class));
+                    startActivity(new Intent(StartActivity.this, GuidePageActivity.class));
                     finish();
                 }
             } else {

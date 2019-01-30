@@ -283,7 +283,6 @@ public class MovieFrag extends BaseFragment {
         public void success(Result<List<movie.bw.com.movie.bean.HotMovie>> data) {
             if (data.getStatus().equals("0000")) {
                 soonAdapter.setData(data.getResult());
-
             }
         }
 
