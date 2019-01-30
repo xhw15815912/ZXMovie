@@ -5,9 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,7 +23,11 @@ import android.widget.Toast;
 import com.bw.movie.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +37,7 @@ import movie.bw.com.movie.bean.MeBean;
 import movie.bw.com.movie.bean.Result;
 import movie.bw.com.movie.core.DataCall;
 import movie.bw.com.movie.core.exception.ApiException;
+import movie.bw.com.movie.p.Change_UserHead_Presenter;
 import movie.bw.com.movie.p.MePresenter;
 
 public class MyMessageActivity extends BaseActivity {
@@ -53,6 +62,8 @@ public class MyMessageActivity extends BaseActivity {
     private MePresenter mePresenter;
     private int userId;
     private String sessionId;
+    private File file;
+    private Change_UserHead_Presenter change_userHead_presenter;
 
     @Override
     protected int getLayoutId() {
@@ -65,7 +76,7 @@ public class MyMessageActivity extends BaseActivity {
             userId = USER.getUserId();
             sessionId = USER.getSessionId();
         }
-
+        change_userHead_presenter = new Change_UserHead_Presenter(new Change());
         mePresenter = new MePresenter(new MeData());
         mePresenter.request(userId, sessionId);
 
@@ -94,22 +105,38 @@ public class MyMessageActivity extends BaseActivity {
                 viewById.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //调用相机拍照的方法
-                        Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        intent1.addCategory("android.intent.category.DEFAULT");
-                        startActivityForResult(intent1, 0);
-                        popupWindow.dismiss();
+                        //用于保存调用相机拍照后所生成的文件
+                        file = new File(Environment.getExternalStorageDirectory().getPath(), System.currentTimeMillis() + ".jpg");
+                        //跳转到调用系统相机
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        //判断版本
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            //如果在Android7.0以上,使用FileProvider获取Uri
+                            intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                            Uri contentUri = FileProvider.getUriForFile(MyMessageActivity.this, "com.bw.movie", file);
+                            intent.putExtra(MediaStore.EXTRA_OUTPUT, contentUri);
+                            Log.e("dasd", contentUri.toString());
+                        } else {
+                            //否则使用Uri.fromFile(file)方法获取Uri
+                            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+                        }
+                        startActivityForResult(intent, 1);
+                        if (popupWindow != null && popupWindow.isShowing()) {
+                            popupWindow.dismiss();
+                        }
 
                     }
                 });
                 photo_album.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //调用获取本地图片的方法
-                        Intent intent2 = new Intent(Intent.ACTION_PICK);
-                        intent2.setType("image/*");
-                        startActivityForResult(intent2, 1);
-                        popupWindow.dismiss();
+                        //调用相册
+                        Intent intent = new Intent(Intent.ACTION_PICK);
+                        intent.setType("image/*");
+                        startActivityForResult(intent, 2);
+                        if (popupWindow != null && popupWindow.isShowing()) {
+                            popupWindow.dismiss();
+                        }
                     }
                 });
                 popupWindow.showAtLocation(view1, 1, 0, 0);
@@ -156,35 +183,116 @@ public class MyMessageActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 2 && resultCode == RESULT_OK) {
+            //用户从图库选择图片后会返回所选图片的Uri
 
-        switch (requestCode) {
-            case 0:
-                Bitmap bitmap = data.getParcelableExtra("data");
-                userAvatar.setImageBitmap(bitmap);
-                break;
-            case 1:
-                Uri uri = data.getData();
-                Intent intent = crop(uri);
-                startActivityForResult(intent, 2);
-                break;
-            case 2:
-                Bitmap bitmap1 = (Bitmap) data.getExtras().get("data");
-                userAvatar.setImageBitmap(bitmap1);
-                break;
+            String filePath = getFilePath(null, requestCode, data);
+            change_userHead_presenter.request(userId,sessionId,filePath);
+        }
+       //调用相机后返回
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+
+            //版本号大于等于7.0
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                //通过FileProvider创建一个content类型的Uri
+                Uri contentUri = FileProvider.getUriForFile(MyMessageActivity.this, "com.bw.movie", file);
+                cropPhoto(contentUri);
+                String filePath = getFilePath(null, requestCode, data);
+                change_userHead_presenter.request(userId,sessionId,filePath);
+            } else {
+                cropPhoto(Uri.fromFile(file));
+            }
+            cropPhoto(Uri.fromFile(file));
+        }
+        if (requestCode == 3 && resultCode == RESULT_OK) {
+
+            Bundle bundle = data.getExtras();
+            if (bundle != null) {
+                //在这里获得了剪裁后的Bitmap对象，可以用于上传
+                Bitmap image = bundle.getParcelable("data");
+                //设置到ImageView上
+                userAvatar.setImageBitmap(image);
+
+                //也可以进行一些保存、压缩等操作后上传
+                String path = saveImage("crop", image);
+
+                File filea = getFile(image);
+
+                HashMap<String, String> map = new HashMap<>();
+                map.put("image", path + "");
+
+                //change_userHead_presenter.request(userId,sessionId,map);
+
+            }
         }
     }
 
-    //剪切
-    private Intent crop(Uri uri) {
+    /**
+     * 裁剪图片
+     */
+    private void cropPhoto (Uri uri){
         Intent intent = new Intent("com.android.camera.action.CROP");
+        //intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        //intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         intent.setDataAndType(uri, "image/*");
-        intent.putExtra("crop", true);
-        intent.putExtra("acceptX", 1);
-        intent.putExtra("acceptY", 1);
-        intent.putExtra("outputX", 250);
-        intent.putExtra("outputY", 250);
-        intent.putExtra("outputFormat", "JPEG");
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+
+        intent.putExtra("outputX", 300);
+        intent.putExtra("outputY", 300);
         intent.putExtra("return-data", true);
-        return intent;
+
+        startActivityForResult(intent, 3);
+    }
+    public String saveImage (String name, Bitmap bmp){
+        File appDir = new File(Environment.getExternalStorageDirectory().getPath());
+        if (!appDir.exists()) {
+            appDir.mkdir();
+        }
+        String fileName = name + ".jpg";
+        File file = new File(appDir, fileName);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.flush();
+            fos.close();
+            return file.getAbsolutePath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public File getFile (Bitmap bmp){
+        String defaultPath = getApplicationContext().getFilesDir()
+                .getAbsolutePath() + "/defaultGoodInfo";
+        File file = new File(defaultPath);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        String defaultImgPath = defaultPath + "/messageImg.jpg";
+        file = new File(defaultImgPath);
+        try {
+            file.createNewFile();
+            FileOutputStream fOut = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.PNG, 20, fOut);
+            fOut.flush();
+            fOut.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
+
+    private class Change implements DataCall<Result> {
+        @Override
+        public void success(Result data) {
+
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
     }
 }

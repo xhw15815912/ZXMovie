@@ -23,6 +23,6 @@ public class ChangeHeadImage_Presenter extends BasePresenter {
     @Override
     protected Observable observable(Object... args) {
         IRequest iRequest = NotWorkUtils.getNotWorkUtils().create(IRequest.class);
-        return iRequest.HeadImage((int)args[0],(String)args[1],(MultipartBody.Part) args[2]);
+        return null;
     }
 }
