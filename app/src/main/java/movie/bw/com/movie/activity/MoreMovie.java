@@ -114,28 +114,31 @@ public class MoreMovie extends BaseActivity implements XRecyclerView.LoadingList
             @Override
             public void onItemClick(int cinemaId, int isFollow) {
                 Log.d("状态渍渍渍++++++++++", "onItemClick: "+isFollow);
-                if (hot.isClickable()){
-                   if (isFollow==1){
-                       unfollowPresenter.request(userId,sessionId,cinemaId);
-                   }else if (isFollow==2){
-                       unfollowcinemasPresenter.request(userId,sessionId,cinemaId);
+                if (USER!=null){
+                    if (hot.isClickable()){
+                        if (isFollow==1){
+                            unfollowPresenter.request(userId,sessionId,cinemaId);
+                        }else if (isFollow==2){
+                            unfollowcinemasPresenter.request(userId,sessionId,cinemaId);
 
-                   }
-                } else if (photo.isClickable()) {
-                    if (isFollow==1){
-                        unfollowPresenter.request(userId,sessionId,cinemaId);
-                    }else if (isFollow==2){
-                        unfollowcinemasPresenter.request(userId,sessionId,cinemaId);
+                        }
+                    } else if (photo.isClickable()) {
+                        if (isFollow==1){
+                            unfollowPresenter.request(userId,sessionId,cinemaId);
+                        }else if (isFollow==2){
+                            unfollowcinemasPresenter.request(userId,sessionId,cinemaId);
 
-                    }
-                } else if (comment.isClickable()) {
-                    if (isFollow==1){
-                        unfollowPresenter.request(userId,sessionId,cinemaId);
-                    }else if (isFollow==2){
-                        unfollowcinemasPresenter.request(userId,sessionId,cinemaId);
+                        }
+                    } else if (comment.isClickable()) {
+                        if (isFollow==1){
+                            unfollowPresenter.request(userId,sessionId,cinemaId);
+                        }else if (isFollow==2){
+                            unfollowcinemasPresenter.request(userId,sessionId,cinemaId);
 
+                        }
                     }
                 }
+
             }
         });
     }

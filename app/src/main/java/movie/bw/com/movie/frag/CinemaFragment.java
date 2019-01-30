@@ -181,21 +181,23 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
             @Override
             public void onItemClick(int cinemaId, int isFollow) {
                 Log.d("状态值++++++++++++++++", "onItemClick: "+isFollow);
-                if (recommend.isChecked()){
-                    if (isFollow==1){
-                        focusonFilmPresenter.request(userId,sessionId,cinemaId);
+                if(USER!=null&&list.size()>0){
+                    if (recommend.isChecked()){
+                        if (isFollow==1){
+                            focusonFilmPresenter.request(userId,sessionId,cinemaId);
 
-                    }else if (isFollow==2){
-                        attentiontocinemaPresenter.request(userId,sessionId,cinemaId);
+                        }else if (isFollow==2){
+                            attentiontocinemaPresenter.request(userId,sessionId,cinemaId);
 
-                    }
-                }else if (nearby.isChecked()){
-                    if (isFollow==1){
-                        focusonFilmPresenter.request(userId,sessionId,cinemaId);
+                        }
+                    }else if (nearby.isChecked()){
+                        if (isFollow==1){
+                            focusonFilmPresenter.request(userId,sessionId,cinemaId);
 
-                    }else if (isFollow==2){
-                        attentiontocinemaPresenter.request(userId,sessionId,cinemaId);
+                        }else if (isFollow==2){
+                            attentiontocinemaPresenter.request(userId,sessionId,cinemaId);
 
+                        }
                     }
                 }
 

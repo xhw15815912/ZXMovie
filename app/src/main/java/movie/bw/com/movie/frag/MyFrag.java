@@ -2,6 +2,7 @@ package movie.bw.com.movie.frag;
 
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -20,6 +21,7 @@ import com.bw.movie.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -48,6 +50,9 @@ import movie.bw.com.movie.p.MePresenter;
 import movie.bw.com.movie.p.MyInterestPresenter;
 import movie.bw.com.movie.p.UserSingnInPresenter;
 import movie.bw.com.movie.utils.ImageUtil;
+
+import static android.content.Context.ACTIVITY_SERVICE;
+import static android.content.Intent.FLAG_ACTIVITY_NO_HISTORY;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -108,6 +113,7 @@ public class MyFrag extends BaseFragment {
         changeHeadImage_presenter = new ChangeHeadImage_Presenter(new HeadImag());
     }
 
+
     @OnClick({R.id.trumpet, R.id.headimage, R.id.my_chat, R.id.my_attention, R.id.my_rccord, R.id.my_feedback, R.id.my_version, R.id.sign_in, R.id.my_logout})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -115,16 +121,17 @@ public class MyFrag extends BaseFragment {
                 startActivity(new Intent(getContext(), SystemInfoActivity.class));
                 break;
             case R.id.headimage:
-                if (list != null && list.size() > 0) {
-                    Toast.makeText(getContext(), "已有用户", Toast.LENGTH_SHORT).show();
-                    //Intent隐式跳转至相册
-                    Intent intent = new Intent();
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    intent.setType("image/*");
-                        startActivityForResult(intent,1);
-                }else {
+                if (list.size()==0) {
+//                    Toast.makeText(getContext(), "已有用户", Toast.LENGTH_SHORT).show();
+//                    //Intent隐式跳转至相册
+//                    Intent intent = new Intent();
+//                    intent.setAction(Intent.ACTION_GET_CONTENT);
+//                    intent.setType("image/*");
+//                        startActivityForResult(intent,1);
                     startActivity(new Intent(getContext(), MainActivity.class));
+                    getActivity().finish();
                 }
+
                 break;
             case R.id.my_chat:
                 Intent intent = new Intent(getContext(), MyMessageActivity.class);
@@ -145,21 +152,24 @@ public class MyFrag extends BaseFragment {
 
                 break;
             case R.id.sign_in:
-
-                singn.request(userId,sessionId);
+                if (list.size()>0&&list!=null){
+                    singn.request(userId,sessionId);
+                }else {
+                    Toast.makeText(getContext(), "请先登录", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.my_logout:
                 if (list != null && list.size() > 0) {
                     DaoSession daoSession = DaoMaster.newDevSession(getActivity(), UserBeanDao.TABLENAME);
                     UserBeanDao userBeanDao = daoSession.getUserBeanDao();
                     userBeanDao.deleteAll();
-                    mePresenter.request(userId, sessionId);
-                    Intent intent1 = new Intent(getActivity(), MainActivity.class)
-                            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    headimage.setImageResource(R.mipmap.m);
+                    name.setText("请登录");
+                    list.clear();
+//                    mePresenter.request(userId, sessionId);
+                    Toast.makeText(getContext(), "退出登录", Toast.LENGTH_SHORT).show();
 
-                    startActivity(intent1);
                 }else {
-
                         // 显示内容一样时，只有间隔时间大于5秒时才显示
                         if (System.currentTimeMillis() - time >5000) {
                             Toast.makeText(getContext(), "你还未登录过！！！", Toast.LENGTH_LONG).show();
@@ -171,6 +181,7 @@ public class MyFrag extends BaseFragment {
                 break;
         }
     }
+
     public void showMyToast(final Toast toast, final int cnt) {
         final Timer timer =new Timer();
         timer.schedule(new TimerTask() {
