@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bw.movie.R;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -42,6 +43,7 @@ import movie.bw.com.movie.core.DataCall;
 import movie.bw.com.movie.core.exception.ApiException;
 import movie.bw.com.movie.frag.InputDialog;
 import movie.bw.com.movie.frag.MovieInpuDialog;
+import movie.bw.com.movie.p.FilmPresenter;
 import movie.bw.com.movie.p.MovieReview_Presenter;
 import movie.bw.com.movie.p.ParticularsPresenter;
 
@@ -75,6 +77,7 @@ public class MovieDetails extends BaseActivity {
     private String sessionId;
     private int userId;
     private MovieInpuDialog inputDialog;
+    private FilmPresenter filmPresenter;
 
 
     @Override
@@ -84,12 +87,18 @@ public class MovieDetails extends BaseActivity {
 
     @Override
     protected void initView() {
+        filmPresenter = new FilmPresenter(new FILE());
         dialog = new Dialog(this,R.style.DialogTheme);
         jiaoZiAdapter = new JiaoZiAdapter(this);
         photoAdapter = new PhotoAdapter(this);
         movieReviewAdapter = new MovieReviewAdapter(this);
         movieReview_presenter = new MovieReview_Presenter(new Review());
-
+        movieReviewAdapter.setOnItemClickListener(new MovieReviewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int commentId) {
+                filmPresenter.request(userId,sessionId,commentId);
+            }
+        });
 
         Intent intent = getIntent();
         if (list!=null&&list.size()>0){
@@ -313,5 +322,23 @@ public class MovieDetails extends BaseActivity {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         int height = wm.getDefaultDisplay().getHeight();
         return height;
+    }
+
+    private class FILE implements DataCall<Result> {
+        @Override
+        public void success(Result data) {
+            if (data.getStatus().equals("0000")){
+                Toast.makeText(MovieDetails.this, data.getMessage(), Toast.LENGTH_SHORT).show();
+                movieReview_presenter.request(userId,sessionId,id);
+            }else {
+                Toast.makeText(MovieDetails.this, data.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
     }
 }

@@ -279,4 +279,18 @@ public interface IRequest {
                                    @Field("movieId") String movieId,
                                    @Field("commentContent") String commentContent
     );
+    //影院评论点赞
+    @FormUrlEncoded
+    @POST("cinema/v1/verify/cinemaCommentGreat")
+    Observable<Result> cinemaCommentGreat(@Header("userId") int userId,
+                                    @Header("sessionId") String sessionId,
+                                    @Field("commentId")int commentId);
+    //影片评论点赞
+    @FormUrlEncoded
+    @POST("movie/v1/verify/movieCommentGreat")
+    Observable<Result> movieCommentGreat(
+            @Header("userId") int userId,
+            @Header("sessionId") String sessionId,
+            @Field("commentId")int commentId
+    );
 }

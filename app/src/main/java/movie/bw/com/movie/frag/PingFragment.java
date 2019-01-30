@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bw.movie.R;
 
@@ -23,6 +24,7 @@ import movie.bw.com.movie.bean.FilmCommentBean;
 import movie.bw.com.movie.bean.Result;
 import movie.bw.com.movie.core.DataCall;
 import movie.bw.com.movie.core.exception.ApiException;
+import movie.bw.com.movie.p.CommentPresenter;
 import movie.bw.com.movie.p.Film_Comment;
 
 
@@ -34,6 +36,9 @@ public class PingFragment extends BaseFragment {
     private Film_Comment film_comment;
     private FilmComment_Adapter filmComment_adapter;
     private String s;
+    private CommentPresenter commentPresenter;
+    private String sessionId;
+    private int userId;
 
     @Override
     public String getPageName() {
@@ -47,11 +52,22 @@ public class PingFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        if (list!=null&&list.size()>0){
+            sessionId = USER.getSessionId();
+            userId = USER.getUserId();
+        }
+        commentPresenter = new CommentPresenter(new Comm());
         film_comment = new Film_Comment(new CallBack());
         film_comment.request(s);
         recy.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         filmComment_adapter = new FilmComment_Adapter(getActivity());
         recy.setAdapter(filmComment_adapter);
+        filmComment_adapter.setOnItemClickListener(new FilmComment_Adapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int cinemaId) {
+             commentPresenter.request(userId,sessionId,cinemaId);
+            }
+        });
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
@@ -88,5 +104,23 @@ public class PingFragment extends BaseFragment {
     public void onStart() {
         super.onStart();
         film_comment.request(s);
+    }
+
+    private class Comm implements DataCall<Result> {
+        @Override
+        public void success(Result data) {
+            if (data.getStatus().equals("0000")){
+                Toast.makeText(getContext(), data.getMessage(), Toast.LENGTH_SHORT).show();
+                film_comment.request(s);
+                filmComment_adapter.notifyDataSetChanged();
+            }else {
+                Toast.makeText(getContext(), data.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
     }
 }

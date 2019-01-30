@@ -28,7 +28,7 @@ import movie.bw.com.movie.bean.MoviewCommentBean;
 public class FilmComment_Adapter extends RecyclerView.Adapter<FilmComment_Adapter.ViewHolder> {
     private final FragmentActivity context;
     private List<FilmCommentBean> list;
-
+   private boolean isFow;
     public FilmComment_Adapter(FragmentActivity activity) {
        this.context=activity;
         this.list=new ArrayList<>();
@@ -42,15 +42,31 @@ public class FilmComment_Adapter extends RecyclerView.Adapter<FilmComment_Adapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FilmComment_Adapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final FilmComment_Adapter.ViewHolder viewHolder, int i) {
         viewHolder.head.setImageURI(list.get(i).getCommentHeadPic());
-
+        FilmCommentBean bean = list.get(i);
+        final int commentId = bean.getCommentId();
         viewHolder.message.setText(list.get(i).getCommentContent());
         viewHolder.name.setText(list.get(i).getCommentUserName());
         viewHolder.time.setText(list.get(i).getCommentTime()+"");
         viewHolder.num.setText(list.get(i).getHotComment()+"");
         viewHolder.great.setText(list.get(i).getGreatNum()+"");
-    }
+        viewHolder.praise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.onItemClick(commentId);
+            }
+        });
+        if (isFow){
+            isFow=true;
+            viewHolder.praise.setImageResource(R.mipmap.com_icon_praise_selected);
+
+        }else {
+            isFow=true;
+            viewHolder.praise.setImageResource(R.mipmap.com_icon_praise_default);
+
+        }
+     }
 
     @Override
     public int getItemCount() {
@@ -80,5 +96,17 @@ public class FilmComment_Adapter extends RecyclerView.Adapter<FilmComment_Adapte
             praise=itemView.findViewById(R.id.praise);
             great=itemView.findViewById(R.id.great);
         }
+    }
+    //定义接口
+    public interface OnItemClickListener {
+        void onItemClick(int cinemaId);
+    }
+
+    //方法名
+    private  OnItemClickListener onItemClickListener;
+
+    //方法      设置点击方法
+    public void setOnItemClickListener( OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 }
