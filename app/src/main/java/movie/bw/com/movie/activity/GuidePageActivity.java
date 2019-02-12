@@ -41,7 +41,7 @@ public class GuidePageActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        preferences = getSharedPreferences("config", MODE_WORLD_READABLE);
+        preferences = getSharedPreferences("config", MODE_PRIVATE);
         boolean isFirstUse = preferences.getBoolean("isFirstUse", false);
         if (isFirstUse) {
             startActivity(new Intent(GuidePageActivity.this, ShowActivity.class));

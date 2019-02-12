@@ -2,8 +2,11 @@ package movie.bw.com.movie.base;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -49,11 +52,12 @@ public abstract class BaseFragment  extends Fragment implements CustomAdapt {
     //public UserInfo LOGIN_USER;
     public UserBean USER;
     public List<UserBean> list;
+    private ConnectivityManager connectivityManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        connectivityManager = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         XGPushConfig.enableDebug(getActivity(),true);
 
         XGPushConfig.enableOtherPush(getActivity().getApplicationContext(), true);
@@ -122,7 +126,21 @@ public abstract class BaseFragment  extends Fragment implements CustomAdapt {
         }
 
     }
-
+    /**
+     * 判断网络
+     *
+     * @return true为有网络，false无网络
+     */
+    protected boolean isConnection() {
+        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+        if(info != null ){
+            //表示可以连接网络
+            return true;
+        }else{
+            //则不能
+            return false;
+        }
+    }
     private void initLoad() {
         mLoadDialog = new ProgressDialog(getContext());// 加载框
         mLoadDialog.setCanceledOnTouchOutside(false);

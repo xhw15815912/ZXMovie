@@ -17,7 +17,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/FileName"
-            android:text="111"
             android:textColor="#666666"
             android:textSize="14sp"
             />
@@ -54,12 +53,13 @@
             android:id="@+id/image"
             android:layout_marginTop="6dp"
             android:layout_marginLeft="6dp"
+            app:placeholderImage="@mipmap/z"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/movieName"
-            android:text="111111"
+
             android:layout_toRightOf="@id/image"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
@@ -75,7 +75,6 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:textColor="#ffffff"
-            android:text="1111"
             android:textSize="12sp"
             />
         <TextView
@@ -87,7 +86,6 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:textColor="#ffffff"
-            android:text="1111"
             android:textSize="12sp"
             />
         <TextView
@@ -99,7 +97,6 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:textColor="#ffffff"
-            android:text="1111"
             android:textSize="12sp"
             />
         <TextView
@@ -111,7 +108,6 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:textColor="#ffffff"
-            android:text="1111"
             android:textSize="12sp"
             />
     </RelativeLayout>

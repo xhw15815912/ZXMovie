@@ -19,6 +19,7 @@
         tools:ignore="ProtectedPermissions" />
 
     <application
+        android:screenOrientation="portrait"
         android:name="movie.bw.com.movie.App"
         android:allowBackup="true"
         android:icon="@drawable/appicon"
