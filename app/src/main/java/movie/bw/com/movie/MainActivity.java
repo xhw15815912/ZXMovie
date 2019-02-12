@@ -80,6 +80,8 @@ public class MainActivity extends BaseActivity {
         return R.layout.activity_main;
     }
 
+
+
     @Override
     protected void initView() {
         Intent intent = getIntent();
@@ -98,6 +100,7 @@ public class MainActivity extends BaseActivity {
         } else {
             remberpwd.setChecked(false);
         }
+
         initData();
 
         eye.setOnTouchListener(new View.OnTouchListener() {
@@ -166,12 +169,15 @@ public class MainActivity extends BaseActivity {
     //微信登录
     @OnClick(R.id.weixin)
     public void LoginWeixin(){
-        SendAuth.Req req = new SendAuth.Req();
-        req.scope = "snsapi_userinfo";
-        req.state = "wechat_sdk_demo_test";
-        api.sendReq(req);
-
-
+        boolean connection = isConnection();
+        if (connection){
+            SendAuth.Req req = new SendAuth.Req();
+            req.scope = "snsapi_userinfo";
+            req.state = "wechat_sdk_demo_test";
+            api.sendReq(req);
+        }else{
+            Toast.makeText(this,"没有网络！",Toast.LENGTH_LONG).show();
+        }
     }
     @OnClick(R.id.regist)
     public void Regirst(){

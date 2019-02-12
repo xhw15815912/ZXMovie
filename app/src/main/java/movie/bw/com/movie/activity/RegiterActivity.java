@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.bigkoo.pickerview.TimePickerView;
 import com.bw.movie.R;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -144,14 +145,18 @@ public class RegiterActivity extends BaseActivity {
 
     @OnClick(R.id.btn_regiter)
     public void onViewClicked() {
-        String reg_nickname = nickname.getText().toString();
-        String reg_loginpassword = editLoginpassword.getText().toString();
-        String reg__phone = editPhone.getText().toString();
-        String reg_birth = editDateofbirth.getText().toString();
-        String reg_box = editPostbox.getText().toString();
-        String date = editDateofbirth.getText().toString();
-        regiterPresenter.request(reg_nickname, reg__phone, EncryptUtil.encrypt(reg_loginpassword), EncryptUtil.encrypt(reg_loginpassword), gender, date, "123456", "小米", "5.0", "android", reg_box);
-
+        boolean connection = isConnection();
+        if (connection){
+            String reg_nickname = nickname.getText().toString();
+            String reg_loginpassword = editLoginpassword.getText().toString();
+            String reg__phone = editPhone.getText().toString();
+            String reg_birth = editDateofbirth.getText().toString();
+            String reg_box = editPostbox.getText().toString();
+            String date = editDateofbirth.getText().toString();
+            regiterPresenter.request(reg_nickname, reg__phone, EncryptUtil.encrypt(reg_loginpassword), EncryptUtil.encrypt(reg_loginpassword), gender, date, "123456", "小米", "5.0", "android", reg_box);
+        }else{
+            Toast.makeText(this,"没有网络！",Toast.LENGTH_LONG).show();
+        }
     }
 
     private String getTime(Date date) {//可根据需要自行截取数据显示

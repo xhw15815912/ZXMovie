@@ -2,6 +2,7 @@ package movie.bw.com.movie.frag;
 
 
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,13 +16,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.bw.movie.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.util.List;
 
 import butterknife.BindView;
@@ -42,6 +48,8 @@ import movie.bw.com.movie.core.exception.ApiException;
 import movie.bw.com.movie.p.FindHotMovieListPresenter;
 import movie.bw.com.movie.p.NowMovie;
 import movie.bw.com.movie.p.SoonMoviewPresenter;
+
+import movie.bw.com.movie.utils.CacheManager;
 import recycler.coverflow.RecyclerCoverFlow;
 
 
@@ -87,6 +95,7 @@ public class MovieFrag extends BaseFragment {
     private NowAdapter nowAdapter;
     private SoonAdapter soonAdapter;
     private ObjectAnimator animator;
+    private CacheManager cacheManager;
 
     @Override
     public String getPageName() {
@@ -104,15 +113,42 @@ public class MovieFrag extends BaseFragment {
             sessionId = USER.getSessionId();
             userId = USER.getUserId();
         }
+        cacheManager = new CacheManager();
         initFlow();
         initHotMove();
         flow.setAdapter(flowAdapter);
         hotMove.setAdapter(hotMovieAdapter);
         nowMove.setAdapter(nowAdapter);
         soonMove.setAdapter(soonAdapter);
+        boolean connection = isConnection();
+        if (!connection){
+            Toast.makeText(getActivity(),"没网啦！！！",Toast.LENGTH_LONG).show();
+            String s = cacheManager.loadDataFromFile(getContext(), "hot");
+            String s1 = cacheManager.loadDataFromFile(getContext(), "now");
+            String s2 = cacheManager.loadDataFromFile(getContext(), "soon");
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<movie.bw.com.movie.bean.HotMovie>>() {
+            }.getType();
+            Type type1 = new TypeToken<List<movie.bw.com.movie.bean.HotMovie>>() {
+            }.getType();
+            Type type2 = new TypeToken<List<movie.bw.com.movie.bean.HotMovie>>() {
+            }.getType();
+            List<movie.bw.com.movie.bean.HotMovie> o = gson.fromJson(s, type);
+            List<movie.bw.com.movie.bean.HotMovie> o1 = gson.fromJson(s1, type1);
+            List<movie.bw.com.movie.bean.HotMovie> o2 = gson.fromJson(s2, type2);
+            hotMovieAdapter.setData(o);
+            hotMovieAdapter.notifyDataSetChanged();
+            soonAdapter.setData(o1);
+            soonAdapter.notifyDataSetChanged();
+            nowAdapter.setData(o2);
+            nowAdapter.notifyDataSetChanged();
+            flowAdapter.setData(o);
+            flowAdapter.notifyDataSetChanged();
+        }
     }
 
     private void initFlow() {
+
         nowMovie = new NowMovie(new Now());
         soonAdapter = new SoonAdapter(getActivity());
         soonMoviewPresenter = new SoonMoviewPresenter(new Soon());
@@ -251,15 +287,18 @@ public class MovieFrag extends BaseFragment {
         public void success(Result<List<movie.bw.com.movie.bean.HotMovie>> data) {
             Log.e("qwer", data.getMessage() + "===");
 
+            //FileUtils.writeFile()
             if (data.getStatus().equals("0000")) {
+                List<movie.bw.com.movie.bean.HotMovie> result = data.getResult();
+                Gson gson = new Gson();
+                String s = gson.toJson(result);
+                cacheManager.saveDataToFile(getContext(),s,"hot");
                 flowAdapter.setData(data.getResult());
                 hotMovieAdapter.setData(data.getResult());
             }
         }
-
         @Override
         public void fail(ApiException e) {
-
         }
     }
 
@@ -268,7 +307,10 @@ public class MovieFrag extends BaseFragment {
         public void success(Result<List<movie.bw.com.movie.bean.HotMovie>> data) {
             if (data.getStatus().equals("0000")) {
                 nowAdapter.setData(data.getResult());
-
+                List<movie.bw.com.movie.bean.HotMovie> result = data.getResult();
+                Gson gson = new Gson();
+                String s = gson.toJson(result);
+                cacheManager.saveDataToFile(getContext(),s,"now");
             }
         }
 
@@ -283,6 +325,10 @@ public class MovieFrag extends BaseFragment {
         public void success(Result<List<movie.bw.com.movie.bean.HotMovie>> data) {
             if (data.getStatus().equals("0000")) {
                 soonAdapter.setData(data.getResult());
+                List<movie.bw.com.movie.bean.HotMovie> result = data.getResult();
+                Gson gson = new Gson();
+                String s = gson.toJson(result);
+                cacheManager.saveDataToFile(getContext(),s,"soon");
             }
         }
 

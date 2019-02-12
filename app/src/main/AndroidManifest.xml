@@ -36,7 +36,11 @@
         </activity>
         <activity android:name="movie.bw.com.movie.activity.RegiterActivity" />
         <activity android:name="movie.bw.com.movie.activity.ShowActivity" />
-
+        <receiver android:name="movie.bw.com.movie.utils.NetWorkReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+        </receiver>
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="qHnEwbGEWeANLSvjYht33oCumc5UrDF8" />
