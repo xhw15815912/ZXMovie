@@ -6,6 +6,8 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -48,10 +50,12 @@ public abstract class BaseActivity extends AppCompatActivity implements CustomAd
     private String success ;
     public UserBean USER;
     public List<UserBean> list;
+    private ConnectivityManager connectivityManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        connectivityManager = (ConnectivityManager)getSystemService (CONNECTIVITY_SERVICE);
         // Android4.4的沉浸式状态栏写法
         XGPushConfig.enableDebug(this,true);
 
@@ -105,6 +109,21 @@ public abstract class BaseActivity extends AppCompatActivity implements CustomAd
      */
     protected boolean isRegisterEventBus() {
         return false;
+    }
+    /**
+     * 判断网络
+     *
+     * @return true为有网络，false无网络
+     */
+    protected boolean isConnection() {
+        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+        if(info != null ){
+            //表示可以连接网络
+            return true;
+        }else{
+            //则不能
+            return false;
+        }
     }
     /**
      * 设置layoutId

@@ -107,15 +107,6 @@
                 android:textColor="#fff"
                 android:theme="@style/MyCheckBox" />
 
-            <CheckBox
-                android:id="@+id/zd"
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:layout_toRightOf="@id/remberpwd"
-                android:text="自动登录"
-                android:textColor="#fff"
-                android:theme="@style/MyCheckBox" />
-
             <TextView
                 android:id="@+id/regist"
                 android:layout_width="wrap_content"

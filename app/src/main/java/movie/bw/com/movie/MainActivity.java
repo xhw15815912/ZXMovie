@@ -61,8 +61,6 @@ public class MainActivity extends BaseActivity {
     Button login;
     @BindView(R.id.remberpwd)
     CheckBox remberpwd;
-    @BindView(R.id.zd)
-    CheckBox zd;
     @BindView(R.id.regist)
     TextView regist;
     @BindView(R.id.weixin)
@@ -152,13 +150,18 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.login)
     public void Login(){
         //startActivity(new Intent(this,ShowActivity.class));
+        boolean connection = isConnection();
+        if (connection){
+            if (submit()){
+                s = moble.getText().toString();
+                password = pwd.getText().toString();
 
-         if (submit()){
-            s = moble.getText().toString();
-            password = pwd.getText().toString();
-
-            loginPresenter.request(s,EncryptUtil.encrypt(password));
+                loginPresenter.request(s,EncryptUtil.encrypt(password));
+            }
+        }else{
+            Toast.makeText(this,"没有网络！",Toast.LENGTH_LONG).show();
         }
+
     }
     //微信登录
     @OnClick(R.id.weixin)
