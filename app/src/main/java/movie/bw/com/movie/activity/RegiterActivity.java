@@ -200,6 +200,7 @@ public class RegiterActivity extends BaseActivity {
                 Toast.makeText(RegiterActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(RegiterActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
             } else {
                 Toast.makeText(RegiterActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
             }
