@@ -45,6 +45,7 @@ public class GuidePageActivity extends BaseActivity {
         boolean isFirstUse = preferences.getBoolean("isFirstUse", false);
         if (isFirstUse) {
             startActivity(new Intent(GuidePageActivity.this, ShowActivity.class));
+            finish();
             return;
         }
         list = new ArrayList<>();
@@ -74,6 +75,7 @@ public class GuidePageActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int i) {
+
             }
 
             @Override
