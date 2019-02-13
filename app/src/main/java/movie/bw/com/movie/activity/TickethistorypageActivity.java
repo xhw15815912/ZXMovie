@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -63,6 +64,7 @@ public class TickethistorypageActivity extends BaseActivity {
         theatersXrecyclerview.setLayoutManager(layoutManager);
         adapter = new PaymentonbehalfofothersAdapter(this);
         theatersXrecyclerview.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
     private void initData1() {
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
@@ -70,6 +72,7 @@ public class TickethistorypageActivity extends BaseActivity {
         theatersXrecyclerview.setLayoutManager(layoutManager);
         offthestocksAdapter = new OffthestocksAdapter(this);
         theatersXrecyclerview.setAdapter(adapter);
+        offthestocksAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -102,7 +105,7 @@ public class TickethistorypageActivity extends BaseActivity {
               if (data.getStatus().equals("0000")){
                   Toast.makeText(TickethistorypageActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
                   List<TheticketrecordBean> result = data.getResult();
-
+                  Log.e("wodewodewode",result.size()+",,,");
                   if (recommend.isChecked()){
                       adapter.addItem(result);
                       adapter.notifyDataSetChanged();

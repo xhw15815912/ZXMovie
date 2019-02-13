@@ -36,7 +36,9 @@ public class PaymentonbehalfofothersAdapter extends RecyclerView.Adapter<Payment
     }
     public void addItem(List<TheticketrecordBean> beans){
         if (beans!=null){
+            this.list.clear();
             list.addAll(beans);
+            notifyDataSetChanged();
         }
     }
     @NonNull
