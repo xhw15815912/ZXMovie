@@ -32,7 +32,9 @@ public class OffthestocksAdapter extends RecyclerView.Adapter<OffthestocksAdapte
     }
     public void addItem(List<TheticketrecordBean> beans){
         if (beans!=null){
+            this.list.clear();
             list.addAll(beans);
+            notifyDataSetChanged();
         }
     }
     @NonNull
