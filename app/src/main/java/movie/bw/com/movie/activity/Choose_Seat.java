@@ -36,6 +36,8 @@ public class Choose_Seat extends BaseActivity {
 
     @BindView(R.id.FilmName)
     TextView FilmName;
+    @BindView(R.id.zifu)
+    TextView zifu;
     @BindView(R.id.FilmPlace)
     TextView FilmPlace;
     @BindView(R.id.MovieName)
@@ -144,6 +146,7 @@ public class Choose_Seat extends BaseActivity {
                 NumberFormat nf = NumberFormat.getNumberInstance();
                 nf.setMaximumFractionDigits(2);
                 zong.setText(nf.format(price1));
+                zifu.setText("微信支付" +nf.format(price1) + "元");
             }
 
             @Override
@@ -159,6 +162,7 @@ public class Choose_Seat extends BaseActivity {
                 NumberFormat nf = NumberFormat.getNumberInstance();
                 nf.setMaximumFractionDigits(2);
                 zong.setText(nf.format(price1));
+                zifu.setText("微信支付" +nf.format(price1) + "元");
             }
 
             @Override
@@ -211,13 +215,13 @@ public class Choose_Seat extends BaseActivity {
     }
 
 
-    @OnClick({R.id.affirm, R.id.cancel,R.id.weixin_radio_button, R.id.zhifubao_radio_button})
+    @OnClick({R.id.affirm, R.id.cancel, R.id.weixin_radio_button,R.id.finishssss, R.id.zhifubao_radio_button, R.id.zifu})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.affirm:
-                if (USER==null){
+                if (USER == null) {
                     Intent intent = new Intent(Choose_Seat.this, MainActivity.class);
-                    intent.putExtra("id",1);
+                    intent.putExtra("id", 1);
                     startActivity(intent);
                 }
                 String sourceStr = userId + "" + id + "" + num + "movie";
@@ -225,34 +229,42 @@ public class Choose_Seat extends BaseActivity {
                 buyMovieTicketPresenter.request(userId, sessionId, id, num, sss);
                 break;
             case R.id.cancel:
-                di.setVisibility(View.GONE);
+                finish();
                 break;
             case R.id.weixin_radio_button:
-                Log.e("qwer3",111+"====");
-                wxPay_presenter.request(userId,sessionId,1, orderId);
+                zifu.setText("微信支付" + price1 + "元");
                 break;
             case R.id.zhifubao_radio_button:
+                zifu.setText("支付宝支付" + price1 + "元");
                 break;
             case R.id.finishssss:
-                Toast.makeText(this,"1111",Toast.LENGTH_LONG).show();
                 cenggong.setVisibility(View.GONE);
+                di.setVisibility(View.VISIBLE);
                 back.setVisibility(View.VISIBLE);
+                break;
+            case R.id.zifu:
+                if (weixinRadioButton.isChecked()) {
+                    wxPay_presenter.request(userId, sessionId, 1, orderId);
+                } else if (zhifubaoRadioButton.isChecked()) {
+                    Toast.makeText(this, "现在不支持支付宝，建议使用微信", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "至少要选择一个支付方式", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
-
 
 
     private class Buy implements DataCall<Result> {
         @Override
         public void success(Result data) {
             if (data.getStatus().equals("0000")) {
-                Log.e("qwer2",111+"====");
+                Log.e("qwer2", 111 + "====");
                 Toast.makeText(Choose_Seat.this, data.getMessage(), Toast.LENGTH_SHORT).show();
                 cenggong.setVisibility(View.VISIBLE);
                 di.setVisibility(View.GONE);
                 orderId = data.getOrderId();
-                Log.e("qwer1",orderId+"====");
+                Log.e("qwer1", orderId + "====");
             } else {
                 Toast.makeText(Choose_Seat.this, data.getMessage(), Toast.LENGTH_SHORT).show();
 
@@ -271,16 +283,16 @@ public class Choose_Seat extends BaseActivity {
 
             final IWXAPI msgApi = WXAPIFactory.createWXAPI(Choose_Seat.this, null);
             // 将该app注册到微信
-            Log.e("qwer",data.getAppId()+"====");
+            Log.e("qwer", data.getAppId() + "====");
             msgApi.registerApp("wxb3852e6a6b7d9516");
             PayReq request = new PayReq();
             request.appId = data.getAppId();
             request.partnerId = data.getPartnerId();
-            request.prepayId= data.getPrepayId();
+            request.prepayId = data.getPrepayId();
             request.packageValue = data.getPackageValue();
-            request.nonceStr= data.getNonceStr();
-            request.timeStamp= data.getTimeStamp();
-            request.sign= data.getSign();
+            request.nonceStr = data.getNonceStr();
+            request.timeStamp = data.getTimeStamp();
+            request.sign = data.getSign();
             msgApi.sendReq(request);
 
         }
