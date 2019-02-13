@@ -175,6 +175,7 @@ public class MainActivity extends BaseActivity {
             req.scope = "snsapi_userinfo";
             req.state = "wechat_sdk_demo_test";
             api.sendReq(req);
+            finish();
         } else {
             Toast.makeText(this, "没有网络！", Toast.LENGTH_LONG).show();
         }

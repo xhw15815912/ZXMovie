@@ -43,7 +43,7 @@ import movie.bw.com.movie.core.DataCall;
 import movie.bw.com.movie.core.exception.ApiException;
 import movie.bw.com.movie.frag.InputDialog;
 import movie.bw.com.movie.frag.MovieInpuDialog;
-import movie.bw.com.movie.p.AdduserresponsestocommentsPresenter;
+
 import movie.bw.com.movie.p.FilmPresenter;
 import movie.bw.com.movie.p.MovieReview_Presenter;
 import movie.bw.com.movie.p.ParticularsPresenter;
@@ -80,7 +80,7 @@ public class MovieDetails extends BaseActivity {
     private MovieInpuDialog inputDialog;
     private FilmPresenter filmPresenter;
 
-    private AdduserresponsestocommentsPresenter presenter;
+    //private AdduserresponsestocommentsPresenter presenter;
 
     @Override
     protected int getLayoutId() {
@@ -114,6 +114,8 @@ public class MovieDetails extends BaseActivity {
             particularsPresenter.request(userId, sessionId, id);
         }
         movieReview_presenter.request(userId,sessionId,id);
+
+
     }
 
     @Override
@@ -185,8 +187,8 @@ public class MovieDetails extends BaseActivity {
         RecyclerView recy = inflate.findViewById(R.id.recy);
         recy.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
-        jiaoZiAdapter.setData(result.getShortFilmList());
         recy.setAdapter(jiaoZiAdapter);
+
         dialog.show();
 
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -297,7 +299,7 @@ public class MovieDetails extends BaseActivity {
                 result = data.getResult();
                 name.setText(result.getName());
                 image.setImageURI(result.getImageUrl());
-
+                jiaoZiAdapter.setData(result.getShortFilmList());
             }
         }
 

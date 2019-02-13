@@ -109,22 +109,16 @@ public class TickethistorypageActivity extends BaseActivity {
                   if (recommend.isChecked()){
                       adapter.addItem(result);
                       adapter.notifyDataSetChanged();
-
                   }else if (nearby.isChecked()){
                       offthestocksAdapter.addItem(result);
                       offthestocksAdapter.notifyDataSetChanged();
                   }
-
-
               }else {
                   Toast.makeText(TickethistorypageActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
-
               }
         }
-
         @Override
         public void fail(ApiException e) {
-
         }
     }
 }

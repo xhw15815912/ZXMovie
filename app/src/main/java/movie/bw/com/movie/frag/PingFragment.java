@@ -57,7 +57,9 @@ public class PingFragment extends BaseFragment {
         }
         commentPresenter = new CommentPresenter(new Comm());
         film_comment = new Film_Comment(new CallBack());
-        film_comment.request(s);
+        if (s!=null){
+            film_comment.request(s);
+        }
         recy.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         filmComment_adapter = new FilmComment_Adapter(getActivity());
         recy.setAdapter(filmComment_adapter);
@@ -72,7 +74,9 @@ public class PingFragment extends BaseFragment {
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void FilmNum(String s) {
         this.s=s;
-        film_comment.request(s);
+        if (s!=null){
+            film_comment.request(s);
+        }
     }
 
     @Override
@@ -96,13 +100,17 @@ public class PingFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        film_comment.request(s);
+        if (s!=null){
+            film_comment.request(s);
+        }
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        film_comment.request(s);
+        if (s!=null){
+            film_comment.request(s);
+        }
     }
 
     private class Comm implements DataCall<Result> {
@@ -110,7 +118,9 @@ public class PingFragment extends BaseFragment {
         public void success(Result data) {
             if (data.getStatus().equals("0000")){
                 Toast.makeText(getContext(), data.getMessage(), Toast.LENGTH_SHORT).show();
-                film_comment.request(s);
+                if (s!=null){
+                    film_comment.request(s);
+                }
                 filmComment_adapter.notifyDataSetChanged();
             }else {
                 Toast.makeText(getContext(), data.getMessage(), Toast.LENGTH_SHORT).show();

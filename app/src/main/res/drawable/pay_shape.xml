@@ -12,9 +12,10 @@
         />
 
 
-    <gradient
-        android:startColor="#e8175e"
-        android:endColor="#440a33"
-        android:type="linear"/>
 
+    <gradient
+        android:startColor="#ee7700"
+        android:centerColor="#FFBB00"
+        android:endColor="#FFDD55"
+        android:type="linear" />
 </shape>

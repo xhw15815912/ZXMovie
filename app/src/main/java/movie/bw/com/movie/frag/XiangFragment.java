@@ -61,16 +61,15 @@ public class XiangFragment extends BaseFragment {
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void FilmNum(String s) {
         Log.e("s",s+"====");
-        filmInfo_presenter = new Film_Chat_Presenter(new CallBack());
-        filmInfo_presenter.request(s);
+        if (s!=null){
+            filmInfo_presenter = new Film_Chat_Presenter(new CallBack());
+            filmInfo_presenter.request(s);
+        }
     }
 
     @Override
     protected void initView() {
-
     }
-
-
     private class CallBack implements DataCall<Result<DetailsofcinemaBean>> {
         @Override
         public void success(Result<DetailsofcinemaBean> data) {
@@ -80,7 +79,6 @@ public class XiangFragment extends BaseFragment {
                 address.setText(data.getResult().getVehicleRoute());
             }
         }
-
         @Override
         public void fail(ApiException e) {
 

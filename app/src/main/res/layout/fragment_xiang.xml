@@ -16,11 +16,9 @@
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:id="@+id/place"
-
        android:layout_toRightOf="@id/a"
        android:layout_marginTop="10dp"
        android:layout_marginLeft="10dp"
-       android:text="11111111"
        />
     <ImageView
         android:layout_width="24dp"
@@ -37,9 +35,8 @@
         android:id="@+id/phone"
         android:layout_toRightOf="@id/b"
         android:layout_below="@id/place"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="25dp"
         android:layout_marginLeft="10dp"
-        android:text="11111111"
         />
     <ImageView
         android:layout_width="24dp"
@@ -55,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/c"
         android:layout_below="@id/phone"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_marginLeft="10dp"
         android:text="乘车路线"
         />

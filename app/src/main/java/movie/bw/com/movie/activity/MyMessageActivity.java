@@ -111,7 +111,7 @@ public class MyMessageActivity extends BaseActivity {
                 popupWindow.setContentView(view1);
                 popupWindow.setFocusable(true);
                 popupWindow.setOutsideTouchable(true);
-                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.RED));
+                //popupWindow.setBackgroundDrawable(new ColorDrawable(Color.RED));
                 Button photo_album = view1.findViewById(R.id.photo_album);
 
                 //相机的点击事件

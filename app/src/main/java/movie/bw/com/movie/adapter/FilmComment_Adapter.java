@@ -31,9 +31,8 @@ public class FilmComment_Adapter extends RecyclerView.Adapter<FilmComment_Adapte
    private boolean isFow;
     public FilmComment_Adapter(FragmentActivity activity) {
        this.context=activity;
-        this.list=new ArrayList<>();
+       this.list=new ArrayList<>();
     }
-
     @NonNull
     @Override
     public FilmComment_Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -70,7 +69,10 @@ public class FilmComment_Adapter extends RecyclerView.Adapter<FilmComment_Adapte
 
     @Override
     public int getItemCount() {
-        return list.size();
+        if (this.list!=null){
+            return this.list.size();
+        }
+        return 0;
     }
 
     public void setData(List<FilmCommentBean> result) {
@@ -79,7 +81,6 @@ public class FilmComment_Adapter extends RecyclerView.Adapter<FilmComment_Adapte
             this.list=result;
             notifyDataSetChanged();
         }
-
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

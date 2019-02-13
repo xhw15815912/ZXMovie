@@ -40,12 +40,5 @@
         android:layout_marginLeft="20dp"
         android:id="@+id/far"
         />
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@mipmap/com_icon_collection"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="70dp"
-        android:layout_marginRight="24dp"
-        />
+
 </RelativeLayout>
