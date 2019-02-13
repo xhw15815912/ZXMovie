@@ -24,19 +24,20 @@ import movie.bw.com.movie.bean.TheticketrecordBean;
  * Describe:
  */
 public class OffthestocksAdapter extends RecyclerView.Adapter<OffthestocksAdapter.VH> {
-    private List<TheticketrecordBean> list=new ArrayList<>();
+    private List<TheticketrecordBean> list = new ArrayList<>();
     private Context context;
 
     public OffthestocksAdapter(Context context) {
         this.context = context;
     }
-    public void addItem(List<TheticketrecordBean> beans){
-        if (beans!=null){
-            this.list.clear();
+
+    public void addItem(List<TheticketrecordBean> beans) {
+        if (beans != null) {
+            list.clear();
             list.addAll(beans);
-            notifyDataSetChanged();
         }
     }
+
     @NonNull
     @Override
     public VH onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -49,15 +50,15 @@ public class OffthestocksAdapter extends RecyclerView.Adapter<OffthestocksAdapte
     public void onBindViewHolder(@NonNull VH vh, int i) {
         TheticketrecordBean bean = list.get(i);
         vh.name.setText(bean.getMovieName());
-        vh.begin_time.setText(bean.getBeginTime()+"-"+bean.getEndTime());
-        vh.odd_hao.setText("订单号："+bean.getOrderId());
+        vh.begin_time.setText(bean.getBeginTime() + "-" + bean.getEndTime());
+        vh.odd_hao.setText("订单号：" + bean.getOrderId());
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String format = format1.format(bean.getCreateTime());
-        vh.cinem.setText("影院："+bean.getCinemaName());
-        vh.th_film_office.setText("影厅："+bean.getScreeningHall());
-        vh.timea.setText("时间："+format);
-        vh.number.setText("数量："+bean.getAmount()+"张");
-        vh.money.setText("金额："+bean.getPrice()+"元");
+        vh.cinem.setText("影院：" + bean.getCinemaName());
+        vh.th_film_office.setText("影厅：" + bean.getScreeningHall());
+        vh.timea.setText("时间：" + format);
+        vh.number.setText("数量：" + bean.getAmount() + "张");
+        vh.money.setText("金额：" + bean.getPrice() + "元");
 //        SimpleDateFormat format2 = new SimpleDateFormat("HH:mm:ss");
 //        String begin = format2.format(bean.getBeginTime());
 //        String end = format2.format(bean.getEndTime());
@@ -71,7 +72,7 @@ public class OffthestocksAdapter extends RecyclerView.Adapter<OffthestocksAdapte
         return list.size();
     }
 
-    class VH extends RecyclerView.ViewHolder{
+    class VH extends RecyclerView.ViewHolder {
 
         private final TextView odd_hao;
         private final TextView begin_time;
