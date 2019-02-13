@@ -157,7 +157,6 @@ public class MainActivity extends BaseActivity {
             if (submit()) {
                 s = moble.getText().toString();
                 password = pwd.getText().toString();
-
                 loginPresenter.request(s, EncryptUtil.encrypt(password));
             }
         } else {
@@ -230,7 +229,7 @@ public class MainActivity extends BaseActivity {
                 }
 
                 if (id == 1) {
-                    startActivity(new Intent(MainActivity.this, Choose_Seat.class));
+                    //startActivity(new Intent(MainActivity.this, Choose_Seat.class));
                     finish();
                 } else {
                     startActivity(new Intent(MainActivity.this, ShowActivity.class));

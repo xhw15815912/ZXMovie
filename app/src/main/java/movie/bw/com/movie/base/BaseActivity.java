@@ -198,8 +198,19 @@ public abstract class BaseActivity extends AppCompatActivity implements CustomAd
     @Override
     protected void onStart() {
         super.onStart();
+        DaoSession daoSession = DaoMaster.newDevSession(this, UserBeanDao.TABLENAME);
+        UserBeanDao userBeanDao = daoSession.getUserBeanDao();
+        list = userBeanDao.queryBuilder()
+                .where(UserBeanDao.Properties.Register.eq(1))
+                .build()
+                .list();
+
+        if (list !=null&& list.size()>0){
+            USER= list.get(0);
+        }
         mActivity = this;
     }
+
 
     /**
      * 获取当前处于前台的activity
@@ -252,10 +263,31 @@ public abstract class BaseActivity extends AppCompatActivity implements CustomAd
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
+        DaoSession daoSession = DaoMaster.newDevSession(this, UserBeanDao.TABLENAME);
+        UserBeanDao userBeanDao = daoSession.getUserBeanDao();
+        list = userBeanDao.queryBuilder()
+                .where(UserBeanDao.Properties.Register.eq(1))
+                .build()
+                .list();
+
+        if (list !=null&& list.size()>0){
+            USER= list.get(0);
+        }
     }
     @Override
     public void onPause() {
         super.onPause();
+        MobclickAgent.onResume(this);
+        DaoSession daoSession = DaoMaster.newDevSession(this, UserBeanDao.TABLENAME);
+        UserBeanDao userBeanDao = daoSession.getUserBeanDao();
+        list = userBeanDao.queryBuilder()
+                .where(UserBeanDao.Properties.Register.eq(1))
+                .build()
+                .list();
+
+        if (list !=null&& list.size()>0){
+            USER= list.get(0);
+        }
         MobclickAgent.onPause(this);
     }
 }

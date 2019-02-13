@@ -102,8 +102,6 @@ public class MyFrag extends BaseFragment {
 
     @Override
     protected void initView() {
-
-
         if (list != null && list.size() > 0) {
             userId = USER.getUserId();
             sessionId = USER.getSessionId();
@@ -122,8 +120,11 @@ public class MyFrag extends BaseFragment {
     public void onResume() {
         super.onResume();
         if (list != null && list.size() > 0) {
+            userId = USER.getUserId();
+            sessionId = USER.getSessionId();
+        }
+        if (list != null && list.size() > 0) {
             mePresenter.request(userId, sessionId);
-
         }
     }
 
@@ -131,7 +132,10 @@ public class MyFrag extends BaseFragment {
     public void onStart() {
         super.onStart();
         if (list != null && list.size() > 0) {
-
+            userId = USER.getUserId();
+            sessionId = USER.getSessionId();
+        }
+        if (list != null && list.size() > 0) {
             mePresenter.request(userId, sessionId);
         }
     }

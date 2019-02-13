@@ -40,5 +40,4 @@
         android:layout_marginLeft="20dp"
         android:id="@+id/far"
         />
-
 </RelativeLayout>

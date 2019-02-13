@@ -187,11 +187,46 @@ public abstract class BaseFragment  extends Fragment implements CustomAdapt {
     @Override
     public void onResume() {
         super.onResume();
+        DaoSession daoSession = DaoMaster.newDevSession(getActivity(), UserBeanDao.TABLENAME);
+        UserBeanDao userBeanDao = daoSession.getUserBeanDao();
+        list = userBeanDao.queryBuilder()
+                .where(UserBeanDao.Properties.Register.eq(1))
+                .build()
+                .list();
+
+        if (list !=null&& list.size()>0){
+            USER= list.get(0);
+        }
         MobclickAgent.onResume(getActivity());
     }
     @Override
     public void onPause() {
         super.onPause();
+        DaoSession daoSession = DaoMaster.newDevSession(getActivity(), UserBeanDao.TABLENAME);
+        UserBeanDao userBeanDao = daoSession.getUserBeanDao();
+        list = userBeanDao.queryBuilder()
+                .where(UserBeanDao.Properties.Register.eq(1))
+                .build()
+                .list();
+
+        if (list !=null&& list.size()>0){
+            USER= list.get(0);
+        }
         MobclickAgent.onPause(getActivity());
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        DaoSession daoSession = DaoMaster.newDevSession(getActivity(), UserBeanDao.TABLENAME);
+        UserBeanDao userBeanDao = daoSession.getUserBeanDao();
+        list = userBeanDao.queryBuilder()
+                .where(UserBeanDao.Properties.Register.eq(1))
+                .build()
+                .list();
+
+        if (list !=null&& list.size()>0){
+            USER= list.get(0);
+        }
     }
 }

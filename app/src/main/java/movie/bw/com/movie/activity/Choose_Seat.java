@@ -121,9 +121,7 @@ public class Choose_Seat extends BaseActivity {
             @Override
             public boolean isValidSeat(int row, int column) {
                 if (column == 2) {
-
                     return false;
-
                 }
                 return true;
             }
@@ -174,6 +172,33 @@ public class Choose_Seat extends BaseActivity {
         seatTableView.setData(10, 15);
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (list != null && list.size() > 0) {
+            userId = USER.getUserId();
+            sessionId = USER.getSessionId();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (list != null && list.size() > 0) {
+            userId = USER.getUserId();
+            sessionId = USER.getSessionId();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (list != null && list.size() > 0) {
+            userId = USER.getUserId();
+            sessionId = USER.getSessionId();
+        }
+    }
 
     /**
      * MD5加密
