@@ -211,7 +211,13 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
     @Override
     public void onResume() {
         super.onResume();
-        presenter.request(userId, sessionId, page, 10);
+        if (recommend.isChecked()){
+            presenter.request(userId, sessionId, page, 10);
+
+        }else {
+            nearcinemadPresenter.request(userId, sessionId, "116.30551391385724", "40.04571807462411", page, 10);
+
+        }
 
     }
 

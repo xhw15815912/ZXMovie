@@ -46,6 +46,7 @@ public interface IRequest {
     @FormUrlEncoded
     @POST("user/v1/weChatBindingLogin")
     Observable<Result<UserInfo>> WX_LOGIN(@Field("code") String code);
+
     @FormUrlEncoded
     @POST("user/v1/registerUser")
     Observable<Result> registerUser(
@@ -61,27 +62,30 @@ public interface IRequest {
             @Field("os") String os,
             @Field("email") String email
     );
+
     //查询热门影片
     @GET("movie/v1/findHotMovieList")
     Observable<Result<List<HotMovie>>> FINDHOT(
-            @Header("userId")int userId,
-            @Header("sessionId")String sessionId,
+            @Header("userId") int userId,
+            @Header("sessionId") String sessionId,
             @Query("page") int page,
             @Query("count") int count
     );
+
     //查看正在上映的电影
     @GET("movie/v1/findReleaseMovieList")
     Observable<Result<List<HotMovie>>> NOW(
-            @Header("userId")int userId,
-            @Header("sessionId")String sessionId,
+            @Header("userId") int userId,
+            @Header("sessionId") String sessionId,
             @Query("page") int page,
             @Query("count") int count
     );
+
     //查看即将上映
     @GET("movie/v1/findComingSoonMovieList")
     Observable<Result<List<HotMovie>>> Soon(
-            @Header("userId")int userId,
-            @Header("sessionId")String sessionId,
+            @Header("userId") int userId,
+            @Header("sessionId") String sessionId,
             @Query("page") int page,
             @Query("count") int count
     );
@@ -186,12 +190,13 @@ public interface IRequest {
 
     //影院详情
     @GET("cinema/v1/findCinemaInfo")
-    Observable<Result<DetailsofcinemaBean>> findCinemaInfo(@Header("userId")int userId,
-                                                           @Header("sessionId")String sessionId,
-                                                           @Query("cinemaId")int cinemaId);
+    Observable<Result<DetailsofcinemaBean>> findCinemaInfo(@Header("userId") int userId,
+                                                           @Header("sessionId") String sessionId,
+                                                           @Query("cinemaId") int cinemaId);
+
     //影院详情
     @GET("cinema/v1/findCinemaInfo")
-    Observable<Result<DetailsofcinemaBean>> FilMINFO(@Query("cinemaId")String cinemaId);
+    Observable<Result<DetailsofcinemaBean>> FilMINFO(@Query("cinemaId") String cinemaId);
 
     //查询影片评论
     @GET("cinema/v1/findAllCinemaComment")
@@ -200,6 +205,7 @@ public interface IRequest {
             @Query("page") int page,
             @Query("count") int count
     );
+
     //修改密码
     @FormUrlEncoded
     @POST("user/v1/verify/modifyUserPwd")
@@ -236,15 +242,17 @@ public interface IRequest {
     Observable<Result> cancelFollowMovie(@Header("userId") int userId, @Header("sessionId") String sessionId,
                                          @Query("movieId") int movieId
     );
+
     //关注影院
     @GET("cinema/v1/verify/followCinema")
     Observable<Result> followCinema(@Header("userId") int userId, @Header("sessionId") String sessionId,
                                     @Query("cinemaId") int cinemaId
     );
+
     //取消关注影院
     @GET("cinema/v1/verify/cancelFollowCinema")
     Observable<Result> cancelFollowCinema(@Header("userId") int userId, @Header("sessionId") String sessionId,
-                                    @Query("cinemaId") int cinemaId
+                                          @Query("cinemaId") int cinemaId
     );
 //    //头像上传
 //    @FormUrlEncoded
@@ -255,8 +263,9 @@ public interface IRequest {
     //修改用户头像
 
     @POST("user/v1/verify/uploadHeadPic")
-    Observable<Result> HeadImage(@Header("userId")int userId, @Header("sessionId")String sessionId,
-                                      @Body MultipartBody  body);
+    Observable<Result> HeadImage(@Header("userId") int userId, @Header("sessionId") String sessionId,
+                                 @Body MultipartBody body);
+
     @GET("user/v1/verify/findUserBuyTicketRecordList")
     Observable<Result<List<TheticketrecordBean>>> findUserBuyTicketRecordList(
             @Header("userId") int userId, @Header("sessionId") String sessionId,
@@ -264,34 +273,49 @@ public interface IRequest {
             @Query("count") int count,
             @Query("status") int status
     );
+
     //影院评论
     @FormUrlEncoded
     @POST("cinema/v1/verify/cinemaComment")
     Observable<Result> FilmComment(@Header("userId") int userId,
                                    @Header("sessionId") String sessionId,
                                    @Field("cinemaId") String cinemaId,
-                                     @Field("commentContent") String commentContent
+                                   @Field("commentContent") String commentContent
     );
+
     //影院评论
     @FormUrlEncoded
     @POST("movie/v1/verify/movieComment")
     Observable<Result> MovieComment(@Header("userId") int userId,
-                                   @Header("sessionId") String sessionId,
-                                   @Field("movieId") String movieId,
-                                   @Field("commentContent") String commentContent
+                                    @Header("sessionId") String sessionId,
+                                    @Field("movieId") String movieId,
+                                    @Field("commentContent") String commentContent
     );
+
     //影院评论点赞
     @FormUrlEncoded
     @POST("cinema/v1/verify/cinemaCommentGreat")
     Observable<Result> cinemaCommentGreat(@Header("userId") int userId,
-                                    @Header("sessionId") String sessionId,
-                                    @Field("commentId")int commentId);
+                                          @Header("sessionId") String sessionId,
+                                          @Field("commentId") int commentId);
+
     //影片评论点赞
     @FormUrlEncoded
     @POST("movie/v1/verify/movieCommentGreat")
     Observable<Result> movieCommentGreat(
             @Header("userId") int userId,
             @Header("sessionId") String sessionId,
-            @Field("commentId")int commentId
+            @Field("commentId") int commentId
     );
+
+    //添加用户对评论的回复
+    @FormUrlEncoded
+    @POST("movie/v1/verify/commentReply")
+    Observable<Result> commentReply(
+            @Header("userId") int userId,
+            @Header("sessionId") String sessionId,
+            @Field("commentId") int commentId,
+            @Field("replyContent") String replyContent
+    );
+
 }

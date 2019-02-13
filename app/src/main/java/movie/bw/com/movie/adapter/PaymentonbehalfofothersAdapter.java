@@ -20,6 +20,7 @@ import movie.bw.com.movie.bean.TheticketrecordBean;
 import static com.umeng.analytics.pro.k.a.b;
 import static com.umeng.analytics.pro.k.a.i;
 import static com.umeng.analytics.pro.k.a.s;
+import static com.umeng.analytics.pro.k.a.v;
 
 /**
  * Created by zxk
@@ -59,11 +60,12 @@ public class PaymentonbehalfofothersAdapter extends RecyclerView.Adapter<Payment
         vh.timea.setText("时间："+format);
         vh.number.setText("数量："+bean.getAmount()+"张");
         vh.money.setText("金额："+bean.getPrice()+"元");
-//        SimpleDateFormat format2 = new SimpleDateFormat("HH:mm:ss");
-//        String begin = format2.format(bean.getBeginTime());
-//        String end = format2.format(bean.getEndTime());
-//        long deadline = Long.parseLong(format);
+        vh.go_buymoney.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
 
     }
 
@@ -95,4 +97,17 @@ public class PaymentonbehalfofothersAdapter extends RecyclerView.Adapter<Payment
             th_film_office = itemView.findViewById(R.id.th_film_Office);
         }
     }
+    //定义接口
+    public interface OnItemClickListener {
+        void onItemClick(int commentId);
+    }
+
+    //方法名
+    private  OnItemClickListener onItemClickListener;
+
+    //方法      设置点击方法
+    public void setOnItemClickListener( OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
 }

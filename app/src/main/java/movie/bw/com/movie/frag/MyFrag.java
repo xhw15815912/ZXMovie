@@ -104,16 +104,15 @@ public class MyFrag extends BaseFragment {
     protected void initView() {
 
 
-
-        if (list!=null&&list.size()>0){
+        if (list != null && list.size() > 0) {
             userId = USER.getUserId();
             sessionId = USER.getSessionId();
         }
         singn = new UserSingnInPresenter(new UserSingnIn());
-        if (list.size()>0&&list!=null){
-            singn.request(userId,sessionId);
+        if (list.size() > 0 && list != null) {
+            singn.request(userId, sessionId);
         }
-        mePresenter = new MePresenter(new  MeData());
+        mePresenter = new MePresenter(new MeData());
         mePresenter.request(userId, sessionId);
         changeHeadImage_presenter = new ChangeHeadImage_Presenter(new HeadImag());
     }
@@ -122,13 +121,19 @@ public class MyFrag extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        mePresenter.request(userId, sessionId);
+        if (list != null && list.size() > 0) {
+            mePresenter.request(userId, sessionId);
+
+        }
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        mePresenter.request(userId, sessionId);
+        if (list != null && list.size() > 0) {
+
+            mePresenter.request(userId, sessionId);
+        }
     }
 
     @OnClick({R.id.trumpet, R.id.headimage, R.id.my_chat, R.id.my_attention, R.id.my_rccord, R.id.my_feedback, R.id.my_version, R.id.sign_in, R.id.my_logout})
@@ -138,7 +143,7 @@ public class MyFrag extends BaseFragment {
                 startActivity(new Intent(getContext(), SystemInfoActivity.class));
                 break;
             case R.id.headimage:
-                if (list.size()==0) {
+                if (list.size() == 0) {
 //                    Toast.makeText(getContext(), "已有用户", Toast.LENGTH_SHORT).show();
 //                    //Intent隐式跳转至相册
 //                    Intent intent = new Intent();
@@ -147,7 +152,7 @@ public class MyFrag extends BaseFragment {
 //                        startActivityForResult(intent,1);
                     startActivity(new Intent(getContext(), MainActivity.class));
                     getActivity().finish();
-                }else{
+                } else {
 
                 }
 
@@ -159,21 +164,21 @@ public class MyFrag extends BaseFragment {
             //我的关注
             case R.id.my_attention:
 
-                startActivity(new Intent(getContext(),MyInterestActivity.class));
+                startActivity(new Intent(getContext(), MyInterestActivity.class));
                 break;
             case R.id.my_rccord:
-                  startActivity(new Intent(getActivity(), TickethistorypageActivity.class));
+                startActivity(new Intent(getActivity(), TickethistorypageActivity.class));
                 break;
             case R.id.my_feedback:
-                startActivity(new Intent(getContext(),FeedbackActivity.class));
+                startActivity(new Intent(getContext(), FeedbackActivity.class));
                 break;
             case R.id.my_version:
 
                 break;
             case R.id.sign_in:
-                if (list.size()>0&&list!=null){
-                    singn.request(userId,sessionId);
-                }else {
+                if (list.size() > 0 && list != null) {
+                    singn.request(userId, sessionId);
+                } else {
                     Toast.makeText(getContext(), "请先登录", Toast.LENGTH_SHORT).show();
                 }
                 break;
@@ -184,16 +189,17 @@ public class MyFrag extends BaseFragment {
                     userBeanDao.deleteAll();
                     headimage.setImageResource(R.mipmap.m);
                     name.setText("请登录");
+                    sign_in.setText("签到");
                     list.clear();
 //                    mePresenter.request(userId, sessionId);
                     Toast.makeText(getContext(), "退出登录", Toast.LENGTH_SHORT).show();
 
-                }else {
-                        // 显示内容一样时，只有间隔时间大于5秒时才显示
-                        if (System.currentTimeMillis() - time >5000) {
-                            Toast.makeText(getContext(), "你还未登录过！！！", Toast.LENGTH_LONG).show();
-                            time = System.currentTimeMillis();
-                        }
+                } else {
+                    // 显示内容一样时，只有间隔时间大于5秒时才显示
+                    if (System.currentTimeMillis() - time > 5000) {
+                        Toast.makeText(getContext(), "你还未登录过！！！", Toast.LENGTH_LONG).show();
+                        time = System.currentTimeMillis();
+                    }
 
                 }
 
@@ -202,20 +208,20 @@ public class MyFrag extends BaseFragment {
     }
 
     public void showMyToast(final Toast toast, final int cnt) {
-        final Timer timer =new Timer();
+        final Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 toast.show();
             }
-        },0,60000);
+        }, 0, 60000);
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 toast.cancel();
                 timer.cancel();
             }
-        }, cnt );
+        }, cnt);
     }
 
     private class UserSingnIn implements DataCall<Result> {
@@ -226,7 +232,6 @@ public class MyFrag extends BaseFragment {
                 Toast.makeText(getContext(), data.getMessage(), Toast.LENGTH_SHORT).show();
             } else {
                 sign_in.setText("已签到");
-                Toast.makeText(getContext(), data.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -244,24 +249,25 @@ public class MyFrag extends BaseFragment {
         switch (requestCode) {
             case 1:
                 //得到相册图片,转为file类型
-                if(data.getData() != null){
+                if (data.getData() != null) {
                     Uri uri = data.getData();
-                    if(uri != null){
+                    if (uri != null) {
                         //调用工具类将uri图片转为path
                         String path = ImageUtil.getPath(getContext(), uri);
-                        if(path != null){
+                        if (path != null) {
                             //将图片转为file
                             File file = new File(path);
                             //调用P层
-                            changeHeadImage_presenter.request(userId,sessionId,file);
+                            changeHeadImage_presenter.request(userId, sessionId, file);
                         }
                     }
-                }else {
+                } else {
                     return;
                 }
                 break;
         }
     }
+
     //剪切
     private Intent crop(Uri uri) {
         Intent intent = new Intent("com.android.camera.action.CROP");
@@ -275,10 +281,11 @@ public class MyFrag extends BaseFragment {
         intent.putExtra("return-data", true);
         return intent;
     }
+
     private class MeData implements DataCall<Result<MeBean>> {
         @Override
         public void success(Result<MeBean> data) {
-            if (data.getStatus().equals("0000")){
+            if (data.getStatus().equals("0000")) {
                 MeBean bean = data.getResult();
                 name.setText(bean.getNickName());
                 headimage.setImageURI(bean.getHeadPic());

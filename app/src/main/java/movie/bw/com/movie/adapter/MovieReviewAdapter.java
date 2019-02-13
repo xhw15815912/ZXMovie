@@ -1,16 +1,20 @@
 package movie.bw.com.movie.adapter;
 
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bw.movie.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import org.greenrobot.eventbus.EventBus;
 import org.xml.sax.helpers.LocatorImpl;
 
 import java.util.ArrayList;
@@ -18,6 +22,11 @@ import java.util.List;
 
 import movie.bw.com.movie.activity.MovieDetails;
 import movie.bw.com.movie.bean.MoviewCommentBean;
+import movie.bw.com.movie.bean.Result;
+import movie.bw.com.movie.core.DataCall;
+import movie.bw.com.movie.core.exception.ApiException;
+import movie.bw.com.movie.frag.MovieInpuDialog;
+import movie.bw.com.movie.p.AdduserresponsestocommentsPresenter;
 
 /**
  * 作者：夏洪武
@@ -45,18 +54,19 @@ public class MovieReviewAdapter extends RecyclerView.Adapter<MovieReviewAdapter.
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         viewHolder.head.setImageURI(list.get(i).getCommentHeadPic());
         viewHolder.message.setText(list.get(i).getCommentContent());
-        MoviewCommentBean bean = list.get(i);
+        final MoviewCommentBean bean = list.get(i);
         final int commentId = bean.getCommentId();
         viewHolder.name.setText(list.get(i).getCommentUserName());
         viewHolder.time.setText(list.get(i).getCommentTime()+"");
         viewHolder.num.setText(list.get(i).getReplyNum()+"");
         viewHolder.great.setText(list.get(i).getGreatNum()+"");
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.praise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onItemClickListener.onItemClick(commentId);
             }
         });
+
 
         if (isFow){
             isFow=true;
@@ -87,6 +97,7 @@ public class MovieReviewAdapter extends RecyclerView.Adapter<MovieReviewAdapter.
         SimpleDraweeView head;
         TextView name,message,time,num,great;
         ImageView praise;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             head=itemView.findViewById(R.id.head);
@@ -110,4 +121,6 @@ public class MovieReviewAdapter extends RecyclerView.Adapter<MovieReviewAdapter.
     public void setOnItemClickListener( OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
+
+
 }

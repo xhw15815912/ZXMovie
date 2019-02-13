@@ -32,7 +32,6 @@ public class PingFragment extends BaseFragment {
 
     @BindView(R.id.recy)
     RecyclerView recy;
-    Unbinder unbinder;
     private Film_Comment film_comment;
     private FilmComment_Adapter filmComment_adapter;
     private String s;

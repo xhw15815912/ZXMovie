@@ -338,5 +338,4 @@ public class MovieFrag extends BaseFragment {
         }
     }
 
-
 }

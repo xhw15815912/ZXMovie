@@ -43,6 +43,7 @@ import movie.bw.com.movie.core.DataCall;
 import movie.bw.com.movie.core.exception.ApiException;
 import movie.bw.com.movie.frag.InputDialog;
 import movie.bw.com.movie.frag.MovieInpuDialog;
+import movie.bw.com.movie.p.AdduserresponsestocommentsPresenter;
 import movie.bw.com.movie.p.FilmPresenter;
 import movie.bw.com.movie.p.MovieReview_Presenter;
 import movie.bw.com.movie.p.ParticularsPresenter;
@@ -79,6 +80,7 @@ public class MovieDetails extends BaseActivity {
     private MovieInpuDialog inputDialog;
     private FilmPresenter filmPresenter;
 
+    private AdduserresponsestocommentsPresenter presenter;
 
     @Override
     protected int getLayoutId() {
