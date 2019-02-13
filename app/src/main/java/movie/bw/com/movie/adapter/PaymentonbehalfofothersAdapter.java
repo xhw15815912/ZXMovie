@@ -29,19 +29,20 @@ import static com.umeng.analytics.pro.k.a.v;
  * Describe:
  */
 public class PaymentonbehalfofothersAdapter extends RecyclerView.Adapter<PaymentonbehalfofothersAdapter.VH> {
-    private List<TheticketrecordBean> list=new ArrayList<>();
+    private List<TheticketrecordBean> list = new ArrayList<>();
     private Context context;
 
     public PaymentonbehalfofothersAdapter(Context context) {
         this.context = context;
     }
-    public void addItem(List<TheticketrecordBean> beans){
-        if (beans!=null){
-            this.list.clear();
+
+    public void addItem(List<TheticketrecordBean> beans) {
+        if (beans != null) {
+            list.clear();
             list.addAll(beans);
-            notifyDataSetChanged();
         }
     }
+
     @NonNull
     @Override
     public VH onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -52,20 +53,20 @@ public class PaymentonbehalfofothersAdapter extends RecyclerView.Adapter<Payment
 
     @Override
     public void onBindViewHolder(@NonNull VH vh, int i) {
-        TheticketrecordBean bean = list.get(i);
+        final TheticketrecordBean bean = list.get(i);
         vh.name.setText(bean.getMovieName());
-        vh.odd_hao.setText("订单号："+bean.getOrderId());
+        vh.odd_hao.setText("订单号：" + bean.getOrderId());
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String format = format1.format(bean.getCreateTime());
-        vh.cinem.setText("影院："+bean.getCinemaName());
-        vh.th_film_office.setText("影厅："+bean.getScreeningHall());
-        vh.timea.setText("时间："+format);
-        vh.number.setText("数量："+bean.getAmount()+"张");
-        vh.money.setText("金额："+bean.getPrice()+"元");
+        vh.cinem.setText("影院：" + bean.getCinemaName());
+        vh.th_film_office.setText("影厅：" + bean.getScreeningHall());
+        vh.timea.setText("时间：" + format);
+        vh.number.setText("数量：" + bean.getAmount() + "张");
+        vh.money.setText("金额：" + bean.getPrice() + "元");
         vh.go_buymoney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                onItemClickListener.onItemClick(bean.getOrderId(),bean.getPrice());
             }
         });
 
@@ -76,7 +77,7 @@ public class PaymentonbehalfofothersAdapter extends RecyclerView.Adapter<Payment
         return list.size();
     }
 
-    class VH extends RecyclerView.ViewHolder{
+    class VH extends RecyclerView.ViewHolder {
 
         private final Button go_buymoney;
         private final TextView odd_hao;
@@ -99,16 +100,17 @@ public class PaymentonbehalfofothersAdapter extends RecyclerView.Adapter<Payment
             th_film_office = itemView.findViewById(R.id.th_film_Office);
         }
     }
+
     //定义接口
     public interface OnItemClickListener {
-        void onItemClick(int commentId);
+        void onItemClick(String id,double price);
     }
 
     //方法名
-    private  OnItemClickListener onItemClickListener;
+    private OnItemClickListener onItemClickListener;
 
     //方法      设置点击方法
-    public void setOnItemClickListener( OnItemClickListener onItemClickListener) {
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
