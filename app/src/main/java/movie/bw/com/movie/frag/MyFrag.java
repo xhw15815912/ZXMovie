@@ -154,8 +154,10 @@ public class MyFrag extends BaseFragment {
 //                    intent.setAction(Intent.ACTION_GET_CONTENT);
 //                    intent.setType("image/*");
 //                        startActivityForResult(intent,1);
-                    startActivity(new Intent(getContext(), MainActivity.class));
-                    getActivity().finish();
+                    Intent intent = new Intent(getContext(), MainActivity.class);
+                    intent.putExtra("id",2);
+                    startActivity(intent);
+                    //getActivity().finish();
                 } else {
 
                 }

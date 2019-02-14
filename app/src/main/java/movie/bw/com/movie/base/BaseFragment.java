@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.google.gson.Gson;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
@@ -36,6 +38,7 @@ import movie.bw.com.movie.DaoMaster;
 import movie.bw.com.movie.DaoSession;
 import movie.bw.com.movie.UserBeanDao;
 import movie.bw.com.movie.bean.UserBean;
+import movie.bw.com.movie.frag.MovieFrag;
 
 
 /**
@@ -46,7 +49,6 @@ import movie.bw.com.movie.bean.UserBean;
  */
 public abstract class BaseFragment  extends Fragment implements CustomAdapt {
     public Gson mGson = new Gson();
-
     public Dialog mLoadDialog;
     private Unbinder unbinder;
     //public UserInfo LOGIN_USER;
@@ -104,6 +106,7 @@ public abstract class BaseFragment  extends Fragment implements CustomAdapt {
         View view = inflater.inflate(getLayoutId(),container,false);
         unbinder = ButterKnife.bind(this,view);
         initView();
+
         //LogUtils.e(this.toString()+"页面加载使用："+(System.currentTimeMillis()-time));
         return view;
     }
@@ -141,6 +144,7 @@ public abstract class BaseFragment  extends Fragment implements CustomAdapt {
             return false;
         }
     }
+
     private void initLoad() {
         mLoadDialog = new ProgressDialog(getContext());// 加载框
         mLoadDialog.setCanceledOnTouchOutside(false);

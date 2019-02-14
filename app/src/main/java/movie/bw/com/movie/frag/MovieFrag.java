@@ -116,6 +116,7 @@ public class MovieFrag extends BaseFragment {
         cacheManager = new CacheManager();
         initFlow();
         initHotMove();
+        orientation();
         flow.setAdapter(flowAdapter);
         hotMove.setAdapter(hotMovieAdapter);
         nowMove.setAdapter(nowAdapter);
@@ -197,6 +198,12 @@ public class MovieFrag extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        orientation();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         orientation();
     }
 
@@ -337,5 +344,6 @@ public class MovieFrag extends BaseFragment {
 
         }
     }
+
 
 }
