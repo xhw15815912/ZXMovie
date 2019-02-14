@@ -59,7 +59,7 @@ public class GuidePageActivity extends BaseActivity {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
                 radio.check(radio.getChildAt(i).getId());
-                if (i == list.size() - 1) {
+                if (i == 3) {
 
                     startActivity(new Intent(GuidePageActivity.this, ShowActivity.class));
 

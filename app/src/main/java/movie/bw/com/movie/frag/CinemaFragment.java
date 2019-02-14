@@ -212,10 +212,10 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
     public void onResume() {
         super.onResume();
         if (recommend.isChecked()){
-            presenter.request(userId, sessionId, page, 10);
+            presenter.request(userId, sessionId, page, 5);
 
         }else {
-            nearcinemadPresenter.request(userId, sessionId, "116.30551391385724", "40.04571807462411", page, 10);
+            nearcinemadPresenter.request(userId, sessionId, "116.30551391385724", "40.04571807462411", page, 5);
 
         }
 
@@ -226,11 +226,11 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
         switch (view.getId()) {
             case R.id.recommend:
 
-                presenter.request(userId, sessionId, page, 10);
+                presenter.request(userId, sessionId, page, 5);
                 break;
             case R.id.nearby:
 
-                nearcinemadPresenter.request(userId, sessionId, "116.30551391385724", "40.04571807462411", page, 10);
+                nearcinemadPresenter.request(userId, sessionId, "116.30551391385724", "40.04571807462411", page, 5);
                 break;
             case R.id.recommend_cinem_search_image:
                 initExpand();
@@ -247,9 +247,9 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
     public void onRefresh() {
         page = 1;
         if (recommend.isChecked()) {
-            presenter.request(userId, sessionId, page, 10);
+            presenter.request(userId, sessionId, page, 5);
         } else if (nearby.isChecked()) {
-            nearcinemadPresenter.request(userId, sessionId, "116.30551391385724", "40.04571807462411", page, 10);
+            nearcinemadPresenter.request(userId, sessionId, "116.30551391385724", "40.04571807462411", page, 5);
         }
     }
 
@@ -257,9 +257,9 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
     public void onLoadMore() {
         page++;
         if (recommend.isChecked()) {
-            presenter.request(userId, sessionId, page, 10);
+            presenter.request(userId, sessionId, page, 5);
         } else if (nearby.isChecked()) {
-            nearcinemadPresenter.request(userId, sessionId, "116.30551391385724", "40.04571807462411", page, 10);
+            nearcinemadPresenter.request(userId, sessionId, "116.30551391385724", "40.04571807462411", page, 5);
         }
     }
 
@@ -307,10 +307,10 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
             if (data.getStatus().equals("0000")){
                 Toast.makeText(getContext(), data.getMessage(), Toast.LENGTH_SHORT).show();
                 if(recommend.isChecked()){
-                    presenter.request(userId, sessionId, page, 10);
+                    presenter.request(userId, sessionId, page, 5);
 
                 }else if (nearby.isChecked()){
-                    nearcinemadPresenter.request(userId, sessionId, "116.30551391385724", "40.04571807462411", page, 10);
+                    nearcinemadPresenter.request(userId, sessionId, "116.30551391385724", "40.04571807462411", page, 5);
                 }
                 adapter.notifyDataSetChanged();
 
@@ -331,10 +331,10 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
             if (data.getStatus().equals("0000")){
                 Toast.makeText(getContext(), data.getMessage(), Toast.LENGTH_SHORT).show();
                 if(recommend.isChecked()){
-                    presenter.request(userId, sessionId, page, 10);
+                    presenter.request(userId, sessionId, page, 5);
 
                 }else if (nearby.isChecked()){
-                    nearcinemadPresenter.request(userId, sessionId, "116.30551391385724", "40.04571807462411", page, 10);
+                    nearcinemadPresenter.request(userId, sessionId, "116.30551391385724", "40.04571807462411", page, 5);
                 }
                 adapter.notifyDataSetChanged();
             }else {
