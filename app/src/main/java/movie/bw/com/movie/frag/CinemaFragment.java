@@ -24,6 +24,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.bw.movie.R;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
@@ -68,6 +72,9 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
     TextView recommendCinemaTextName;
     @BindView(R.id.recommend_cinema_linear)
     LinearLayout recommendCinemaLinear;
+    @BindView(R.id.address)
+    TextView address;
+    Unbinder unbinder;
     private RecommendPresenter presenter;
     private RecommedAdapter adapter;
     private String sessionId;
@@ -76,6 +83,8 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
     private int page = 1;
     private AttentiontocinemaPresenter attentiontocinemaPresenter;
     private FocusonFilmPresenter focusonFilmPresenter;
+    public LocationClient mLocationClient = null;
+    private MyLocationListener myListener = new MyLocationListener();
 
     @Override
     public String getPageName() {
@@ -89,9 +98,10 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
 
     @Override
     protected void initView() {
+        orientation();
         presenter = new RecommendPresenter(new Recomm());
         nearcinemadPresenter = new NearcinemadPresenter(new Nearcinima());
-        if (list!=null&&list.size()>0){
+        if (list != null && list.size() > 0) {
             sessionId = USER.getSessionId();
             userId = USER.getUserId();
         }
@@ -170,6 +180,38 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
         return (int) (dpVale * scale + 0.5f);
     }
 
+    private void orientation() {
+        mLocationClient = new LocationClient(getActivity());
+        //声明LocationClient类
+        mLocationClient.registerLocationListener(myListener);
+        //注册监听函数
+        LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationClientOption.LocationMode.Battery_Saving);
+        //可选，是否需要位置描述信息，默认为不需要，即参数为false
+        //如果开发者需要获得当前点的位置信息，此处必须为true
+        option.setIsNeedLocationDescribe(true);
+        //可选，设置是否需要地址信息，默认不需要
+        option.setIsNeedAddress(true);
+        //可选，默认false,设置是否使用gps
+        option.setOpenGps(true);
+        //可选，默认false，设置是否当GPS有效时按照1S/1次频率输出GPS结果
+        option.setLocationNotify(true);
+        mLocationClient.setLocOption(option);
+        mLocationClient.start();
+    }
+
+    public class MyLocationListener implements BDLocationListener {
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            //此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定     位相关的全部结果
+            //以下只列举部分获取地址相关的结果信息
+            //更多结果信息获取说明，请参照类参考中BDLocation类中的说明
+            String locationDescribe = location.getLocationDescribe();    //获取位置描述信息
+            String addr = location.getCity();    //获取详细地址信息
+            address.setText(addr + "");
+        }
+    }
+
     private void initData() {
         focusonFilmPresenter = new FocusonFilmPresenter(new FOCU());
         attentiontocinemaPresenter = new AttentiontocinemaPresenter(new ZAn());
@@ -180,28 +222,28 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
         adapter.setOnItemClickListener(new RecommedAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int cinemaId, int isFollow) {
-                Log.d("状态值++++++++++++++++", "onItemClick: "+isFollow);
-                if(USER!=null&&list.size()>0){
-                    if (recommend.isChecked()){
-                        if (isFollow==1){
-                            focusonFilmPresenter.request(userId,sessionId,cinemaId);
+                Log.d("状态值++++++++++++++++", "onItemClick: " + isFollow);
+                if (USER != null && list.size() > 0) {
+                    if (recommend.isChecked()) {
+                        if (isFollow == 1) {
+                            focusonFilmPresenter.request(userId, sessionId, cinemaId);
 
-                        }else if (isFollow==2){
-                            attentiontocinemaPresenter.request(userId,sessionId,cinemaId);
+                        } else if (isFollow == 2) {
+                            attentiontocinemaPresenter.request(userId, sessionId, cinemaId);
 
                         }
-                    }else if (nearby.isChecked()){
-                        if (isFollow==1){
-                            focusonFilmPresenter.request(userId,sessionId,cinemaId);
+                    } else if (nearby.isChecked()) {
+                        if (isFollow == 1) {
+                            focusonFilmPresenter.request(userId, sessionId, cinemaId);
 
-                        }else if (isFollow==2){
-                            attentiontocinemaPresenter.request(userId,sessionId,cinemaId);
+                        } else if (isFollow == 2) {
+                            attentiontocinemaPresenter.request(userId, sessionId, cinemaId);
 
                         }
                     }
                 }
 
-              adapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
         });
         theatersXrecyclerview.setAdapter(adapter);
@@ -211,10 +253,11 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
     @Override
     public void onResume() {
         super.onResume();
-        if (recommend.isChecked()){
+        orientation();
+        if (recommend.isChecked()) {
             presenter.request(userId, sessionId, page, 10);
 
-        }else {
+        } else {
             nearcinemadPresenter.request(userId, sessionId, "116.30551391385724", "40.04571807462411", page, 10);
 
         }
@@ -304,17 +347,17 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
     private class ZAn implements DataCall<Result> {
         @Override
         public void success(Result data) {
-            if (data.getStatus().equals("0000")){
+            if (data.getStatus().equals("0000")) {
                 Toast.makeText(getContext(), data.getMessage(), Toast.LENGTH_SHORT).show();
-                if(recommend.isChecked()){
+                if (recommend.isChecked()) {
                     presenter.request(userId, sessionId, page, 10);
 
-                }else if (nearby.isChecked()){
+                } else if (nearby.isChecked()) {
                     nearcinemadPresenter.request(userId, sessionId, "116.30551391385724", "40.04571807462411", page, 10);
                 }
                 adapter.notifyDataSetChanged();
 
-            }else {
+            } else {
                 Toast.makeText(getContext(), data.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
@@ -328,16 +371,16 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
     private class FOCU implements DataCall<Result> {
         @Override
         public void success(Result data) {
-            if (data.getStatus().equals("0000")){
+            if (data.getStatus().equals("0000")) {
                 Toast.makeText(getContext(), data.getMessage(), Toast.LENGTH_SHORT).show();
-                if(recommend.isChecked()){
+                if (recommend.isChecked()) {
                     presenter.request(userId, sessionId, page, 10);
 
-                }else if (nearby.isChecked()){
+                } else if (nearby.isChecked()) {
                     nearcinemadPresenter.request(userId, sessionId, "116.30551391385724", "40.04571807462411", page, 10);
                 }
                 adapter.notifyDataSetChanged();
-            }else {
+            } else {
                 Toast.makeText(getContext(), data.getMessage(), Toast.LENGTH_SHORT).show();
 
             }

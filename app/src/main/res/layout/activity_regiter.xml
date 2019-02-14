@@ -166,6 +166,8 @@
                     android:layout_toRightOf="@id/image_phone"
                     android:background="@null"
                     android:hint="手机号"
+                    android:maxLength="11"
+                    android:digits="1234567890"
                     android:textColor="#FFF"
                     android:textColorHint="#FFF"
                     android:textSize="18dp" />

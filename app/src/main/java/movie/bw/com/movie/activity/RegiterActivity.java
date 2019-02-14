@@ -3,6 +3,7 @@ package movie.bw.com.movie.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -81,6 +82,7 @@ public class RegiterActivity extends BaseActivity {
     }
 
     private void initKey() {
+        editPostbox.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         final InputMethodManager systemService = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         nickname.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -203,8 +205,8 @@ public class RegiterActivity extends BaseActivity {
         public void success(Result data) {
             if (data.getStatus().equals("0000")) {
                 Toast.makeText(RegiterActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(RegiterActivity.this, MainActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(RegiterActivity.this, MainActivity.class);
+                //startActivity(intent);
                 finish();
             } else {
                 Toast.makeText(RegiterActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();

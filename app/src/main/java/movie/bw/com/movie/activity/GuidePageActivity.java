@@ -1,9 +1,13 @@
 package movie.bw.com.movie.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.widget.RadioGroup;
 
@@ -41,6 +45,12 @@ public class GuidePageActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        if (ContextCompat.checkSelfPermission(GuidePageActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // 申请权限
+            ActivityCompat.requestPermissions(GuidePageActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.ACCESS_NETWORK_STATE}, 1);
+        }
+
         preferences = getSharedPreferences("config", MODE_PRIVATE);
         boolean isFirstUse = preferences.getBoolean("isFirstUse", false);
         if (isFirstUse) {

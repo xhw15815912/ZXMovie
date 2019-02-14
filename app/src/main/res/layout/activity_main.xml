@@ -31,7 +31,10 @@
                 android:padding="2dp"
                 android:textColor="#fff"
                 android:textColorHint="#ffff"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:maxLength="11"
+                android:digits="1234567890"
+                />
 
             <ImageView
                 android:id="@+id/image_phone"

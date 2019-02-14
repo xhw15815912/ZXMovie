@@ -231,7 +231,10 @@ public class MainActivity extends BaseActivity {
                 if (id == 1) {
                     //startActivity(new Intent(MainActivity.this, Choose_Seat.class));
                     finish();
-                } else {
+                }else if (id == 2){
+                    finish();
+                }
+                else {
                     startActivity(new Intent(MainActivity.this, ShowActivity.class));
                     finish();
                 }
