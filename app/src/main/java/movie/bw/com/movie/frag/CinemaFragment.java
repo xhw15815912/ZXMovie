@@ -208,7 +208,12 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
             //更多结果信息获取说明，请参照类参考中BDLocation类中的说明
             String locationDescribe = location.getLocationDescribe();    //获取位置描述信息
             String addr = location.getCity();    //获取详细地址信息
-            address.setText(addr + "");
+            //address.setText(addr + "");
+            if (addr!=null){
+                address.setText(addr + "");
+            }else{
+                address.setText("请重新定位!");
+            }
         }
     }
 

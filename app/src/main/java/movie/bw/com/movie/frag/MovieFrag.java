@@ -2,7 +2,6 @@ package movie.bw.com.movie.frag;
 
 
 import android.animation.ObjectAnimator;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +14,8 @@ import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +27,6 @@ import com.bw.movie.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -35,7 +35,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import movie.bw.com.movie.activity.MoreMovie;
-import movie.bw.com.movie.activity.MovieDetails;
 import movie.bw.com.movie.adapter.FlowAdapter;
 import movie.bw.com.movie.adapter.HotMovieAdapter;
 import movie.bw.com.movie.adapter.NowAdapter;
@@ -48,8 +47,8 @@ import movie.bw.com.movie.core.exception.ApiException;
 import movie.bw.com.movie.p.FindHotMovieListPresenter;
 import movie.bw.com.movie.p.NowMovie;
 import movie.bw.com.movie.p.SoonMoviewPresenter;
-
 import movie.bw.com.movie.utils.CacheManager;
+import recycler.coverflow.CoverFlowLayoutManger;
 import recycler.coverflow.RecyclerCoverFlow;
 
 
@@ -79,6 +78,21 @@ public class MovieFrag extends BaseFragment {
     @BindView(R.id.soon)
     TextView soon;
     Unbinder unbinder;
+    @BindView(R.id.rad1)
+    RadioButton rad1;
+    @BindView(R.id.rad2)
+    RadioButton rad2;
+    @BindView(R.id.rad3)
+    RadioButton rad3;
+    @BindView(R.id.rad4)
+    RadioButton rad4;
+    @BindView(R.id.rad5)
+    RadioButton rad5;
+    @BindView(R.id.rad6)
+    RadioButton rad6;
+    @BindView(R.id.redgroup)
+    RadioGroup redgroup;
+    Unbinder unbinder1;
 
     private MyLocationListener myListener = new MyLocationListener();
     @BindView(R.id.image_location)
@@ -122,8 +136,8 @@ public class MovieFrag extends BaseFragment {
         nowMove.setAdapter(nowAdapter);
         soonMove.setAdapter(soonAdapter);
         boolean connection = isConnection();
-        if (!connection){
-            Toast.makeText(getActivity(),"没网啦！！！",Toast.LENGTH_LONG).show();
+        if (!connection) {
+            Toast.makeText(getActivity(), "没网啦！！！", Toast.LENGTH_LONG).show();
             String s = cacheManager.loadDataFromFile(getContext(), "hot");
             String s1 = cacheManager.loadDataFromFile(getContext(), "now");
             String s2 = cacheManager.loadDataFromFile(getContext(), "soon");
@@ -146,6 +160,13 @@ public class MovieFrag extends BaseFragment {
             flowAdapter.setData(o);
             flowAdapter.notifyDataSetChanged();
         }
+        redgroup.check(redgroup.getChildAt(0).getId());
+        flow.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {
+            @Override
+            public void onItemSelected(int position) {
+                redgroup.check(redgroup.getChildAt(position).getId());
+            }
+        });
     }
 
     private void initFlow() {
@@ -156,12 +177,12 @@ public class MovieFrag extends BaseFragment {
         flowAdapter = new FlowAdapter(getActivity());
         nowAdapter = new NowAdapter(getActivity());
         findHotMovieListPresenter = new FindHotMovieListPresenter(new HotMovie());
-        findHotMovieListPresenter.request( userId,sessionId,1, 10);
+        findHotMovieListPresenter.request(userId, sessionId, 1, 10);
     }
 
     private void initHotMove() {
-        nowMovie.request( userId,sessionId,1, 10);
-        soonMoviewPresenter.request(userId,sessionId,1, 10);
+        nowMovie.request(userId, sessionId, 1, 10);
+        soonMoviewPresenter.request(userId, sessionId, 1, 10);
         hotMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         nowMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         soonMove.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
@@ -233,7 +254,7 @@ public class MovieFrag extends BaseFragment {
     }
 
 
-    @OnClick({R.id.recommend_cinem_search_image, R.id.recommend_cinema_textName,R.id.image_location,R.id.next,R.id.next1,R.id.next2})
+    @OnClick({R.id.recommend_cinem_search_image, R.id.recommend_cinema_textName, R.id.image_location, R.id.next, R.id.next1, R.id.next2})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.recommend_cinem_search_image:
@@ -271,10 +292,19 @@ public class MovieFrag extends BaseFragment {
         }
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder1 = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
 
-
-
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder1.unbind();
+    }
 
 
     public class MyLocationListener implements BDLocationListener {
@@ -285,7 +315,12 @@ public class MovieFrag extends BaseFragment {
             //更多结果信息获取说明，请参照类参考中BDLocation类中的说明
             String locationDescribe = location.getLocationDescribe();    //获取位置描述信息
             String addr = location.getCity();    //获取详细地址信息
-            textPositioningq.setText(addr + "");
+            if (addr!=null){
+                textPositioningq.setText(addr + "");
+            }else{
+                textPositioningq.setText("请重新定位!");
+            }
+
         }
     }
 
@@ -299,11 +334,12 @@ public class MovieFrag extends BaseFragment {
                 List<movie.bw.com.movie.bean.HotMovie> result = data.getResult();
                 Gson gson = new Gson();
                 String s = gson.toJson(result);
-                cacheManager.saveDataToFile(getContext(),s,"hot");
+                cacheManager.saveDataToFile(getContext(), s, "hot");
                 flowAdapter.setData(data.getResult());
                 hotMovieAdapter.setData(data.getResult());
             }
         }
+
         @Override
         public void fail(ApiException e) {
         }
@@ -317,7 +353,7 @@ public class MovieFrag extends BaseFragment {
                 List<movie.bw.com.movie.bean.HotMovie> result = data.getResult();
                 Gson gson = new Gson();
                 String s = gson.toJson(result);
-                cacheManager.saveDataToFile(getContext(),s,"now");
+                cacheManager.saveDataToFile(getContext(), s, "now");
             }
         }
 
@@ -335,7 +371,7 @@ public class MovieFrag extends BaseFragment {
                 List<movie.bw.com.movie.bean.HotMovie> result = data.getResult();
                 Gson gson = new Gson();
                 String s = gson.toJson(result);
-                cacheManager.saveDataToFile(getContext(),s,"soon");
+                cacheManager.saveDataToFile(getContext(), s, "soon");
             }
         }
 

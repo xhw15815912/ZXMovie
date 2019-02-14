@@ -134,9 +134,7 @@
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
        android:layout_gravity="bottom"
-
         android:layout_alignParentBottom="true"
-        android:background="@drawable/bg_show"
         >
         <ImageView
             android:layout_width="60dp"
