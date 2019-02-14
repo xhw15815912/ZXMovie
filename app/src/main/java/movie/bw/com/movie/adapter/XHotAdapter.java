@@ -64,7 +64,7 @@ public class XHotAdapter extends XRecyclerView.Adapter<XHotAdapter.ViewHolder> {
         if (list.get(i).isFollowMovie()==1){
             viewHolder.attention.setImageResource(R.mipmap.com_icon_collection);
         }else if (list.get(i).isFollowMovie()==2){
-            viewHolder.attention.setImageResource(R.drawable.aixin);
+            viewHolder.attention.setImageResource(R.mipmap.weiguanzhu);
         }
 
     }

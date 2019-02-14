@@ -84,7 +84,7 @@ public class RecommedAdapter extends RecyclerView.Adapter<RecommedAdapter.VH> {
         if (recommend.getFollowCinema()==1){
             vh.item_mind.setImageResource(R.mipmap.com_icon_collection);
         }else if (recommend.getFollowCinema()==2){
-            vh.item_mind.setImageResource(R.drawable.aixin);
+            vh.item_mind.setImageResource(R.mipmap.weiguanzhu);
         }
     }
 

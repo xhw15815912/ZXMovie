@@ -78,7 +78,6 @@ public class MovieFrag extends BaseFragment {
     TextView now;
     @BindView(R.id.soon)
     TextView soon;
-    Unbinder unbinder;
 
     private MyLocationListener myListener = new MyLocationListener();
     @BindView(R.id.image_location)

@@ -74,7 +74,6 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
     LinearLayout recommendCinemaLinear;
     @BindView(R.id.address)
     TextView address;
-    Unbinder unbinder;
     private RecommendPresenter presenter;
     private RecommedAdapter adapter;
     private String sessionId;
@@ -254,11 +253,15 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
     public void onResume() {
         super.onResume();
         orientation();
+        if (list != null && list.size() > 0) {
+            sessionId = USER.getSessionId();
+            userId = USER.getUserId();
+        }
         if (recommend.isChecked()) {
-            presenter.request(userId, sessionId, page, 10);
+            presenter.request(userId, sessionId, page, 5);
 
         }else {
-            nearcinemadPresenter.request(userId, sessionId, "116.30551391385724", "40.04571807462411", page, 10);
+            nearcinemadPresenter.request(userId, sessionId, "116.30551391385724", "40.04571807462411", page, 5);
 
         }
 

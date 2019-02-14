@@ -148,16 +148,10 @@ public class MyFrag extends BaseFragment {
                 break;
             case R.id.headimage:
                 if (list.size() == 0) {
-//                    Toast.makeText(getContext(), "已有用户", Toast.LENGTH_SHORT).show();
-//                    //Intent隐式跳转至相册
-//                    Intent intent = new Intent();
-//                    intent.setAction(Intent.ACTION_GET_CONTENT);
-//                    intent.setType("image/*");
-//                        startActivityForResult(intent,1);
+
                     Intent intent = new Intent(getContext(), MainActivity.class);
                     intent.putExtra("id",2);
                     startActivity(intent);
-                    //getActivity().finish();
                 } else {
 
                 }
