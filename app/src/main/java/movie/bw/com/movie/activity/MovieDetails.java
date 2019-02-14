@@ -17,7 +17,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,12 +40,11 @@ import movie.bw.com.movie.bean.ParticularsBean;
 import movie.bw.com.movie.bean.Result;
 import movie.bw.com.movie.core.DataCall;
 import movie.bw.com.movie.core.exception.ApiException;
-import movie.bw.com.movie.frag.InputDialog;
 import movie.bw.com.movie.frag.MovieInpuDialog;
-
 import movie.bw.com.movie.p.FilmPresenter;
 import movie.bw.com.movie.p.MovieReview_Presenter;
 import movie.bw.com.movie.p.ParticularsPresenter;
+import movie.bw.com.movie.p.UnfollowPresenter;
 
 public class MovieDetails extends BaseActivity {
 
@@ -67,6 +65,8 @@ public class MovieDetails extends BaseActivity {
     ImageView back;
     @BindView(R.id.pay)
     Button pay;
+    @BindView(R.id.zan)
+    ImageView zan;
     private int id;
     private ParticularsPresenter particularsPresenter;
     private ParticularsBean result;
@@ -79,6 +79,8 @@ public class MovieDetails extends BaseActivity {
     private int userId;
     private MovieInpuDialog inputDialog;
     private FilmPresenter filmPresenter;
+    private UnfollowPresenter presenter;
+    private Intent intent;
 
     //private AdduserresponsestocommentsPresenter presenter;
 
@@ -89,8 +91,9 @@ public class MovieDetails extends BaseActivity {
 
     @Override
     protected void initView() {
+        presenter = new UnfollowPresenter(new Zan());
         filmPresenter = new FilmPresenter(new FILE());
-        dialog = new Dialog(this,R.style.DialogTheme);
+        dialog = new Dialog(this, R.style.DialogTheme);
         jiaoZiAdapter = new JiaoZiAdapter(this);
         photoAdapter = new PhotoAdapter(this);
         movieReviewAdapter = new MovieReviewAdapter(this);
@@ -98,12 +101,12 @@ public class MovieDetails extends BaseActivity {
         movieReviewAdapter.setOnItemClickListener(new MovieReviewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int commentId) {
-                filmPresenter.request(userId,sessionId,commentId);
+                filmPresenter.request(userId, sessionId, commentId);
             }
         });
 
-        Intent intent = getIntent();
-        if (list!=null&&list.size()>0){
+        intent = getIntent();
+        if (list != null && list.size() > 0) {
             sessionId = USER.getSessionId();
             userId = USER.getUserId();
         }
@@ -113,8 +116,14 @@ public class MovieDetails extends BaseActivity {
         if (id != 0) {
             particularsPresenter.request(userId, sessionId, id);
         }
-        movieReview_presenter.request(userId,sessionId,id);
+        movieReview_presenter.request(userId, sessionId, id);
 
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
     }
 
@@ -122,13 +131,14 @@ public class MovieDetails extends BaseActivity {
     protected void destoryData() {
 
     }
+
     @OnClick(R.id.back)
-    public void Bk(){
+    public void Bk() {
         finish();
     }
-    @OnClick(R.id.chat)
-    public void Chat(){
 
+    @OnClick(R.id.chat)
+    public void Chat() {
         View inflate = View.inflate(this, R.layout.pop_movie_chat, null);
         dialog.setContentView(inflate);
         Window dialogWindow = dialog.getWindow();
@@ -149,11 +159,11 @@ public class MovieDetails extends BaseActivity {
         TextView time = inflate.findViewById(R.id.time);
         TextView place = inflate.findViewById(R.id.place);
         TextView chat = inflate.findViewById(R.id.chat);
-        RecyclerView recy =inflate.findViewById(R.id.recy);
-        type.setText("类型："+result.getMovieTypes());
-        men.setText("导演："+result.getDirector());
-        time.setText("时长："+result.getDuration());
-        place.setText("产地："+result.getPlaceOrigin());
+        RecyclerView recy = inflate.findViewById(R.id.recy);
+        type.setText("类型：" + result.getMovieTypes());
+        men.setText("导演：" + result.getDirector());
+        time.setText("时长：" + result.getDuration());
+        place.setText("产地：" + result.getPlaceOrigin());
         chat.setText(result.getSummary());
         bak.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,8 +173,9 @@ public class MovieDetails extends BaseActivity {
         });
         dialog.show();
     }
+
     @OnClick(R.id.show)
-    public void Show(){
+    public void Show() {
         View inflate = View.inflate(this, R.layout.dia_foreshow, null);
         dialog.setContentView(inflate);
         Window dialogWindow = dialog.getWindow();
@@ -185,7 +196,7 @@ public class MovieDetails extends BaseActivity {
             }
         });
         RecyclerView recy = inflate.findViewById(R.id.recy);
-        recy.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        recy.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         recy.setAdapter(jiaoZiAdapter);
 
@@ -198,8 +209,9 @@ public class MovieDetails extends BaseActivity {
             }
         });
     }
+
     @OnClick(R.id.photo)
-    public void Photo(){
+    public void Photo() {
         View inflate = View.inflate(this, R.layout.dia_photo, null);
         dialog.setContentView(inflate);
         Window dialogWindow = dialog.getWindow();
@@ -219,21 +231,22 @@ public class MovieDetails extends BaseActivity {
             }
         });
         RecyclerView recy = inflate.findViewById(R.id.recy);
-        recy.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        recy.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         photoAdapter.setData(result.getPosterList());
         recy.setAdapter(photoAdapter);
         dialog.show();
 
 
     }
+
     @OnClick(R.id.comment)
-    public void Cooment(){
+    public void Cooment() {
 
         View inflate = View.inflate(this, R.layout.dia_movie_review, null);
         inflate.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 getScreenHeight(MovieDetails.this) / 2));
         dialog.setContentView(inflate);
-        ImageView write=inflate.findViewById(R.id.write);
+        ImageView write = inflate.findViewById(R.id.write);
         Window dialogWindow = dialog.getWindow();
         WindowManager m = getWindow().getWindowManager();
         Display d = m.getDefaultDisplay(); // 获取屏幕宽、高度
@@ -251,8 +264,8 @@ public class MovieDetails extends BaseActivity {
             }
         });
         RecyclerView recy = inflate.findViewById(R.id.recy);
-        recy.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-         ImageView back=inflate.findViewById(R.id.back);
+        recy.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        ImageView back = inflate.findViewById(R.id.back);
         //movieReviewAdapter.setData(result.getPosterList());
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -274,7 +287,7 @@ public class MovieDetails extends BaseActivity {
                 inputDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        movieReview_presenter.request(userId,sessionId,id);
+                        movieReview_presenter.request(userId, sessionId, id);
                     }
                 });
             }
@@ -284,18 +297,31 @@ public class MovieDetails extends BaseActivity {
         dialog.show();
 
 
-    }@OnClick(R.id.pay)
-    public void Pay(){
+    }
+
+    @OnClick(R.id.pay)
+    public void Pay() {
         Intent intent = new Intent(this, Pay_Chose_Film.class);
-        intent.putExtra("id",id);
-        intent.putExtra("name",result.getName());
+        intent.putExtra("id", id);
+        intent.putExtra("name", result.getName());
         startActivity(intent);
     }
+
+
+
+    @OnClick(R.id.zan)
+    public void onViewClicked() {
+        int id = intent.getIntExtra("id", 0);
+
+        presenter.request(userId,sessionId,id);
+
+    }
+
     private class CallBack implements DataCall<Result<ParticularsBean>> {
         @Override
         public void success(Result<ParticularsBean> data) {
-            Log.e("错误",data.getMessage()+"");
-            if (data.getStatus().equals("0000")){
+            Log.e("错误", data.getMessage() + "");
+            if (data.getStatus().equals("0000")) {
                 result = data.getResult();
                 name.setText(result.getName());
                 image.setImageURI(result.getImageUrl());
@@ -305,16 +331,16 @@ public class MovieDetails extends BaseActivity {
 
         @Override
         public void fail(ApiException e) {
-            Log.e("错误",e+"");
+            Log.e("错误", e + "");
         }
     }
 
     private class Review implements DataCall<Result<List<MoviewCommentBean>>> {
         @Override
         public void success(Result<List<MoviewCommentBean>> data) {
-             if (data.getStatus().equals("0000")){
-                 movieReviewAdapter.setData(data.getResult());
-             }
+            if (data.getStatus().equals("0000")) {
+                movieReviewAdapter.setData(data.getResult());
+            }
         }
 
         @Override
@@ -322,6 +348,7 @@ public class MovieDetails extends BaseActivity {
 
         }
     }
+
     public static int getScreenHeight(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         int height = wm.getDefaultDisplay().getHeight();
@@ -331,13 +358,26 @@ public class MovieDetails extends BaseActivity {
     private class FILE implements DataCall<Result> {
         @Override
         public void success(Result data) {
-            if (data.getStatus().equals("0000")){
+            if (data.getStatus().equals("0000")) {
                 Toast.makeText(MovieDetails.this, data.getMessage(), Toast.LENGTH_SHORT).show();
-                movieReview_presenter.request(userId,sessionId,id);
-            }else {
+                movieReview_presenter.request(userId, sessionId, id);
+            } else {
                 Toast.makeText(MovieDetails.this, data.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
+        }
+
+        @Override
+        public void fail(ApiException e) {
+
+        }
+    }
+
+    private class Zan implements DataCall<Result> {
+        @Override
+        public void success(Result data) {
+
+            Toast.makeText(MovieDetails.this, data.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
         @Override

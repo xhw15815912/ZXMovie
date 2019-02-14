@@ -111,7 +111,7 @@ public class MyMessageActivity extends BaseActivity {
                 popupWindow.setContentView(view1);
                 popupWindow.setFocusable(true);
                 popupWindow.setOutsideTouchable(true);
-                //popupWindow.setBackgroundDrawable(new ColorDrawable(Color.RED));
+                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
                 Button photo_album = view1.findViewById(R.id.photo_album);
 
                 //相机的点击事件
@@ -120,15 +120,6 @@ public class MyMessageActivity extends BaseActivity {
                 photo_album.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(MyMessageActivity.this,"111",Toast.LENGTH_LONG).show();
-                        //调用相册
-                        /*Intent intent = new Intent(Intent.ACTION_PICK);
-                        intent.setType("image/*");
-                        startActivityForResult(intent, 2);
-                        if (popupWindow != null && popupWindow.isShowing()) {
-                            popupWindow.dismiss();
-                        }*/
-
                         if (ContextCompat.checkSelfPermission(MyMessageActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                             //权限还没有授予，需要在这里写申请权限的代码
                             ActivityCompat.requestPermissions(MyMessageActivity.this,

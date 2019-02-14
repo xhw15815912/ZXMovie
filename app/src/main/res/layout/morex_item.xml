@@ -21,6 +21,7 @@
            android:layout_toRightOf="@id/image"
            >
            <RelativeLayout
+               android:layout_marginTop="10dp"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:orientation="horizontal">
@@ -37,8 +38,6 @@
                    android:layout_alignParentRight="true"
                    android:layout_marginRight="24dp"
                    android:layout_width="24dp"
-
-                   android:layout_marginTop="10dp"
                    android:layout_height="24dp"
                    android:layout_toRightOf="@id/name"
                    android:src="@mipmap/com_icon_collection" />
