@@ -39,6 +39,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
+                android:hint="写下您对产品的感受吧！工作人员将会在第一时间评估处理。"
                 android:layout_marginBottom="20dp"
                 android:background="@null" />
         </LinearLayout>

@@ -1,6 +1,7 @@
 package movie.bw.com.movie.frag;
 
 
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -84,6 +86,7 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
     private FocusonFilmPresenter focusonFilmPresenter;
     public LocationClient mLocationClient = null;
     private MyLocationListener myListener = new MyLocationListener();
+    private ObjectAnimator animator;
 
     @Override
     public String getPageName() {
@@ -114,70 +117,8 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
     }
 
 
-    /*设置伸展状态时的布局*/
-    @SuppressLint("ClickableViewAccessibility")
-    private void initExpand() {
-        recommendCinemaEdname.setHint("CGV影城");
-        recommendCinemaEdname.requestFocus();
-        recommendCinemaEdname.setHintTextColor(Color.WHITE);
-        recommendCinemaTextName.setText("搜索");
-        recommendCinemaTextName.setVisibility(View.VISIBLE);
-        recommendCinemaEdname.setVisibility(View.VISIBLE);
-        LinearLayout.LayoutParams LayoutParams = (LinearLayout.LayoutParams) recommendCinemaLinear.getLayoutParams();
-        LayoutParams.width = dip2px(240);
-        LayoutParams.setMargins(dip2px(0), dip2px(0), dip2px(0), dip2px(0));
-        recommendCinemaLinear.setLayoutParams(LayoutParams);
-
-        recommendCinemaEdname.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                recommendCinemaEdname.setFocusable(true);
-                recommendCinemaEdname.setFocusableInTouchMode(true);
-                return false;
-            }
-        });
-        //开始动画
-        beginDelayedTransition(recommendCinemaLinear);
-    }
-
-    /*设置收缩状态时的布局*/
-    private void initReduce() {
-        recommendCinemaEdname.setCursorVisible(false);
-        recommendCinemaEdname.setVisibility(View.GONE);
-        recommendCinemaTextName.setVisibility(View.GONE);
-        LinearLayout.LayoutParams LayoutParams = (LinearLayout.LayoutParams) recommendCinemaLinear.getLayoutParams();
-        LayoutParams.width = dip2px(50);
-        LayoutParams.setMargins(dip2px(0), dip2px(0), dip2px(0), dip2px(0));
-        recommendCinemaLinear.setLayoutParams(LayoutParams);
-
-        //隐藏键盘
-        InputMethodManager imm = (InputMethodManager) getActivity()
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getActivity().getWindow()
-                .getDecorView().getWindowToken(), 0);
 
 
-        recommendCinemaEdname.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                recommendCinemaEdname.setCursorVisible(true);
-            }
-        });
-        //开始动画
-        beginDelayedTransition(recommendCinemaLinear);
-    }
-
-
-    private void beginDelayedTransition(ViewGroup view) {
-        AutoTransition transition = new AutoTransition();
-        transition.setDuration(1000);
-        TransitionManager.beginDelayedTransition(view, transition);
-    }
-
-    private int dip2px(float dpVale) {
-        final float scale = getResources().getDisplayMetrics().density;
-        return (int) (dpVale * scale + 0.5f);
-    }
 
     private void orientation() {
         mLocationClient = new LocationClient(getActivity());
@@ -212,6 +153,9 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
                 address.setText(addr + "");
             }else{
                 address.setText("请重新定位!");
+            }
+            if (!location.equals("")) {
+                mLocationClient.stop();
             }
         }
     }
@@ -284,10 +228,16 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
                 nearcinemadPresenter.request(userId, sessionId, "116.30551391385724", "40.04571807462411", page, 5);
                 break;
             case R.id.recommend_cinem_search_image:
-                initExpand();
+                animator = ObjectAnimator.ofFloat(recommendCinemaLinear, "translationX", 30f, -500f);
+                animator.setDuration(1000);
+                animator.setInterpolator(new LinearInterpolator());
+                animator.start();
                 break;
             case R.id.recommend_cinema_textName:
-                initReduce();
+                animator = ObjectAnimator.ofFloat(recommendCinemaLinear, "translationX", -510f, 0f);
+                animator.setDuration(1000);
+                animator.setInterpolator(new LinearInterpolator());
+                animator.start();
                 break;
             case R.id.rad:
                 break;
