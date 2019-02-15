@@ -39,7 +39,7 @@
         <LinearLayout
             android:id="@+id/recommend_cinema_linear"
             android:layout_width="wrap_content"
-            android:layout_marginRight="-210dp"
+            android:layout_marginRight="-225dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:background="@drawable/bk_radi9"
@@ -98,7 +98,7 @@
         <RadioButton
             android:id="@+id/recommend"
             android:layout_width="83dp"
-            android:layout_height="25dp"
+            android:layout_height="30dp"
             android:background="@drawable/selector_radio_button"
             android:button="@null"
             android:checked="true"
@@ -111,7 +111,7 @@
             android:layout_marginLeft="32dp"
             android:id="@+id/nearby"
             android:layout_width="83dp"
-            android:layout_height="25dp"
+            android:layout_height="30dp"
             android:textSize="12sp"
             android:background="@drawable/selector_radio_button"
             android:button="@null"

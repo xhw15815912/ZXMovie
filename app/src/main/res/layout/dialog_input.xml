@@ -10,14 +10,14 @@
         android:layout_height="80dp"
         android:layout_weight="9"
         />
-    <Button
+
+    <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:text="发送"
-        android:textColor="#ffffff"
         android:layout_weight="2"
-        android:gravity="center"
-        android:background="@drawable/bg_linear"
-        android:id="@+id/send"
-        />
+        android:gravity="bottom"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:id="@+id/send" />
 </LinearLayout>

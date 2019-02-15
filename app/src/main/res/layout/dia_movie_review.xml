@@ -56,13 +56,6 @@
         <ImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:id="@+id/back"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/com_icon_my"
-            />
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
             android:id="@+id/write"
             android:layout_centerVertical="true"
             android:src="@mipmap/com_icon_publish_default"

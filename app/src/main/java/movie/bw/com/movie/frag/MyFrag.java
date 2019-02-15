@@ -126,6 +126,9 @@ public class MyFrag extends BaseFragment {
         if (list != null && list.size() > 0) {
             mePresenter.request(userId, sessionId);
         }
+        if (list.size() > 0 && list != null) {
+            singn.request(userId, sessionId);
+        }
     }
 
     @Override

@@ -264,15 +264,6 @@ public class MovieDetails extends BaseActivity {
         });
         RecyclerView recy = inflate.findViewById(R.id.recy);
         recy.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        ImageView back = inflate.findViewById(R.id.back);
-        //movieReviewAdapter.setData(result.getPosterList());
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                finish();
-            }
-        });
         write.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -283,12 +274,18 @@ public class MovieDetails extends BaseActivity {
                 //设置软键盘通常是可见的
                 window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
                 inputDialog.show();
-                inputDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        movieReview_presenter.request(userId, sessionId, id);
-                    }
-                });
+                if (list!=null&&list.size()>0){
+                    inputDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            movieReview_presenter.request(userId, sessionId, id);
+
+                        }
+                    });
+                }else {
+                    Toast.makeText(MovieDetails.this, "请先登录", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 

@@ -61,7 +61,7 @@ public class RecommedAdapter extends RecyclerView.Adapter<RecommedAdapter.VH> {
         vh.item_title.setText(recommend.getName());
         vh.item_image.setImageURI(recommend.getLogo());
         vh.item_content.setText(recommend.getAddress());
-        vh.item_km.setText(recommend.getDistance()+"");
+        vh.item_km.setText(recommend.getDistance()+"m");
 
         vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
