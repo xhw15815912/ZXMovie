@@ -222,8 +222,9 @@
                 android:text="重置密码"/>
             <ImageView
                 android:id="@+id/reset_passwords"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="15dp"
                 android:src="@mipmap/com_icon_next"/>

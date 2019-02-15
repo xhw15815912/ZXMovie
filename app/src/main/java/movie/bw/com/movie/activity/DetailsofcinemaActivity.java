@@ -107,7 +107,7 @@ public class DetailsofcinemaActivity extends BaseActivity {
         Log.e("zasx",s);
         EventBus.getDefault().postSticky(s);
         if(fragmentFeedCmt==null){
-            fragmentFeedCmt = FragmentFeedCmt.newInstance(123L);
+            fragmentFeedCmt = FragmentFeedCmt.newInstance(300L);
         }
         fragmentFeedCmt.show(getSupportFragmentManager(), "Dialog");
     }

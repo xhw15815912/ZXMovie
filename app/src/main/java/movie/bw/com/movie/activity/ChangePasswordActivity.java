@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bw.movie.R;
@@ -28,6 +30,10 @@ public class ChangePasswordActivity extends BaseActivity {
     EditText textXpwd;
     @BindView(R.id.text_xxpwd)
     EditText textXxpwd;
+    @BindView(R.id.btn_commit)
+    Button btnCommit;
+    @BindView(R.id.finif)
+    ImageView finif;
     private ChangePwdPresenter changePwdPresenter;
     private String sessionId;
     private int userId;
@@ -39,7 +45,7 @@ public class ChangePasswordActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        if (list!=null&&list.size()>0){
+        if (list != null && list.size() > 0) {
             sessionId = USER.getSessionId();
             userId = USER.getUserId();
         }
@@ -47,10 +53,10 @@ public class ChangePasswordActivity extends BaseActivity {
         textLpwd.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
-                if(!hasFocus){
+                if (!hasFocus) {
                     InputMethodManager systemService = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if (systemService != null){
-                        systemService.hideSoftInputFromWindow(view.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+                    if (systemService != null) {
+                        systemService.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     }
                 }
             }
@@ -58,10 +64,10 @@ public class ChangePasswordActivity extends BaseActivity {
         textXpwd.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
-                if(!hasFocus){
+                if (!hasFocus) {
                     InputMethodManager systemService = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if (systemService != null){
-                        systemService.hideSoftInputFromWindow(view.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+                    if (systemService != null) {
+                        systemService.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     }
                 }
             }
@@ -69,10 +75,10 @@ public class ChangePasswordActivity extends BaseActivity {
         textXxpwd.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
-                if(!hasFocus){
+                if (!hasFocus) {
                     InputMethodManager systemService = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if (systemService != null){
-                        systemService.hideSoftInputFromWindow(view.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+                    if (systemService != null) {
+                        systemService.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     }
                 }
             }
@@ -85,31 +91,29 @@ public class ChangePasswordActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.btn_commit,R.id.finif})
+    @OnClick({R.id.btn_commit, R.id.finif})
     public void onViewClicked(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_commit:
                 String lpwd = textLpwd.getText().toString();
                 String xpwd = textXpwd.getText().toString();
                 String xxpwd = textXxpwd.getText().toString();
-                if (lpwd.equals(xpwd)){
-                    Toast.makeText(ChangePasswordActivity.this,"新密码与旧密码相同请更改",Toast.LENGTH_LONG).show();
-                }else{
-                    if (xxpwd.equals(xpwd)){
-                        changePwdPresenter.request(userId,sessionId,EncryptUtil.encrypt(lpwd),EncryptUtil.encrypt(xpwd) ,EncryptUtil.encrypt(xxpwd) );
-                    }else{
-                        Toast.makeText(ChangePasswordActivity.this,"两次新密码不相同请核对",Toast.LENGTH_LONG).show();
+                if (lpwd.equals(xpwd)) {
+                    Toast.makeText(ChangePasswordActivity.this, "新密码与旧密码相同请更改", Toast.LENGTH_LONG).show();
+                } else {
+                    if (xxpwd.equals(xpwd)) {
+                        changePwdPresenter.request(userId, sessionId, EncryptUtil.encrypt(lpwd), EncryptUtil.encrypt(xpwd), EncryptUtil.encrypt(xxpwd));
+                    } else {
+                        Toast.makeText(ChangePasswordActivity.this, "两次新密码不相同请核对", Toast.LENGTH_LONG).show();
                     }
                 }
                 break;
             case R.id.finif:
-                    finish();
+                finish();
                 break;
         }
 
     }
-
-
 
     private class Change implements DataCall<Result> {
         @Override
