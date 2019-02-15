@@ -1,11 +1,17 @@
 package movie.bw.com.movie.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.WindowManager;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.bw.movie.R;
@@ -14,10 +20,10 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import movie.bw.com.movie.FragmentFeedCmt;
 import movie.bw.com.movie.adapter.FlowAdapter;
@@ -46,6 +52,8 @@ public class DetailsofcinemaActivity extends BaseActivity {
     RecyclerCoverFlow flow;
     @BindView(R.id.x_receycelview)
     XRecyclerView xreceycelview;
+    @BindView(R.id.home_radio_group)
+    RadioGroup homeRadioGroup;
     private FlowAdapter adapter;
     private FindMoviePresenter presenter;
     private DTPresenter dtPresenter;
@@ -76,20 +84,22 @@ public class DetailsofcinemaActivity extends BaseActivity {
         title.setText(name);
         String address = intent.getStringExtra("address");
         content.setText(address);
-        intent1.putExtra("FimlName",name);
-        intent1.putExtra("FimlAddress",address);
+        intent1.putExtra("FimlName", name);
+        intent1.putExtra("FimlAddress", address);
         dtPresenter = new DTPresenter(new DT());
 
         flow.setOnItemSelectedListener(new CoverFlowLayoutManger.OnSelected() {
             @Override
             public void onItemSelected(int position) {
                 //请求当前影院当前电影的排场
-                dtPresenter.request(yid,result.get(position).getId());
+                dtPresenter.request(yid, result.get(position).getId());
+                homeRadioGroup.check(homeRadioGroup.getChildAt(position).getId());
             }
         });
 
 
-        LinearLayoutManager layoutManager=new LinearLayoutManager(this);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(OrientationHelper.VERTICAL);
         xreceycelview.setLayoutManager(layoutManager);
         adapters = new TimesAdapter(this);
@@ -100,13 +110,14 @@ public class DetailsofcinemaActivity extends BaseActivity {
     protected void destoryData() {
 
     }
+
     @OnClick(R.id.content)
-    public void Content(){
+    public void Content() {
         fragmentFeedCmt = new FragmentFeedCmt();
         String s = String.valueOf(yid);
-        Log.e("zasx",s);
+        Log.e("zasx", s);
         EventBus.getDefault().postSticky(s);
-        if(fragmentFeedCmt==null){
+        if (fragmentFeedCmt == null) {
             fragmentFeedCmt = FragmentFeedCmt.newInstance(123L);
         }
         fragmentFeedCmt.show(getSupportFragmentManager(), "Dialog");
@@ -119,11 +130,13 @@ public class DetailsofcinemaActivity extends BaseActivity {
     }
 
 
+
+
     private class FindMovie implements DataCall<Result<List<HotMovie>>> {
         @Override
         public void success(Result<List<HotMovie>> data) {
             result = data.getResult();
-            dtPresenter.request(yid,result.get(0).getId());
+            dtPresenter.request(yid, result.get(0).getId());
             adapter.setData(result);
             adapter.setIntent(intent1);
             adapter.notifyDataSetChanged();
@@ -137,6 +150,7 @@ public class DetailsofcinemaActivity extends BaseActivity {
 
 
     private class DT implements DataCall<Result<List<Chose_Session_Bean>>> {
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void success(Result<List<Chose_Session_Bean>> data) {
             List<Chose_Session_Bean> result = data.getResult();
@@ -145,6 +159,17 @@ public class DetailsofcinemaActivity extends BaseActivity {
             adapters.setIntent(intent1);
 
             adapters.notifyDataSetChanged();
+            for (int i = 0; i < result.size(); i++) {
+                RadioButton radioButton = new RadioButton(getApplicationContext());
+                WindowManager wm = (WindowManager) DetailsofcinemaActivity.this.getSystemService(Context.WINDOW_SERVICE);
+                int width = wm.getDefaultDisplay().getWidth();
+                double widths = width / result.size();
+                radioButton.setWidth((int) widths);
+                radioButton.setButtonTintMode(PorterDuff.Mode.CLEAR);
+                radioButton.setBackgroundResource(R.drawable.radio_selector);
+                homeRadioGroup.addView(radioButton);
+            }
+            homeRadioGroup.check(homeRadioGroup.getChildAt(0).getId());
         }
 
         @Override

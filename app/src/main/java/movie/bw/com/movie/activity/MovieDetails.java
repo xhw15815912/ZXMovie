@@ -363,7 +363,6 @@ public class MovieDetails extends BaseActivity {
                 movieReview_presenter.request(userId, sessionId, id);
             } else {
                 Toast.makeText(MovieDetails.this, data.getMessage(), Toast.LENGTH_SHORT).show();
-
             }
         }
 

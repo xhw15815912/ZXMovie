@@ -1,5 +1,6 @@
 package movie.bw.com.movie.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -71,6 +72,7 @@ public class RecommedAdapter extends RecyclerView.Adapter<RecommedAdapter.VH> {
                 intent.putExtra("name",(recommend.getName()));
                 intent.putExtra("address",recommend.getAddress());
                 intent.putExtra("yid",recommend.getId());
+
                 context.startActivity(intent);
             }
         });
