@@ -14,8 +14,8 @@
 
 
     <gradient
-        android:startColor="#ee7700"
+        android:startColor="#FFDD55"
         android:centerColor="#FFBB00"
-        android:endColor="#FFDD55"
+        android:endColor="#ee7700"
         android:type="linear" />
 </shape>

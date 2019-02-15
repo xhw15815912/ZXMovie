@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,8 +19,6 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.jessyan.autosize.utils.LogUtils;
-import movie.bw.com.movie.MainActivity;
-import movie.bw.com.movie.activity.ShowActivity;
 
 /**
  * @author happy_movie
@@ -30,10 +28,9 @@ import movie.bw.com.movie.activity.ShowActivity;
  */
 public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEventHandler {
 
+
     @BindView(R.id.back)
-    Button back;
-    @BindView(R.id.next)
-    Button next;
+    ImageView back;
     private IWXAPI api;
 
     private TextView payResult;
@@ -54,14 +51,6 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
             @Override
             public void onClick(View v) {
                 finish();
-            }
-        });
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(WXPayEntryActivity.this, ShowActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
             }
         });
     }

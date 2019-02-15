@@ -10,8 +10,8 @@
 
 
     <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
         android:id="@+id/next"
         android:src="@mipmap/com_icon_next"
         android:layout_alignParentRight="true"

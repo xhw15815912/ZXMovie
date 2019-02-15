@@ -65,8 +65,7 @@ public class MovieDetails extends BaseActivity {
     ImageView back;
     @BindView(R.id.pay)
     Button pay;
-    @BindView(R.id.zan)
-    ImageView zan;
+
     private int id;
     private ParticularsPresenter particularsPresenter;
     private ParticularsBean result;
@@ -91,7 +90,7 @@ public class MovieDetails extends BaseActivity {
 
     @Override
     protected void initView() {
-        presenter = new UnfollowPresenter(new Zan());
+
         filmPresenter = new FilmPresenter(new FILE());
         dialog = new Dialog(this, R.style.DialogTheme);
         jiaoZiAdapter = new JiaoZiAdapter(this);
@@ -309,13 +308,7 @@ public class MovieDetails extends BaseActivity {
 
 
 
-    @OnClick(R.id.zan)
-    public void onViewClicked() {
-        int id = intent.getIntExtra("id", 0);
 
-        presenter.request(userId,sessionId,id);
-
-    }
 
     private class CallBack implements DataCall<Result<ParticularsBean>> {
         @Override
@@ -372,16 +365,5 @@ public class MovieDetails extends BaseActivity {
         }
     }
 
-    private class Zan implements DataCall<Result> {
-        @Override
-        public void success(Result data) {
 
-            Toast.makeText(MovieDetails.this, data.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void fail(ApiException e) {
-
-        }
-    }
 }

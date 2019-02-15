@@ -107,7 +107,7 @@
                 android:layout_height="35dp"
                 android:text="热门影片"
                 android:id="@+id/hot"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 />
         </RelativeLayout>
         <RelativeLayout
@@ -121,8 +121,7 @@
                 android:layout_height="35dp"
                 android:text="正在热映"
                 android:id="@+id/photo"
-
-                android:textSize="14sp"
+                android:textSize="12sp"
                 />
         </RelativeLayout>
         <RelativeLayout
@@ -136,7 +135,7 @@
                 android:layout_height="35dp"
                 android:text="即将上映"
                 android:id="@+id/comment"
-                android:textSize="14sp"
+                android:textSize="12sp"
 
                 />
         </RelativeLayout>

@@ -110,7 +110,6 @@ public class DetailsofcinemaActivity extends BaseActivity {
     protected void destoryData() {
 
     }
-
     @OnClick(R.id.content)
     public void Content() {
         fragmentFeedCmt = new FragmentFeedCmt();

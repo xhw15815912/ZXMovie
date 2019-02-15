@@ -31,10 +31,12 @@
             android:textColor="#fff"
             />
         <ImageView
-            android:id="@+id/zan"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@mipmap/weiguanzhu"/>
+            android:layout_alignParentRight="true"
+            android:src="@drawable/xing"
+            android:layout_marginLeft="200dp"
+            />
     </LinearLayout>
     <TextView
         android:layout_width="wrap_content"

@@ -71,7 +71,7 @@ public class FragmentFeedCmt extends BottomSheetDialogFragment implements Custom
         Log.e("xiaxl: ", "onCreateView");
         View inflate = inflater.inflate(R.layout.dialog_monitor_detail, container);
         inflate.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                getScreenHeight(getActivity()) / 2));
+                getScreenHeight(getActivity()) / 1));
         initview(inflate);
         initData();
         initLinter();

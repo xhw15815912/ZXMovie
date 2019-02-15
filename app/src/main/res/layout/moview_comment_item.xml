@@ -99,6 +99,6 @@
         android:layout_height="1dp"
         android:layout_below="@id/praise"
         android:layout_marginTop="10dp"
-        android:background="#999999"
+        android:background="#f2f2f2"
         />
 </RelativeLayout>
