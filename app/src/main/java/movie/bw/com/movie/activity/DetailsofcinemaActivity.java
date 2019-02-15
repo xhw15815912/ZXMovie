@@ -52,8 +52,6 @@ public class DetailsofcinemaActivity extends BaseActivity {
     RecyclerCoverFlow flow;
     @BindView(R.id.x_receycelview)
     XRecyclerView xreceycelview;
-    @BindView(R.id.home_radio_group)
-    RadioGroup homeRadioGroup;
     private FlowAdapter adapter;
     private FindMoviePresenter presenter;
     private DTPresenter dtPresenter;
@@ -93,7 +91,6 @@ public class DetailsofcinemaActivity extends BaseActivity {
             public void onItemSelected(int position) {
                 //请求当前影院当前电影的排场
                 dtPresenter.request(yid, result.get(position).getId());
-                homeRadioGroup.check(homeRadioGroup.getChildAt(position).getId());
             }
         });
 
@@ -158,17 +155,7 @@ public class DetailsofcinemaActivity extends BaseActivity {
             adapters.setIntent(intent1);
 
             adapters.notifyDataSetChanged();
-            for (int i = 0; i < result.size(); i++) {
-                RadioButton radioButton = new RadioButton(getApplicationContext());
-                WindowManager wm = (WindowManager) DetailsofcinemaActivity.this.getSystemService(Context.WINDOW_SERVICE);
-                int width = wm.getDefaultDisplay().getWidth();
-                double widths = width / result.size();
-                radioButton.setWidth((int) widths);
-                radioButton.setButtonTintMode(PorterDuff.Mode.CLEAR);
-                radioButton.setBackgroundResource(R.drawable.radio_selector);
-                homeRadioGroup.addView(radioButton);
-            }
-            homeRadioGroup.check(homeRadioGroup.getChildAt(0).getId());
+
         }
 
         @Override
