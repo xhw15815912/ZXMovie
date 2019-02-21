@@ -11,6 +11,25 @@ public class Result<T> {
     T result;
     String headPath;
     String orderId;
+    int flag;
+    String downloadUrl;
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
+    }
+
+    public String getDownloadUrl() {
+        return downloadUrl;
+    }
+
+    public void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl;
+    }
+
     /**
      * appId : wxb3852e6a6b7d9516
      * nonceStr : WQ72A7mNfUaA05Gw
