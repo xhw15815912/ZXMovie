@@ -318,6 +318,13 @@ public interface IRequest {
             @Field("commentId") int commentId,
             @Field("replyContent") String replyContent
     );
+    //最新版本
+    @GET("tool/v1/findNewVersion")
+    Observable<Result> findNewVersion(
+            @Header("userId") int userId,
+            @Header("sessionId") String sessionId,
+            @Header("ak") String ak
+    );
     //影片评论回复列表
     @GET("movie/v1/findCommentReply")
     Observable<Result<List<FindCommentReplyBean>>> findCommentReply(

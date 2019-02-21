@@ -114,5 +114,7 @@ dependencies {
     implementation 'com.tencent.mid:mid:4.0.7-Release'
     implementation 'com.umeng.umsdk:analytics:8.0.0'
     implementation 'com.umeng.umsdk:common:2.0.0'
+    implementation 'com.loopj.android:android-async-http:1.4.9'
+
     implementation 'com.umeng.umsdk:utdid:1.1.5.3'
 }
