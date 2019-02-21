@@ -111,13 +111,12 @@ public class MoreMovie extends BaseActivity implements XRecyclerView.LoadingList
         orientation();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        orientation();
-    }
+
+
+
     @Override
     protected void initView() {
+
         recommendCinemaEdname.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
@@ -158,7 +157,7 @@ public class MoreMovie extends BaseActivity implements XRecyclerView.LoadingList
             soonMoviewPresenter.request(userId, sessionId, 1, 10);
 
         }
-
+        orientation();
         xrecy.setAdapter(xHotAdapter);
     }
     public class MyLocationListener implements BDLocationListener {

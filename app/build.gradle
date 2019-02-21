@@ -6,7 +6,7 @@ android {
             keyAlias 'bw_movie'
             keyPassword '123456'
             storePassword '123456'
-            storeFile file('C:/Users/LENOVO/Desktop/movie.keystore')
+            storeFile file('C:/Users/asus-/Downloads/movie.keystore')
         }
     }
     compileSdkVersion 28

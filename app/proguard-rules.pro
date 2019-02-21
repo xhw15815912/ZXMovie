@@ -210,8 +210,7 @@
 
 ### greenDAO 3
 -keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
-public static java.lang.String TABLENAME;
-        94    }
+public static java.lang.String TABLENAME;}
 -keep class **$Properties
 
 # If you do not use SQLCipher:
@@ -227,7 +226,7 @@ public static java.lang.String TABLENAME;
 -keep class com.google.gson.stream.** { *; }
 # 使用Gson时需要配置Gson的解析对象及变量都不混淆。不然Gson会找不到变量。
 # 将下面替换成自己的实体类
--keep class movie.bw.com.movie.movie.bw.com.movie.** { *; }
+#-keep class movie.bw.com.movie.movie.bw.com.movie.** { *; }
 
 # 极光推送
 -dontoptimize
@@ -249,52 +248,3 @@ public static java.lang.String TABLENAME;
 -keepattributes Exceptions
 -dontwarn okio.**
 -dontwarn javax.annotation.**
-
-# RxJava RxAndroid
--dontwarn sun.misc.**
--keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
-    long producerIndex;
-    long consumerIndex;
-}
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
-    rx.internal.util.atomic.LinkedQueueNode producerNode;
-}
--keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
-    rx.internal.util.atomic.LinkedQueueNode consumerNode;
-}
--dontnote rx.internal.util.PlatformDependent
-
-
-# Universal-Image-Loader-v1.9.5
--libraryjars libs/universal-image-loader-1.9.5-SNAPSHOT-with-sources.jar
--dontwarn com.nostra13.universalimageloader.**
--keep class com.nostra13.universalimageloader.** { *; }
-
-
-# 微信支付
--dontwarn com.tencent.mm.**
--dontwarn com.tencent.wxop.stat.**
--keep class com.tencent.mm.** {*;}
--keep class com.tencent.wxop.stat.**{*;}
-
-
-# 信鸽
--keep public class * extends android.app.Service
--keep public class * extends android.content.BroadcastReceiver
--keep class com.tencent.android.tpush.**  {* ;}
--keep class com.tencent.mid.**  {* ;}
--keepattributes *Annotation*
-# 友盟统计分析
--keepclassmembers class * { public <init>(org.json.JSONObject); }
--keepclassmembers enum com.umeng.analytics.** {
-    public static **[] values();
-    public static ** valueOf(java.lang.String);
-}
-
-
-# 友盟自动更新
--keepclassmembers class * { public <init>(org.json.JSONObject); }
--keep public class cn.irains.parking.cloud.pub.R$*{ public static final int *; }
--keep public class * extends com.umeng.**
--keep class com.umeng.** { *; }
-

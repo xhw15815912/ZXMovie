@@ -1,1 +1,1 @@
-include ':app', ':Demo', ':SeatTable'
+include ':app', ':Demo', ':SeatTable', ':coverflow'
