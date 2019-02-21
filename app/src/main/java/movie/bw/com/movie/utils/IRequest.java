@@ -9,6 +9,7 @@ import movie.bw.com.movie.bean.Cinema;
 import movie.bw.com.movie.bean.DetailsofcinemaBean;
 import movie.bw.com.movie.bean.FilmCommentBean;
 import movie.bw.com.movie.bean.FilmInFoBean;
+import movie.bw.com.movie.bean.FindCommentReplyBean;
 import movie.bw.com.movie.bean.HotMovie;
 import movie.bw.com.movie.bean.MeBean;
 import movie.bw.com.movie.bean.MoviewCommentBean;
@@ -317,5 +318,13 @@ public interface IRequest {
             @Field("commentId") int commentId,
             @Field("replyContent") String replyContent
     );
+    //影片评论回复列表
+    @GET("movie/v1/findCommentReply")
+    Observable<Result<List<FindCommentReplyBean>>> findCommentReply(
+            @Header("userId") int userId, @Header("sessionId") String sessionId,
+            @Query("commentId") int commentId,
+            @Query("page") int page,
+            @Query("count") int count
 
+    );
 }

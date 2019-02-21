@@ -24,6 +24,8 @@ import com.bw.movie.R;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -37,6 +39,7 @@ import movie.bw.com.movie.adapter.PhotoAdapter;
 import movie.bw.com.movie.base.BaseActivity;
 import movie.bw.com.movie.bean.MoviewCommentBean;
 import movie.bw.com.movie.bean.ParticularsBean;
+import movie.bw.com.movie.bean.PinglunBean;
 import movie.bw.com.movie.bean.Result;
 import movie.bw.com.movie.core.DataCall;
 import movie.bw.com.movie.core.exception.ApiException;
@@ -80,6 +83,7 @@ public class MovieDetails extends BaseActivity {
     private FilmPresenter filmPresenter;
     private UnfollowPresenter presenter;
     private Intent intent;
+    private MovierAplyAdapter movierAplyAdapter;
 
     //private AdduserresponsestocommentsPresenter presenter;
 
@@ -95,21 +99,21 @@ public class MovieDetails extends BaseActivity {
         dialog = new Dialog(this, R.style.DialogTheme);
         jiaoZiAdapter = new JiaoZiAdapter(this);
         photoAdapter = new PhotoAdapter(this);
+        movierAplyAdapter = new MovierAplyAdapter(this);
         movieReviewAdapter = new MovieReviewAdapter(this);
         movieReview_presenter = new MovieReview_Presenter(new Review());
+        intent = getIntent();
+        if (list != null && list.size() > 0) {
+            sessionId = USER.getSessionId();
+            userId = USER.getUserId();
+            movieReviewAdapter.setUser(userId,sessionId);
+        }
         movieReviewAdapter.setOnItemClickListener(new MovieReviewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int commentId) {
                 filmPresenter.request(userId, sessionId, commentId);
             }
         });
-
-        intent = getIntent();
-        if (list != null && list.size() > 0) {
-            sessionId = USER.getSessionId();
-            userId = USER.getUserId();
-        }
-
         id = intent.getIntExtra("id", 0);
         particularsPresenter = new ParticularsPresenter(new CallBack());
         if (id != 0) {
@@ -120,6 +124,15 @@ public class MovieDetails extends BaseActivity {
 
     }
 
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void FilmNum(String s) {
+        movieReview_presenter.request(userId, sessionId, id);
+    }
     @Override
     public void onResume() {
         super.onResume();
@@ -249,7 +262,7 @@ public class MovieDetails extends BaseActivity {
         Window dialogWindow = dialog.getWindow();
         WindowManager m = getWindow().getWindowManager();
         Display d = m.getDefaultDisplay(); // 获取屏幕宽、高度
-        WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 获取对话框当前的参数值
+        final WindowManager.LayoutParams p = dialogWindow.getAttributes(); // 获取对话框当前的参数值
         p.height = (int) (d.getHeight() * 0.9); // 高度设置为屏幕的0.6，根据实际情况调整
         p.width = (int) (d.getWidth()); // 宽度设置为屏幕的0.65，根据实际情况调整
         dialogWindow.setAttributes(p);
@@ -267,7 +280,10 @@ public class MovieDetails extends BaseActivity {
         write.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventBus.getDefault().postSticky(String.valueOf(id));
+                PinglunBean pinglunBean = new PinglunBean();
+                pinglunBean.setId(id);
+                pinglunBean.setName("1");
+                EventBus.getDefault().postSticky(pinglunBean);
                 inputDialog = new MovieInpuDialog(MovieDetails.this);
                 Window window = inputDialog.getWindow();
                 WindowManager.LayoutParams params = window.getAttributes();
@@ -279,7 +295,6 @@ public class MovieDetails extends BaseActivity {
                         @Override
                         public void onDismiss(DialogInterface dialog) {
                             movieReview_presenter.request(userId, sessionId, id);
-
                         }
                     });
                 }else {
@@ -288,7 +303,7 @@ public class MovieDetails extends BaseActivity {
 
             }
         });
-
+        movieReviewAdapter.setid(id);
         recy.setAdapter(movieReviewAdapter);
         dialog.show();
 

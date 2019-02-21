@@ -24,6 +24,7 @@ import me.jessyan.autosize.internal.CustomAdapt;
 import movie.bw.com.movie.DaoMaster;
 import movie.bw.com.movie.DaoSession;
 import movie.bw.com.movie.UserBeanDao;
+import movie.bw.com.movie.bean.PinglunBean;
 import movie.bw.com.movie.bean.Result;
 import movie.bw.com.movie.bean.UserBean;
 import movie.bw.com.movie.core.DataCall;
@@ -42,6 +43,7 @@ public class MovieInpuDialog extends Dialog implements CustomAdapt {
     private TextView send;
     private MovieCommentPresenter film_comment_presenter;
     private String s;
+    private String name;
 
     public MovieInpuDialog(Context context) {
         super(context);
@@ -72,8 +74,23 @@ public class MovieInpuDialog extends Dialog implements CustomAdapt {
                         .list();
                 String sessionId = list.get(0).getSessionId();
                 int userId = list.get(0).getUserId();
-                String s1 = et.getText().toString();
-                film_comment_presenter.request(userId,sessionId,s,s1);
+                String s1 = et.getText().toString().trim();
+                if (name.equals("1")){
+                    if(s1.isEmpty()){
+                        Toast.makeText(context,"格式不正确，请重新填写",Toast.LENGTH_LONG).show();
+
+                    }else{
+                        film_comment_presenter.request(userId,sessionId,s,s1);
+                    }
+                }else{
+                    if(s1.isEmpty()){
+                        Toast.makeText(context,"格式不正确，请重新填写",Toast.LENGTH_LONG).show();
+                    }else{
+                        film_comment_presenter.request(userId,sessionId,s,"@ "+name+" 回复： "+s1);
+                    }
+                }
+
+
             }
         });
 
@@ -88,8 +105,9 @@ public class MovieInpuDialog extends Dialog implements CustomAdapt {
         }
     }
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void FilmNum(String s) {
-        this.s=s;
+    public void FilmNum(PinglunBean s) {
+        this.s=String.valueOf(s.getId());
+        this.name=s.getName();
     }
     @Override
     public boolean isBaseOnWidth() {
