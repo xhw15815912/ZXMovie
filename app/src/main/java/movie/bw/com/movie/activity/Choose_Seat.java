@@ -265,7 +265,7 @@ public class Choose_Seat extends BaseActivity {
             case R.id.finishssss:
                 cenggong.setVisibility(View.GONE);
                 di.setVisibility(View.VISIBLE);
-                back.setVisibility(View.VISIBLE);
+                back.setVisibility(View.GONE);
                 break;
             case R.id.zifu:
                 if (weixinRadioButton.isChecked()) {

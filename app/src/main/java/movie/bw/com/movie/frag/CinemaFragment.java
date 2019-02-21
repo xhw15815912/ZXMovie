@@ -149,10 +149,10 @@ public class CinemaFragment extends BaseFragment implements XRecyclerView.Loadin
             String locationDescribe = location.getLocationDescribe();    //获取位置描述信息
             String addr = location.getCity();    //获取详细地址信息
             //address.setText(addr + "");
-            if (addr!=null){
+            if (!addr.equals("")){
                 address.setText(addr + "");
             }else{
-                address.setText("请重新定位!");
+                address.setText("定位中...");
             }
             if (!location.equals("")) {
                 mLocationClient.stop();

@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/Demo" />
             <option value="$PROJECT_DIR$/SeatTable" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/coverflow" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

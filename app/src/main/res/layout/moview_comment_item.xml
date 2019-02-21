@@ -25,7 +25,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxLength="3"
         android:id="@+id/message"
         android:text="11111111111111111111111111"
         android:layout_below="@id/head"
@@ -33,19 +32,11 @@
         android:textColor="#333333"
         android:textSize="12sp"
         />
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/message"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
-        android:id="@+id/xiaoxihuifu">
 
-    </android.support.v7.widget.RecyclerView>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/xiaoxihuifu"
+        android:layout_below="@id/message"
         android:layout_marginTop="10dp"
         android:id="@+id/time"
         android:textColor="#999999"
@@ -60,14 +51,14 @@
         android:textSize="12sp"
         android:textColor="#666666"
         android:text="11111"
-        android:layout_below="@id/xiaoxihuifu"
+        android:layout_below="@id/message"
         android:layout_marginTop="10dp"
         />
     <ImageView
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:src="@mipmap/com_icon_comment_default"
-        android:layout_below="@id/xiaoxihuifu"
+        android:layout_below="@id/message"
         android:layout_toLeftOf="@id/num"
         android:layout_marginTop="10dp"
        android:layout_marginRight="6dp"
@@ -78,7 +69,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/great"
         android:layout_toLeftOf="@id/q"
-        android:layout_below="@id/xiaoxihuifu"
+        android:layout_below="@id/message"
         android:layout_marginTop="10dp"
         android:layout_marginRight="18dp"
         android:text="11111"
@@ -89,7 +80,7 @@
         android:id="@+id/praise"
         android:src="@mipmap/com_icon_praise_default"
         android:layout_marginTop="10dp"
-        android:layout_below="@id/xiaoxihuifu"
+        android:layout_below="@id/message"
         android:layout_toLeftOf="@id/great"
         android:layout_marginRight="6dp"
         />

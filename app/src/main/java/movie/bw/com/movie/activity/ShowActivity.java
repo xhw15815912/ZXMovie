@@ -87,7 +87,7 @@ public class ShowActivity extends BaseActivity {
 
                @Override
                public void onPageSelected(int i) {
-                   wdGroup.check(wdGroup.getChildAt(i).getId());
+//                   wdGroup.check(wdGroup.getChildAt(i).getId());
                }
 
                @Override

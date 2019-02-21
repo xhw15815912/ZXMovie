@@ -24,7 +24,7 @@
              <RadioButton
                  android:id="@+id/movie"
                  android:layout_width="83dp"
-                 android:layout_height="25dp"
+                 android:layout_height="30dp"
                  android:checked="true"
                  android:background="@drawable/selector_radio_button"
                  android:button="@null"
@@ -36,7 +36,7 @@
              <RadioButton
                  android:id="@+id/cinema"
                  android:layout_width="83dp"
-                 android:layout_height="25dp"
+                 android:layout_height="30dp"
                  android:layout_marginLeft="32dp"
                  android:background="@drawable/selector_radio_button"
                  android:button="@null"

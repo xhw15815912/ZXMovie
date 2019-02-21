@@ -223,28 +223,8 @@ public class MovieFrag extends BaseFragment {
         orientation();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        orientation();
-    }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        orientation();
-    }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        orientation();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
 
     private void orientation() {
         mLocationClient = new LocationClient(getActivity());
@@ -330,12 +310,12 @@ public class MovieFrag extends BaseFragment {
                 mLocationClient.stop();
             }
 
-            String locationDescribe = location.getLocationDescribe();    //获取位置描述信息
+//            String locationDescribe = location.getLocationDescribe();    //获取位置描述信息
             String addr = location.getCity();    //获取详细地址信息
-            if (addr!=null){
+            if (!addr.equals("")){
                 textPositioningq.setText(addr + "");
             }else{
-                textPositioningq.setText("请重新定位!");
+                textPositioningq.setText("定位中...");
             }
 
         }

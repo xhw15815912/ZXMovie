@@ -172,10 +172,10 @@ public class MoreMovie extends BaseActivity implements XRecyclerView.LoadingList
 
             String locationDescribe = location.getLocationDescribe();    //获取位置描述信息
             String addr = location.getCity();    //获取详细地址信息
-            if (addr!=null){
+            if (!addr.equals("")){
                 address.setText(addr + "");
             }else{
-                address.setText("请重新定位!");
+                address.setText("定位中...");
             }
 
         }

@@ -33,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:id="@+id/address"
+                android:layout_margin="5dp"
                 android:layout_toRightOf="@id/image_white"
                 android:textSize="13dp" />
         </LinearLayout>
@@ -40,7 +41,7 @@
         <LinearLayout
             android:id="@+id/recommend_cinema_linear"
             android:layout_width="wrap_content"
-            android:layout_marginRight="-210dp"
+            android:layout_marginRight="-225dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:background="@drawable/bk_radi9"

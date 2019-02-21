@@ -118,6 +118,7 @@ public class ChangePasswordActivity extends BaseActivity {
     private class Change implements DataCall<Result> {
         @Override
         public void success(Result data) {
+
             if (data.getStatus().equals("0000")) {
                 Toast.makeText(ChangePasswordActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
                 finish();
